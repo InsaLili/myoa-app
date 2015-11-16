@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" media="screen" href="css/star-rating.min.css">
+    <link rel="stylesheet" media="screen" href="css/bootstrap.min.css">
+    <link rel="stylesheet" media="screen" href="css/media.css">
+    <link rel="stylesheet" media="screen" href="jquery-ui-1.11.4/jquery-ui.css">
+    <link href='css/mapbox.css' rel='stylesheet' />
+    <link rel="stylesheet" media="screen" href="css/main.css">
+    <title>Map</title>
+</head>
+<body>
+<div id="maskLayer">
+    <div id="welcomeScreen">
+        <h1>Sélectionnez votre groupe :</h1>
+    </div>
+    <div id="chooseGroup">
+        <div class="chooseGroup">
+            <button class="btn btn-danger chooseGroupBtn" value="1">
+                <h2>Groupe 1</h2>
+            </button>
+        </div>
+        <div class="chooseGroup">
+            <button class="btn btn-success chooseGroupBtn" value="2">
+                <h2>Groupe 2</h2>
+            </button>
+        </div>
+        <div class="chooseGroup">
+            <button class="btn btn-info chooseGroupBtn" value="3" >
+                <h2>Groupe 3</h2>
+            </button>
+        </div>
+        <div class="chooseGroup">
+            <button class="btn btn-warning chooseGroupBtn" value="4">
+                <h2>Groupe 4</h2>
+            </button>
+        </div>
+    </div>
+</div>
+<div id="appLayer">
+    <div id="status" class="container">
+        <!--Détails sur l'insecte-->
+        <div id="insect" class="kit">
+            <h3>Information</h3>
+            <a id="insectBtn">
+                <img src="img/LogoInsecte.png">
+            </a>
+            <img id="insectImg" src="img/fourmis.png">
+            <a id="energyBtn">
+                <img src="img/LogoEnergy.jpg">
+            </a>
+            <img id="energyImg" src="img/energy.png">
+        </div>
+        <!--Progress of the rating -->
+        <div id="leaderboard" class="kit">
+            <h3>Progression</h3>
+            <div class="players">
+                <div class="player">
+                    <div class="avatars">
+                        <img src="img/player1.png">
+                    </div>
+                    <div class="badges noteBadge">
+                        <img src="img/badgeNoteExplorateur.png">
+                    </div>
+                    <!--<p>Explorateur</p>-->
+                    <div class="progressbar" id="progressbar1"></div>
+                    <P>0/4 Emplacements</P>
+                </div>
+                <div class="player">
+                    <div class="avatars">
+                        <img src="img/player2.png">
+                    </div>
+                    <div class="badges noteBadge">
+                        <img src="img/badgeNoteJournaliste.png">
+                    </div>
+                    <!--<p>Journaliste</p>-->
+                    <div class="progressbar" id="progressbar2"></div>
+                    <P>0/4 Emplacements</P>
+                </div>
+                <div class="player">
+                    <div class="avatars">
+                        <img src="img/player3.png">
+                    </div>
+                    <div class="badges noteBadge">
+                        <img src="img/badgeNotePhotographe.png">
+                    </div>
+                    <!--<p>Photographe</p>-->
+                    <div class="progressbar" id="progressbar3"></div>
+                    <P>0/4 Emplacements</P>
+                </div>
+            </div>
+            <div id="timerBadge" class="badges">
+                <img src="img/badgeTimer.png">
+            </div>
+        </div>
+        <!--Show tasks of each step-->
+        <div id="tasks" class="kit">
+            <h3>Consignes</h3><button class="btn btn-info btn-circle" id="resetLocationBtn">Repositionner<br>les fiches</button>
+            <ul>
+                <li>
+                    <p class="steps" id="step1">
+                        Étape 1 : Analysez et évaluez chaque emplacement
+                    </p>
+                    <div id="nextStep">
+                        <button class="btn btn-warning pull-right" id="toStep2">Vérifier les résultats</button>
+                    </div>
+                </li>
+                <li>
+                    <p class="steps" id="step2">
+                        Étape 2 : Choisissez un emplacement
+                    </p>
+                </li>
+                <li>
+                    <p class="steps" id="step3">
+                        Étape 3 : Construisez votre argumentaire
+                    </p>
+                    <div id="finalStep">
+                        <button class="btn btn-warning" id="finalStepBtn">Validation</button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <!--timer-->
+        <div id="counter" class="kit">
+            <h3>Chrono</h3>
+            <div id="timer1"></div>
+            <div id="timer2"></div>
+            <div id="timer3"></div>
+        </div>
+    </div>
+    <!--Change the location-->
+    <div id="navigationTab">
+        <ul>
+            <li id="mountainTab" class="activeTab">
+                <a href="#" id="mountain"><h3>Montagne</h3></a>
+            </li>
+            <li id="schoolTab">
+                <a href="#" id="school"><h3>Lycée</h3></a>
+            </li>
+        </ul>
+    </div>
+    <!--Here is the map div-->
+    <!--Show the mountain location cards-->
+    <div class="mountainLocations">
+        <div class="location" id="location1" title="Location1">
+            <div class="locationTitle">
+                <h3>Balcon sur la cascade</h3>
+            </div>
+            <div class="locationContent">
+                <div class="visualPlayers"  id="visualLocation1">
+                    <h4>Visualisation :</h4>
+                    <div class="visualPlayer visualPlayer1">
+                        <img src="img/player1.png">
+                    </div>
+                    <div class="visualPlayer visualPlayer2">
+                        <img src="img/player2.png">
+                    </div>
+                    <div class="visualPlayer visualPlayer3">
+                        <img src="img/player3.png">
+                    </div>
+                </div>
+                <div class="chooseLocation">
+                    <h4>Choisir cet emplacement:</h4>
+                    <button class="btn btn-default btn-md submitChoice" name="Balcon sur la cascade" value="1">Choisir</button>
+                </div>
+                <span class="vote" id="vote1">
+                    <h4>Évaluation :</h4>
+                <input id="input1" class="rating" data-min="0" data-max="5" data-step="1" data-stars=5  data-show-clear="false" data-size="xs" data-readonly="true">
+                </span>
+                <div class="note">
+                    <h4>Notes :</h4>
+                    <span id="note1"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="location" id="location2" title="Location2">
+            <div class="locationTitle">
+                <h3>Sous les embruns</h3>
+            </div>
+            <div class="locationContent">
+                <div class="visualPlayers"  id="visualLocation2">
+                    <h4>Visualisation :</h4>
+                    <div class="visualPlayer visualPlayer1">
+                        <img src="img/player1.png">
+                    </div>
+                    <div class="visualPlayer visualPlayer2">
+                        <img src="img/player2.png">
+                    </div>
+                    <div class="visualPlayer visualPlayer3">
+                        <img src="img/player3.png">
+                    </div>
+                </div>
+                <div class="chooseLocation">
+                    <h4>Choisir cet emplacement:</h4>
+                    <button class="btn btn-default btn-md submitChoice" name="Sous les embruns" value="2">Choisir</button>
+                </div>
+                <span class="vote" id="vote2">
+                    <h4>Évaluation :</h4>
+                    <input id="input2" class="rating" data-min="0" data-max="5" data-step="1" data-stars=5  data-show-clear="false" data-size="xs" data-readonly="true">
+                </span>
+                <br>
+                <div class="note">
+                    <h4>Notes :</h4>
+                    <span id="note2"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="location" id="location3" title="Location3">
+            <div class="locationTitle">
+                <h3>Au détour du sentier</h3>
+            </div>
+            <div class="locationContent">
+                <div class="visualPlayers"  id="visualLocation3">
+                    <h4>Visualisation :</h4>
+                    <div class="visualPlayer visualPlayer1">
+                        <img src="img/player1.png">
+                    </div>
+                    <div class="visualPlayer visualPlayer2">
+                        <img src="img/player2.png">
+                    </div>
+                    <div class="visualPlayer visualPlayer3">
+                        <img src="img/player3.png">
+                    </div>
+                </div>
+                <div class="chooseLocation">
+                    <h4>Choisir cet emplacement:</h4>
+                    <button class="btn btn-default btn-md submitChoice" name="Au détour du sentier" value="3">Choisir</button>
+                </div>
+                <span class="vote" id="vote3">
+                    <h4>Évaluation :</h4>
+                    <input id="input3" class="rating" data-min="0" data-max="5" data-step="1" data-stars=5  data-show-clear="false" data-size="xs" data-readonly="true">
+                </span>
+                <br>
+                <div class="note">
+                    <h4>Notes :</h4>
+                    <span id="note3"></span>
+                </div>
+            </div>
+        </div>
+        <div class="location" id="location4" title="Location4">
+            <div class="locationTitle">
+                <h3>La clairière</h3>
+            </div>
+            <div class="locationContent">
+                <div class="visualPlayers"  id="visualLocation4">
+                    <h4>Visualisation :</h4>
+                    <div class="visualPlayer visualPlayer1">
+                        <img src="img/player1.png">
+                    </div>
+                    <div class="visualPlayer visualPlayer2">
+                        <img src="img/player2.png">
+                    </div>
+                    <div class="visualPlayer visualPlayer3">
+                        <img src="img/player3.png">
+                    </div>
+                </div>
+                <div class="chooseLocation">
+                    <h4>Choisir cet emplacement:</h4>
+                    <button class="btn btn-default btn-md submitChoice" name="La clairière" value="4">Choisir</button>
+                </div>
+                <span class="vote" id="vote4">
+                    <h4>Évaluation :</h4>
+                    <input id="input4" class="rating" data-min="0" data-max="5" data-step="1" data-stars=5  data-show-clear="false" data-size="xs" data-readonly="true">
+                </span>
+                <br>
+                <div class="note">
+                    <h4>Notes :</h4>
+                    <span id="note4"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Show the school location cards-->
+
+    <div class="schoolLocations">
+        <div class="location" id="location6" title="Location6">
+            <div class="locationTitle">
+                <h3>Lycée N°1</h3>
+            </div>
+            <div class="locationContent">
+                <div class="visualPlayers"  id="visualLocation6">
+                    <h4>Visualisation :</h4>
+                    <div class="visualPlayer visualPlayer1">
+                        <img src="img/player1.png">
+                    </div>
+                    <div class="visualPlayer visualPlayer2">
+                        <img src="img/player2.png">
+                    </div>
+                    <div class="visualPlayer visualPlayer3">
+                        <img src="img/player3.png">
+                    </div>
+                </div>
+                <div class="chooseLocation">
+                    <h4>Choisir cet emplacement:</h4>
+                    <button class="btn btn-default btn-md submitChoice" name="Lycée N°1" value="6">Choisir</button>
+                </div>
+                <span class="vote" id="vote6">
+                    <h4>Évaluation :</h4>
+                    <input id="input6" class="rating" data-min="0" data-max="5" data-step="1" data-stars=5  data-show-clear="false" data-size="xs" data-readonly="true">
+                </span>
+                <br>
+                <div class="note">
+                    <h4>Notes :</h4>
+                    <span id="note6"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="location" id="location7" title="Location7">
+            <div class="locationTitle">
+                <h3>Lycée N°2</h3>
+            </div>
+            <div class="locationContent">
+                <div class="visualPlayers"  id="visualLocation7">
+                    <h4>Visualisation :</h4>
+                    <div class="visualPlayer visualPlayer1">
+                        <img src="img/player1.png">
+                    </div>
+                    <div class="visualPlayer visualPlayer2">
+                        <img src="img/player2.png">
+                    </div>
+                    <div class="visualPlayer visualPlayer3">
+                        <img src="img/player3.png">
+                    </div>
+                </div>
+                <div class="chooseLocation">
+                    <h4>Choisir cet emplacement:</h4>
+                    <button class="btn btn-default btn-md submitChoice" name="Lycée N°2" value="7">Choisir</button>
+                </div>
+                <span class="vote" id="vote7">
+                    <h4>Évaluation :</h4>
+                    <input id="input7" class="rating" data-min="0" data-max="5" data-step="1" data-stars=5  data-show-clear="false" data-size="xs" data-readonly="true">
+                </span>
+                <br>
+                <div class="note">
+                    <h4>Notes :</h4>
+                    <span id="note7"></span>
+                </div>
+            </div>
+        </div>
+        <div class="location" id="location8" title="Location8">
+            <div class="locationTitle">
+                <h3>Lycée N°3</h3>
+            </div>
+            <div class="locationContent">
+                <div class="visualPlayers"  id="visualLocation8">
+                    <h4>Visualisation :</h4>
+                    <div class="visualPlayer visualPlayer1">
+                        <img src="img/player1.png">
+                    </div>
+                    <div class="visualPlayer visualPlayer2">
+                        <img src="img/player2.png">
+                    </div>
+                    <div class="visualPlayer visualPlayer3">
+                        <img src="img/player3.png">
+                    </div>
+                </div>
+                <br>
+                <div class="chooseLocation">
+                    <h4>Choisir cet emplacement:</h4>
+                    <button class="btn btn-default btn-md submitChoice" name="Lycée N°3" value="8">Choisir</button>
+                </div>
+                <span class="vote" id="vote8">
+                    <h4>Évaluation :</h4>
+                    <input id="input8" class="rating" data-min="0" data-max="5" data-step="1" data-stars=5  data-show-clear="false" data-size="xs" data-readonly="true">
+                </span>
+                <br>
+                <div class="note">
+                    <h4>Notes :</h4>
+                    <span id="note8"></span>
+                </div>
+            </div>
+        </div>
+        <div class="location" id="location5" title="Location5">
+            <div class="locationTitle">
+                <h3>Lycée N°4</h3>
+            </div>
+            <div class="locationContent">
+                <div class="visualPlayers"  id="visualLocation5">
+                    <h4>Visualisation :</h4>
+                    <div class="visualPlayer visualPlayer1">
+                        <img src="img/player1.png">
+                    </div>
+                    <div class="visualPlayer visualPlayer2">
+                        <img src="img/player2.png">
+                    </div>
+                    <div class="visualPlayer visualPlayer3">
+                        <img src="img/player3.png">
+                    </div>
+                </div>
+                <div class="chooseLocation">
+                    <h4>Choisir cet emplacement:</h4>
+                    <button class="btn btn-default btn-md submitChoice" name="Lycée N°4" value="5">Choisir</button>
+                </div>
+                <span class="vote" id="vote5">
+                    <h4>Évaluation :</h4>
+                    <input id="input5" class="rating" data-min="0" data-max="5" data-step="1" data-stars=5  data-show-clear="false" data-size="xs" data-readonly="true">
+                </span>
+                <br>
+                <div class="note">
+                    <h4>Notes :</h4>
+                    <span id="note5"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Here are the hiden dialogs-->
+<div id="dialogSpace">
+    <div id="start" title="Consignes">
+        <h4>Etape 1 :</h4>
+        <h4>Vous devez observer, analyser, et évaluer de façon individuelle les données  collectés.</h4>
+         <h4>Choisissez 1 lieu et visualisez les informations sur votre tablette.</h4>
+        <br>
+         <h4>BONUS :</h4>
+         <h4>Gagnez 1 badge Note en prenant au moins 5 notes pertinentes pour le groupe.</h4>
+         <h4>Gagnez le badge Timer si vous finissez toutes les évaluation individuelle dans les 8 minutes.</h4>
+    </div>
+    <div id="insectInfoWrap">
+        <!--Ver'Epice-->
+        <div id="insectDialog" class="insects" title="Fourmis">
+            <img src="img/fourmis.jpeg">
+        </div>
+    </div>
+    <div id="choiceConfirm" title="Choisir un emplacement"><h4></h4></div>
+    <div id="secondStepDialog" title="Consignes">
+        <h4>Etape 2 :</h4>
+        <h4>Bravo! Vous avez gagné le badge Timer!</h4>
+        <h4 class="winNoteBadge"></h4>
+        <br>
+        <h4>Visualisez les résultats des évaluations.</h4>
+        <h4>Choisissez l'emplacement le plus pertinent pour votre nurserie.</h4>
+        <h4>Vous avez 5 minutes pour cette étape.</h4>
+    </div>
+    <div id="secondStepDialog_noBadge" title="Consignes">
+        <h4>Etape 2 :</h4>
+        <h4 class="winNoteBadge"></h4>
+        <br>
+        <h4>Visualisez les résultats des évaluations.</h4>
+        <h4>Choisissez l'emplacement le plus pertinent pour votre nurserie.</h4>
+        <h4>Vous avez 5 minutes pour cette étape.</h4>
+    </div>
+    <div id="gameEnd" title="Consignes">
+        <h4></h4>
+        <h4>En utilisant vos tablettes, justifiez votre choix en quelques lignes dans la case argumentaire.</h4>
+        <h4>Pensez à l'énergie, les conditions climatiques, etc.</h4>
+        <h4>Vous avez 7 minutes pour cette étape.</h4>
+    </div>
+    <div id="finalDialog" title="Consignes">
+        <h4>Bravo!</h4>
+        <h4>Vous venez de finir l'activité!</h4>
+    </div>
+</div>
+<div id="map"></div>
+
+<script src="js/jquery-2.1.3.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src='js/mapbox.js'></script>
+<script src="jquery-ui-1.11.4/jquery-ui.js"></script>
+<script src="js/jquery.ui.touch-punch.min.js"></script>
+<script src="js/hammer.min.js"></script>
+<script src="js/jquery.touch.js"></script>
+<script src="js/pouchdb-3.4.0.min.js"></script>
+<script src="js/pouchdb.find.js"></script>
+<script src="js/socket.io.js"></script>
+<script src="js/star-rating.min.js"></script>
+<script src="js/jquery.countdown.js"></script>
+<script src="js/main_2.js"></script>
+<!-- <script src="js/main.js"></script> -->
+<!-- <script src="js/database.js"></script> -->
+</body>
+</html>
+
