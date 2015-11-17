@@ -410,6 +410,7 @@ $(document).ready(function() {
             socket.on('vote', function(data){
                 var location = data.location;
                 var player = data.player;
+                var id = data.id;
                 var rating = 0;
                 var progressbar;
                 // change check mark
@@ -418,13 +419,20 @@ $(document).ready(function() {
                 $(checkMark).addClass('star-best');
 
                 // change progressbar
-                progressbar = $('#progressbar'+player);
-                rating = parseInt(progressbar. attr("aria-valuenow"));
-                rating++;
-                progressbar.progressbar({
-                    value: rating
+                db.get(id).then(function(doc) {
+                    if(doc.flag <= 1) {
+                        progressbar = $('#progressbar' + player);
+                        rating = parseInt(progressbar.attr("aria-valuenow"));
+                        rating++;
+                        progressbar.progressbar({
+                            value: rating
+                        });
+                        progressbar.next().text(rating + '/4 Emplacements');
+                    }
+                }).catch(function(err){
+                    console.log(err);
                 });
-                progressbar.next().text(rating + '/4 Emplacements');
+
                 if(allRating == 3){
                     $('#toStep2').removeAttr('disabled');
                 }

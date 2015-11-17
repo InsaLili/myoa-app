@@ -1,5 +1,26 @@
 $(document).ready(function() {
-var db = new PouchDB('http://localhost:8080/insect');
+var db = new PouchDB('http://localhost:5984/insect');
+
+//    db.allDocs({
+//        include_docs: true,
+//        attachements: true,
+//        startkey: 'note',
+//        endkey: 'note\uffff'
+//    }).then(function(notes){
+//        for(var i=0; i < notes.rows.length; i++){
+//            db.remove(notes.rows[i].doc);
+//        }
+//    });
+    db.allDocs({
+        include_docs: true,
+        attachements: true,
+        startkey: 'vote',
+        endkey: 'vote\uffff'
+    }).then(function(notes){
+        for(var i=0; i < notes.rows.length; i++){
+            db.remove(notes.rows[i].doc);
+        }
+    });
 
 // db.put({
 //         _id: "measure/1/1",

@@ -39,7 +39,9 @@ $(document).ready(function($){
             //------------------click events for validation btns
             $('#submitNote').on('click', Client.addNote);
             $('#submitAgu').on('click', Client.addAgu);
-            $("#submitVote").on('click', Client.addVote);
+            $('#vote').on('click', '.rating-container', Client.addVote);
+//            $('.rating-container').on('click', Client.addVote);
+//            $("#submitVote").on('click', Client.addVote);
             $('#avatar').on('click', function(){
                 if (screenfull.enabled) {
                     screenfull.request();
@@ -85,20 +87,20 @@ $(document).ready(function($){
                     }
                 }
             });
-            $( "#voteConfirm" ).dialog({
-                autoOpen: false,
-                height:200,
-                modal: true,
-                buttons: {
-                    "Oui": function() {
-                        Client.confirmVote();
-                        $( this ).dialog( "close" );
-                    },
-                    "Non": function() {
-                        $( this ).dialog( "close" );
-                    }
-                }
-            });
+//            $( "#voteConfirm" ).dialog({
+//                autoOpen: false,
+//                height:200,
+//                modal: true,
+//                buttons: {
+//                    "Oui": function() {
+//                        Client.confirmVote();
+//                        $( this ).dialog( "close" );
+//                    },
+//                    "Non": function() {
+//                        $( this ).dialog( "close" );
+//                    }
+//                }
+//            });
         },
 
         //------------------communication via server
@@ -242,12 +244,12 @@ $(document).ready(function($){
                 if(vote.rows.length !== 0){
                     var voteValue = vote.rows[0].doc.vote;
                     input.rating('update', voteValue);
-                    input.rating('refresh', {disabled: true});
-                    $('#submitVote').prop('disabled', true);
+                    input.rating('refresh', {disabled: false});
+//                    $('#submitVote').prop('disabled', true);
                 }else{
                     input.rating('update', 0);
                     input.rating('refresh', {disabled: false});
-                    $('#submitVote').removeAttr('disabled');
+//                    $('#submitVote').removeAttr('disabled');
                 }
             });
         },
@@ -409,30 +411,38 @@ $(document).ready(function($){
                 input.rating("update", 0);
                 return;
             }
-            $( "#voteConfirm" ).dialog( "open");
-        },
-
-        confirmVote: function(){
+//            $( "#voteConfirm" ).dialog( "open");
             var input = $("#input");
             var value = input.val();
             var id = 'vote_' + groupNumber + '_' + locationNumber + '_' + playerNumber;
             Client.newVote(value, id, 5, input);
         },
+//
+//        confirmVote: function(){
+//            var input = $("#input");
+//            var value = input.val();
+//            var id = 'vote_' + groupNumber + '_' + locationNumber + '_' + playerNumber;
+//            Client.newVote(value, id, 5, input);
+//        },
 
         newVote: function(value, id, trials, input){
-            db.put({
-                _id: id,
-                "type": "vote",
-                "group": groupNumber,
-                "location": locationNumber,
-                "player": playerNumber,
-                "vote": value,
-                "timestamp": new Date().getTime()
+            db.upsert(id, function(doc){
+                var flag = doc.flag?doc.flag:0;
+                flag++;
+                return{
+                    "type": "vote",
+                    "group": groupNumber,
+                    "location": locationNumber,
+                    "player": playerNumber,
+                    "vote": value,
+                    "flag": flag,
+                    "timestamp": new Date().getTime()
+                }
             }).then(function() {
                 db.get(id).then(function(){
                     $('#submitVote').prop("disabled", true);
-                    input.rating("refresh", {disabled: true, showClear: false});
-                    socket.emit('vote', {location: locationNumber, group: groupNumber, player: playerNumber, value:value});
+//                    input.rating("refresh", {disabled: true, showClear: false});
+                    socket.emit('vote', {location: locationNumber, group: groupNumber, player: playerNumber, value:value, id: id});
                 }).catch(function (error) {
                     console.log(error);
                     if (trials > 0){
