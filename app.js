@@ -15,8 +15,7 @@ var logger = new (winston.Logger)({
 });
 // Database
 var PouchDB = require('pouchdb');
-var db = new PouchDB('http://192.168.145.53:5984/insect');
-// var db = new PouchDB('http://localhost:8080/insect');
+var db = new PouchDB('http://localhost:5984/insect');
 
 var app = express();
 var routes = require('./routes/index');

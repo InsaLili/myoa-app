@@ -10,6 +10,9 @@ html, body{
     overflow-y: hidden;
     position: relative;
 }
+li{
+    list-style-type: none;
+}
 #maskLayer{
     position: absolute;
     top: 0;
@@ -193,15 +196,22 @@ p{
     float: left;
     margin-left: 20px;
 }
-#tasks ul li{
-    height: 27px;
-    list-style-type: none;
+#tasks .steps{
+    height: 30px;
+    width: 700px;
+    margin-bottom: 10px;
+}
+.glyphicon-unchecked{
+    font-size: 25px;
+    float: left;
 }
 #tasks ul li p{
-    float: left;
     font-size: 20px;
     color: #616161;
+    line-height: 30px;
+    margin-left: 40px;
 }
+
 #nextStep{
     margin-left: 20px;
     float: left;
@@ -282,7 +292,7 @@ p{
     top: 200px;
     z-index: 1;
     width: 400px;
-    height: 350px;
+    height: 400px;
     overflow: visible;
     border-radius: 15px;
     box-shadow: 0 13px 25px 0 rgba(0, 0, 0, 0.3);
@@ -305,18 +315,7 @@ p{
     background-color: #5D4037;
     border-radius: 10px 10px 0 0;
 }
-.schoolLocations .location{
-    background-color: #CFD8DC;
-    border: 2px solid #455A64;
-}
-.schoolLocations .locationTitle{
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 60px;
-    background-color: #455A64;
-    border-radius: 10px 10px 0 0;
-}
+
 .locationTitle h3{
     color: #ffffff;
 }
@@ -328,31 +327,31 @@ p{
 }
 .locationContent .vote{
     position: absolute;
-    top: 60px;
-    left: 200px;
-    width: 170px;
+    top: 175px;
+    width: 400px;
     height: 90px;
     margin-top: 10px;
     margin-left: 15px;
-    padding-left: 15px;
-    border-left: 1px solid #5D4037;
 }
 .vote span{
-    margin-top: 10px;
+    float: left;
 }
-.glyphicon-star{
+.glyphicon-star, .glyphicon-ok-circle{
     font-size: 2em;
 }
+
 .locationContent h4{
     margin-top: 0;
+    width: 150px;
 }
 .visualPlayers{
     position: absolute;
     top: 70px;
     /*left: 170px;*/
-    width: 210px;
-    height: 90px;
+    width: 370px;
+    height: 100px;
     margin-left: 15px;
+    border-bottom: 1px solid #5D4037;
 }
 .visualPlayers button{
     background-color: #5bc0de;
@@ -360,6 +359,8 @@ p{
     border-color: #46b8da;
     width: 60px;
     height: 50px;
+    margin-left: 20px;
+    margin-bottom: 10px;
 }
 .visualPlayers img{
     width: 100%;
@@ -380,7 +381,7 @@ p{
     margin-left: 15px;
     margin-top: 10px;
     position: absolute;
-    top: 160px;
+    top: 250px;
 }
 .location .locationContent .arguments{
     width: 370px;

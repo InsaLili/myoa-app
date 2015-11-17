@@ -47,7 +47,9 @@ $(document).ready(function() {
                 var title = '<div class="locationTitle"><h3>'+name+'</h3></div>';
 
 //                var visual = '<div class="visualPlayers"  id="visualLocation'+num+'"><h4>Visualisation :</h4><div class="visualPlayer visualPlayer1"><img src="img/player1.png"></div><div class="visualPlayer visualPlayer2"><img src="img/player2.png"></div><div class="visualPlayer visualPlayer3"><img src="img/player3.png"></div></div>';
-                var visual = '<div class="visualPlayers"  id="visualLocation'+num+'"><h4>Visualisation :</h4><button type="button" class="btn player1 markerBtn" value="'+num+',1"><img src="/img/player1.png"></button><button type="button" class="btn player2 markerBtn" value="'+num+',2"><img src="/img/player2.png"></button><button type="button" class="btn player3 markerBtn" value="'+num+',3"><img src="/img/player3.png"></button></div>';
+                var visual = '<div class="visualPlayers"  id="visualLocation'+num+'"><h4>Visualisation :</h4><button type="button" class="btn player1 markerBtn" value="'+num+',1"><img src="/img/player1.png"></button><span class="check1 glyphicon glyphicon-ok-circle grey"></span><button type="button" class="btn player2 markerBtn" value="'+num+',2"><img src="/img/player2.png"></button><span class="check1 glyphicon glyphicon-ok-circle grey"></span><button type="button" class="btn player3 markerBtn" value="'+num+',3"><img src="/img/player3.png"></button><span class="check1 glyphicon glyphicon-ok-circle grey"></span></div>';
+
+                var check = '<div></div>'
 
                 var choose = '<div class="chooseLocation"><h4>Choisir cet emplacement:</h4><button class="btn btn-default btn-md submitChoice" name="'+name+'" value='+num+'>Choisir</button></div>';
                 var vote = '<div class="vote" id="vote'+num+'"><h4>Évaluation :</h4><span class="glyphicon glyphicon-star grey"></span><span class="glyphicon glyphicon-star grey"></span><span class="glyphicon glyphicon-star grey"></span><span class="glyphicon glyphicon-star grey"></span><span class="glyphicon glyphicon-star grey"></span></div>';
@@ -81,11 +83,13 @@ $(document).ready(function() {
             });
             $('#finalStepBtn').prop('disabled', true);
             $('.submitChoice').on('click', Server.submitChoice);
-            $('#step1').css('color', '#E0E0E0');
             $('#resetLocationBtn').on('click', Server.resetLocation);
             $('body').off('click').on('click', '.markerBtn', function(){
                 Server.chooseLocation(this);
             });
+            $('#step1 p').css('color', '#E0E0E0');
+            $('#step1 span').css('color', '#E0E0E0');
+
 
             //------------------Enable multi-touch of location cards
             // ------------------Hide school location cards at first
@@ -100,24 +104,15 @@ $(document).ready(function() {
             //--------------bind event to buttons
             $('#toStep2').on('click', function(){
                 db.get('badge/'+groupNumber).then(function(doc) {
-                    var note1 = doc.note1;
-                    var note2 = doc.note2;
-                    var note3 = doc.note3;
+                    var notes = [doc.note1, doc.note2, doc.note3];
                     var notebadge = $('.noteBadge img');
 
-                    if(note1>=5){
-                        $(notebadge[0]).show();
-                        noteBadgeNumSum++;
+                    for(i = 0; i<notes.length; i++){
+                        if(notes[i]>=5){
+                            $(notebadge[i]).show();
+                            noteBadgeNumSum++;
+                        }
                     }
-                    if(note2>=5){
-                        $(notebadge[1]).show();
-                        noteBadgeNumSum++;
-                    }
-                    if(note3>=5){
-                        $(notebadge[2]).show();
-                        noteBadgeNumSum++
-                    }
-
                     $('.winNoteBadge').text('Vous avez gagné '+noteBadgeNumSum+' badges Note!');
 
                     console.log('group'+groupNumber);
@@ -125,9 +120,9 @@ $(document).ready(function() {
                     return db.put({
                         group: groupNumber,
                         timer: timerBadgeNum,
-                        note1: note1,
-                        note2: note2,
-                        note3: note3
+                        note1: notes[0],
+                        note2: notes[1],
+                        note3: notes[2]
                     }, 'badge/'+groupNumber, doc._rev);
                 });
                 //----------------stop the timer and check if the timer equal to zero
@@ -348,37 +343,12 @@ $(document).ready(function() {
                 var player = data.player;
                 var location = data.location;
                 var notes = data.notes;
-                switch (location){
-                    case 1:
-                        $('#note1').append('<p id='+id+' class="notePlayer'+player+'">'+content+'</p>');
-                        break;
-                    case 2:
-                        $('#note2').append('<p id='+id+' class="notePlayer'+player+'">'+content+'</p>');
-                        break;
-                    case 3:
-                        $('#note3').append('<p id='+id+' class="notePlayer'+player+'">'+content+'</p>');
-                        break;
-                    case 4:
-                        $('#note4').append('<p id='+id+' class="notePlayer'+player+'">'+content+'</p>');
-                        break;
-                    case 5:
-                        $('#note5').append('<p id='+id+' class="notePlayer'+player+'">'+content+'</p>');
-                        break;
-                    case 6:
-                        $('#note6').append('<p id='+id+' class="notePlayer'+player+'">'+content+'</p>');
-                        break;
-                    case 7:
-                        $('#note7').append('<p id='+id+' class="notePlayer'+player+'">'+content+'</p>');
-                        break;
-                    case 8:
-                        $('#note8').append('<p id='+id+' class="notePlayer'+player+'">'+content+'</p>');
-                        break;
-                }
+                $('#note'+location).append('<p id='+id+' class="notePlayer'+player+'">'+content+'</p>');
                 var noteHeight = $('#location'+location+' .note').height();
-                if(noteHeight+200 > 350){
-                    $('#location'+location).height(noteHeight + 200 +'px');
+                if(noteHeight+200 > 400){
+                    $('#location'+location).height(noteHeight + 400 +'px');
                 }else{
-                    $('#location'+location).height(350+'px');
+                    $('#location'+location).height(400+'px');
                 }
 
             });
@@ -409,10 +379,10 @@ $(document).ready(function() {
                 var player = data.player;
                 var notes = data.notes;
                 var noteHeight = $('#location'+location+' .note').height();
-                if(noteHeight+200 > 350){
+                if(noteHeight+200 > 400){
                     $('#location'+location).height(noteHeight + 200 +'px');
                 }else{
-                    $('#location'+location).height(350+'px');
+                    $('#location'+location).height(400+'px');
                 }
             });
 
@@ -442,35 +412,19 @@ $(document).ready(function() {
                 var player = data.player;
                 var rating = 0;
                 var progressbar;
-                switch (player){
-                    case 1:
-                        progressbar = $("#progressbar1");
-                        rating = parseInt(progressbar. attr("aria-valuenow"));
-                        rating++;
-                        progressbar.progressbar({
-                            value: rating
-                        });
-                        progressbar.next().text(rating + '/4 Emplacements');
-                        break;
-                    case 2:
-                        progressbar = $("#progressbar2");
-                        rating = parseInt(progressbar. attr("aria-valuenow"));
-                        rating++;
-                        progressbar.progressbar({
-                            value: rating
-                        });
-                        progressbar.next().text(rating + '/4 Emplacements');
-                        break;
-                    case 3:
-                        progressbar = $("#progressbar3");
-                        rating = parseInt(progressbar. attr("aria-valuenow"));
-                        rating++;
-                        progressbar.progressbar({
-                            value: rating
-                        });
-                        progressbar.next().text(rating + '/4 Emplacements');
-                        break;
-                }
+                // change check mark
+                var checkMark = $('#location'+location+' span')[player-1];
+                $(checkMark).removeClass('grey');
+                $(checkMark).addClass('star-best');
+
+                // change progressbar
+                progressbar = $('#progressbar'+player);
+                rating = parseInt(progressbar. attr("aria-valuenow"));
+                rating++;
+                progressbar.progressbar({
+                    value: rating
+                });
+                progressbar.next().text(rating + '/4 Emplacements');
                 if(allRating == 3){
                     $('#toStep2').removeAttr('disabled');
                 }
@@ -486,58 +440,21 @@ $(document).ready(function() {
                 startkey: startKey+'_1',
                 endkey: startKey+'_4\uffff'
             }).then(function(locationData){
-                var note1 = 0;
-                var note2 = 0;
-                var note3 = 0;
+                var notes = [0,0,0]
                 for(var i = 0; i < locationData.rows.length; i++){
                     var location = locationData.rows[i].doc.location;
                     var player = locationData.rows[i].doc.author;
                     var content = locationData.rows[i].doc.content;
                     var id = locationData.rows[i].doc._id;
-                    switch (player){
-                        case 1:
-                            note1++;
-                            break;
-                        case 2:
-                            note2++;
-                            break;
-                        case 3:
-                            note3++;
-                            break;
-                    }
-                    switch (location){
-                        case 1:
-                            $('#note1').append('<p id='+id+' class="notePlayer'+player+'">'+content+'</p>');
-                            break;
-                        case 2:
-                            $('#note2').append('<p id='+id+' class="notePlayer'+player+'">'+content+'</p>');
-                            break;
-                        case 3:
-                            $('#note3').append('<p id='+id+' class="notePlayer'+player+'">'+content+'</p>');
-                            break;
-                        case 4:
-                            $('#note4').append('<p id='+id+' class="notePlayer'+player+'">'+content+'</p>');
-                            break;
-                        case 5:
-                            $('#note5').append('<p id='+id+' class="notePlayer'+player+'">'+content+'</p>');
-                            break;
-                        case 6:
-                            $('#note6').append('<p id='+id+' class="notePlayer'+player+'">'+content+'</p>');
-                            break;
-                        case 7:
-                            $('#note7').append('<p id='+id+' class="notePlayer'+player+'">'+content+'</p>');
-                            break;
-                        case 8:
-                            $('#note8').append('<p id='+id+' class="notePlayer'+player+'">'+content+'</p>');
-                            break;
-                    }
+                    notes[player-1]++;
+                    $('#note'+location).append('<p id='+id+' class="notePlayer'+player+'">'+content+'</p>');
                 }
                 db.get('badge/'+groupNumber).then(function(doc) {
                     return db.put({
                         group: groupNumber,
-                        note1: note1,
-                        note2: note2,
-                        note3: note3,
+                        note1: notes[0],
+                        note2: notes[1],
+                        note3: notes[2],
                         timer: 0
                     }, 'badge/'+groupNumber, doc._rev);
                 });
@@ -552,39 +469,31 @@ $(document).ready(function() {
                 startkey: startKey+'_1',
                 endkey: startKey+'_4\uffff'
             }).then(function(votes){
-                var rating1=0, rating2=0, rating3=0;
+                var rating = [0,0,0];
                 for(var i = 0; i < votes.rows.length; i++) {
                     var player = votes.rows[i].doc.player;
-                    switch(player){
-                        case 1:
-                            rating1++;
-                            break;
-                        case 2:
-                            rating2++;
-                            break;
-                        case 3:
-                            rating3++;
-                            break;
-                    }
-                }
-                $( "#progressbar1" ).progressbar({
-                    value: rating1
-                });
-                $( "#progressbar2" ).progressbar({
-                    value: rating2
-                });
-                $( "#progressbar3" ).progressbar({
-                    value: rating3
-                });
-                var progressbarText = $('.player p');
-                $(progressbarText[0]).text(rating1 + '/4 Emplacements');
-                $(progressbarText[1]).text(rating2 + '/4 Emplacements');
-                $(progressbarText[2]).text(rating3 + '/4 Emplacements');
+                    var location = votes.rows[i].doc.location;
+                    // change check mark color
+                    var checkMark = $('#location'+location+' span')[player-1];
+                    $(checkMark).removeClass('grey');
+                    $(checkMark).addClass('star-best');
 
+                    // get the number of votes of each player
+                    rating[player-1]++;
+                }
+                // change view of progressbar
+                var progressbarText = $('.player p');
+                for(var j = 1; j<=rating.length; j++){
+                    $( "#progressbar"+j ).progressbar({
+                        value: rating[j-1]
+                    });
+                    $(progressbarText[j-1]).text(rating[j-1] + '/4 Emplacements');
+                }
                 if(allRating == 3){
                     $('#toStep2').removeAttr('disabled');
                 }
-            });},
+            });
+        },
         //-----------------Add rating results to location card
         attachVotes: function(){
             var startKey = 'vote_'+groupNumber;

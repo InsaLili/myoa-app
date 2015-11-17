@@ -25,6 +25,43 @@ p, table{
 .table{
     margin-bottom: 15px;
 }
+#maskLayer{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(#0D47A1, #BBDEFB);
+    z-index: 999;
+}
+#maskLayer h1{
+    text-align: center;
+    color: #fff;
+    margin-top: 100px;
+}
+#maskLayer #choosePlayer{
+    width: 750px;
+    height: 210px;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+}
+#maskLayer .choosePlayer{
+    float: left;
+    width: 220px;
+    height: 200px;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+#maskLayer button{
+    width: 220px;
+    height: 200px;
+}
+
+#maskLayer button img{
+    width: 100%;
+    height: 100%;
+}
 
 #locationInfo{
     float: left;
