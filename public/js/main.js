@@ -14,6 +14,9 @@ $(document).ready(function() {
     var allRating = 0;
     var chosenNumber = 0;
     var aguFlag = false;
+    var stepNumber = 1;
+    var white= '#E0E0E0';
+
     var locationNames=[
         '1. Balcon sur la cascade',
         '2. Sous les embruns',
@@ -51,8 +54,8 @@ $(document).ready(function() {
 
                 var check = '<div></div>'
 
-                var choose = '<div class="chooseLocation"><h4>Choisir cet emplacement:</h4><button class="btn btn-default btn-md submitChoice" name="'+name+'" value='+num+'>Choisir</button></div>';
-                var vote = '<div class="vote" id="vote'+num+'"><h4>Évaluation :</h4><span class="glyphicon glyphicon-star grey"></span><span class="glyphicon glyphicon-star grey"></span><span class="glyphicon glyphicon-star grey"></span><span class="glyphicon glyphicon-star grey"></span><span class="glyphicon glyphicon-star grey"></span></div>';
+                var choose = '<div class="chooseLocation"><button class="btn btn-default btn-md submitChoice" name="'+name+'" value='+num+'>Choisir cet<br/>emplacement</button></div>';
+                var vote = '<div class="vote" id="vote'+num+'"><h4>Évaluation :</h4><span class="glyphicon glyphicon-star grey"></span><span class="glyphicon glyphicon-star grey"></span><span class="glyphicon glyphicon-star grey"></span><span class="glyphicon glyphicon-star grey"></span><span class="glyphicon glyphicon-star grey"></span><span class="label label-default caption">Pas Encore Évalué</span></div>';
                 var note = '<div class="note"><h4>Notes :</h4><span id="note'+num+'"></span></div>';
                 var content = '<div class="locationContent">'+visual+choose+vote+note+'</div>';
 
@@ -76,19 +79,18 @@ $(document).ready(function() {
             });
 
             //-------------------set tasks' buttons and color
-            $('#toStep2').prop('disabled', true);
+//            $('#toStep2').prop('disabled', true);
             $('#finalStepBtn').on('click',function(){
                 $(this).prop('disabled', true);
                 $('#finalDialog').dialog('open');
             });
             $('#finalStepBtn').prop('disabled', true);
-            $('.submitChoice').on('click', Server.submitChoice);
-            $('#resetLocationBtn').on('click', Server.resetLocation);
+//            $('#resetLocationBtn').on('click', Server.resetLocation);
             $('body').off('click').on('click', '.markerBtn', function(){
                 Server.chooseLocation(this);
             });
-            $('#step1 p').css('color', '#E0E0E0');
-            $('#step1 span').css('color', '#E0E0E0');
+            $('#step1 p').css('color', white);
+            $('#step1 span').css('color', white);
 
 
             //------------------Enable multi-touch of location cards
@@ -102,44 +104,6 @@ $(document).ready(function() {
             $('.visualPlayer').hide();
 
             //--------------bind event to buttons
-            $('#toStep2').on('click', function(){
-                db.get('badge/'+groupNumber).then(function(doc) {
-                    var notes = [doc.note1, doc.note2, doc.note3];
-                    var notebadge = $('.noteBadge img');
-
-                    for(i = 0; i<notes.length; i++){
-                        if(notes[i]>=5){
-                            $(notebadge[i]).show();
-                            noteBadgeNumSum++;
-                        }
-                    }
-                    $('.winNoteBadge').text('Vous avez gagné '+noteBadgeNumSum+' badges Note!');
-
-                    console.log('group'+groupNumber);
-                    console.log('timerBadge'+timerBadgeNum);
-                    return db.put({
-                        group: groupNumber,
-                        timer: timerBadgeNum,
-                        note1: notes[0],
-                        note2: notes[1],
-                        note3: notes[2]
-                    }, 'badge/'+groupNumber, doc._rev);
-                });
-                //----------------stop the timer and check if the timer equal to zero
-                clearInterval(intervals.main);
-                var currentTime = digits[0].current + digits[1].current +digits[2].current + digits[3].current;
-                var noteBadgeNumSum=0;
-                var timerBadgeNum = 0;
-                if(digits[1].current != 9){
-                    $('#secondStepDialog').dialog('open');
-                    $('#timerBadge img').show();
-                    timerBadgeNum = 1;
-                }else{
-                    $('#secondStepDialog_noBadge').dialog('open');
-                }
-                $('#timer1').remove();
-            });
-
             $('.chooseGroupBtn').on('click', function(){
                 $('#appLayer').show();
                 $('#maskLayer').hide();
@@ -149,23 +113,44 @@ $(document).ready(function() {
                 Server.mapInit();
                 Server.attachNotes();
                 Server.attachRating();
-                $( "#choiceConfirm" ).dialog({
-                    autoOpen: false,
-                    width:500,
-                    height:200,
-                    modal: true,
-                    buttons: {
-                        "Oui": function() {
-                            $( this ).dialog( "close" );
-                            Server.confirmChoice(map);
-                        },
-                        "Non": function() {
-                            $( this ).dialog( "close" );
-                        }
-                    }
-                });
+
             });
             $('#appLayer').hide();
+
+            // check first step
+            $('#step1 span').on('click', function(){
+                if(stepNumber==1){
+                    // reset timer
+                    clearInterval(intervals.main);
+                    $('#timer1').remove();
+
+                    // check whether win a timer badget
+                    if(digits[1].current != 9){
+                        $('#secondStepDialog').dialog('open');
+                        $('#timerBadge img').show();
+                    }else{
+                        $('#secondStepDialog_noBadge').dialog('open');
+                    }
+
+                    //change checkbox
+                    $(this).removeClass('glyphicon-unchecked');
+                    $(this).addClass('glyphicon-check');
+
+                    //change next step color
+                    $('#step2 .glyphicon').css('color', white);
+                    $('#step2 p').css('color', white);
+                    stepNumber++;
+                }
+            });
+
+            // second step, choose a location
+            $('.submitChoice').on('click', function(){
+                chosenNumber = parseInt($(this).val());
+                var locationName = $(this).attr("name");
+                $('#choiceConfirm h4').text("Voulez vous choisir l'emplacement '"+locationName+"' ?");
+                $( "#choiceConfirm" ).dialog( "open");
+            });
+
         },
         mapInit: function(){
             L.mapbox.accessToken = 'pk.eyJ1IjoiaW5zYWxpbGkiLCJhIjoickF1VzlYVSJ9.JH9ZrV76fbU5Ub9ZgBhNCw';
@@ -279,17 +264,7 @@ $(document).ready(function() {
                     }
                 }
             });
-            $( '#finalDialog' ).dialog({
-                autoOpen: false,
-                resizable: false,
-                width: 400,
-                height: 200,
-                buttons:{
-                    "OK": function(){
-                        $(this).dialog("close");
-                    }
-                }
-            });
+
             $('#secondStepDialog').dialog({
                 autoOpen: false,
                 resizable: false,
@@ -316,6 +291,33 @@ $(document).ready(function() {
                     }
                 }
             });
+            $( "#choiceConfirm" ).dialog({
+                autoOpen: false,
+                width:500,
+                height:200,
+                modal: true,
+                buttons: {
+                    "Oui": function() {
+                        $( this ).dialog( "close" );
+
+                        Server.confirmChoice(map);
+                    },
+                    "Non": function() {
+                        $( this ).dialog( "close" );
+                    }
+                }
+            });
+            $( '#finalDialog' ).dialog({
+                autoOpen: false,
+                resizable: false,
+                width: 400,
+                height: 200,
+                buttons:{
+                    "OK": function(){
+                        $(this).dialog("close");
+                    }
+                }
+            });
             $( "#gameEnd" ).dialog({
                 autoOpen: false,
                 width:600,
@@ -332,7 +334,6 @@ $(document).ready(function() {
                     }
                 }
             });
-
         },
         serviceInit: function(){
             //------following parts realize the communication between pages
@@ -345,8 +346,8 @@ $(document).ready(function() {
                 var notes = data.notes;
                 $('#note'+location).append('<p id='+id+' class="notePlayer'+player+'">'+content+'</p>');
                 var noteHeight = $('#location'+location+' .note').height();
-                if(noteHeight+200 > 400){
-                    $('#location'+location).height(noteHeight + 400 +'px');
+                if(noteHeight+260 > 400){
+                    $('#location'+location).height(noteHeight + 260 +'px');
                 }else{
                     $('#location'+location).height(400+'px');
                 }
@@ -363,11 +364,11 @@ $(document).ready(function() {
                 $('.arguments span').append('<p id='+id+' class="aguPlayer'+player+'">'+content+'</p>');
                 var noteHeight = $('#location'+location+' .note').height();
                 var aguHeight = $('#location'+location+' .arguments').height();
-                //    if(noteHeight+200 > 350){
-                $('#location'+location).height(noteHeight + aguHeight + 220 +'px');
-                //    }else{
-                //        $('#location'+location).height(350+'px');
-                //    }
+                if(aguHeight > 130){
+                    $('#location'+location).height(noteHeight + aguHeight + 270 +'px');
+                }else{
+                    $('#location'+location).height(noteHeight+400+'px');
+                }
             });
 
 
@@ -379,8 +380,8 @@ $(document).ready(function() {
                 var player = data.player;
                 var notes = data.notes;
                 var noteHeight = $('#location'+location+' .note').height();
-                if(noteHeight+200 > 400){
-                    $('#location'+location).height(noteHeight + 200 +'px');
+                if(noteHeight+260 > 400){
+                    $('#location'+location).height(noteHeight + 260 +'px');
                 }else{
                     $('#location'+location).height(400+'px');
                 }
@@ -393,18 +394,12 @@ $(document).ready(function() {
                 var location = data.location;
                 var player = data.player;
                 var noteHeight = $('#location'+location+' .note').height();
-                if(noteHeight+200 > 350){
-                    $('#location'+location).height(noteHeight + 200 +'px');
-                }else{
-                    $('#location'+location).height(350+'px');
-                }
-                var noteHeight = $('#location'+location+' .note').height();
                 var aguHeight = $('#location'+location+' .arguments').height();
-                //    if(noteHeight+200 > 350){
-                $('#location'+location).height(noteHeight + aguHeight + 220 +'px');
-                //    }else{
-                //        $('#location'+location).height(350+'px');
-                //    }
+                if(aguHeight > 130){
+                    $('#location'+location).height(noteHeight + aguHeight + 270 +'px');
+                }else{
+                    $('#location'+location).height(noteHeight+400+'px');
+                }
             });
 
             socket.on('vote', function(data){
@@ -520,18 +515,18 @@ $(document).ready(function() {
                     voteAvg[j] = Math.round(allVotes[j]/3);
                     var num = j+1;
                     Server.setStars($('#vote'+num+' span'), voteAvg[j]);
+                    Server.setCaption(num,voteAvg[j]);
                 }
             });
         },
         secondStep: function(){
-            $('#toStep2').prop('disabled', true);
+//            $('#toStep2').prop('disabled', true);
             $('#selectLocation').removeAttr('disabled');
             $('#submitChoice').removeAttr('disabled');
-            $('#step1').css('color', '#616161');
-            $('#step2').css('color', '#E0E0E0');
+//            $('#step1').css('color', '#616161');
+            $('#step2').css('color', white);
 
             $('.chooseLocation').show();
-            $('.visualPlayers').hide();
 
             Server.attachVotes();
             $('#timer2').countdown({
@@ -556,30 +551,24 @@ $(document).ready(function() {
             $(element).css({'background-color': '#f0ad4e', 'border-color': '#eea236'});
             $($(elements)[location-1]).css({'background-color': '#f0ad4e', 'border-color': '#eea236'});
         },
-        submitChoice: function(){
+
+        confirmChoice: function(map){
             clearInterval(intervals.main);
             $('#timer2').remove();
-            chosenNumber = parseInt($(this).val());
-            var locationName = $(this).attr("name");
-            $('#choiceConfirm h4').text("Voulez vous choisir l'emplacement '"+locationName+"' ?");
-            $( "#choiceConfirm" ).dialog( "open");
-        },
-        confirmChoice: function(map){
-            $('#step1').css('color', '#616161');
-            $('#step2').css('color', '#616161');
-            $('#step3').css('color', '#E0E0E0');
-            $('#finalStepBtn').removeAttr('disabled');
-            aguFlag = true;
+            //change checkbox
+            var $check = $('#step2 .glyphicon');
+            $check.removeClass('glyphicon-unchecked');
+            $check.addClass('glyphicon-check');
 
+            //change next step color
+            $('#step3 .glyphicon').css('color', white);
+            $('#step3 p').css('color', white);
+            stepNumber++;
+            aguFlag = true;
             socket.emit('confirmlocation', { location: chosenNumber});
-            $('#school').prop('disabled', true);
-            $('#mountain').prop('disabled', true);
-            $('.locations').show();
             $('.location').hide();
-//            chosenNumber<5?map.panTo([45.394547, 5.890489]): map.panTo([45.387638, 5.587997]);
             $('#location'+chosenNumber).show();
             $('.chooseLocation').hide();
-            $('.visualPlayers').show();
 //-----------------------to be improved
             socket.emit('chooselocation', { location: chosenNumber, player: 1, group: groupNumber});
             socket.emit('chooselocation', { location: chosenNumber, player: 2, group: groupNumber});
@@ -598,10 +587,8 @@ $(document).ready(function() {
             txt += '<span></span>';
             txt += '</div>';
             $('#location'+chosenNumber+' .note').after(txt);
-            var aguHeight = noteHeight + 180;
-            $('.arguments').css({'margin-top':aguHeight + 'px'});
-            $('#location'+chosenNumber).height(noteHeight + 300 +'px');
-
+            $('.arguments').css({'margin-top':noteHeight + 'px'});
+            $('#location'+chosenNumber).height(noteHeight + 400 +'px');
 
             db.get('decision/'+groupNumber).then(function(doc) {
                 console.log("chosenNumber = "+chosenNumber);
@@ -611,21 +598,17 @@ $(document).ready(function() {
                 }, 'decision/'+groupNumber, doc._rev);
             });
         },
-        resetLocation: function(){
-            if($('.locations').css('display') !== "none"){
-                var $location = $('.location');
-                $location.touch();
-                $location.css({'-webkit-transform' : 'rotate(0deg)',
-                    '-moz-transform' : 'rotate(0deg)',
-                    '-ms-transform' : 'rotate(0deg)',
-                    'transform' : 'rotate(0deg)'});
-            }
-        },
         setStars: function(starArray, num){
-            var color = ['star-worst','star-bad','star-normal','star-good','star-best'];
             starArray.splice(num);
             starArray.removeClass('grey');
             starArray.addClass('star');
+        },
+        setCaption: function(num, vote){
+            var color = ['#d9534f','#ec971f','#31b0d5','#337ab7','#449d44'];
+            var caption= ['Très Faible', 'Faible', 'Moyen', 'Bon', 'Très Bon'];
+            var label = $('#vote'+num+' .caption');
+            label.text(caption[num-1]);
+            label.css('background-color', color[num-1]);
         }
     };
     Server.init();

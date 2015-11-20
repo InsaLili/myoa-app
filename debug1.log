@@ -691,3 +691,348 @@
 {"location":3,"group":6,"player":1,"value":"1","id":"vote_6_3_1","level":"info","message":"vote for location","timestamp":"2015-11-17T16:50:18.102Z"}
 {"location":3,"group":6,"player":1,"value":"5","id":"vote_6_3_1","level":"info","message":"vote for location","timestamp":"2015-11-17T16:50:19.205Z"}
 {"location":3,"group":6,"player":1,"value":"3","id":"vote_6_3_1","level":"info","message":"vote for location","timestamp":"2015-11-17T16:50:20.063Z"}
+{"location":3,"group":6,"player":1,"value":"1","id":"vote_6_3_1","level":"info","message":"vote for location","timestamp":"2015-11-17T20:48:13.019Z"}
+{"location":3,"group":6,"player":1,"value":"4","id":"vote_6_3_1","level":"info","message":"vote for location","timestamp":"2015-11-17T20:48:15.371Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-17T20:48:18.596Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T10:25:01.333Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T10:25:51.450Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T10:25:58.122Z"}
+{"group":2,"level":"info","message":"choose the group","timestamp":"2015-11-18T10:26:18.478Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T10:26:21.584Z"}
+{"location":3,"player":2,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T10:26:26.328Z"}
+{"location":3,"player":1,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T10:26:48.180Z"}
+{"location":4,"player":1,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T10:26:58.908Z"}
+{"location":3,"player":1,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T10:27:01.339Z"}
+{"location":4,"player":1,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T10:27:03.805Z"}
+{"location":3,"player":1,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T10:27:05.080Z"}
+{"location":3,"player":1,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T10:29:16.318Z"}
+{"location":3,"player":1,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T10:29:23.204Z"}
+{"location":3,"player":1,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T10:29:23.646Z"}
+{"location":3,"player":1,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T10:29:23.894Z"}
+{"location":3,"player":1,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T10:29:24.063Z"}
+{"location":3,"player":1,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T10:29:24.262Z"}
+{"location":3,"player":1,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T10:29:24.438Z"}
+{"location":3,"player":1,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T10:29:36.280Z"}
+{"location":4,"player":1,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T10:29:42.172Z"}
+{"location":3,"player":1,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T10:29:44.550Z"}
+{"location":3,"group":6,"player":1,"value":"4","id":"vote_6_3_1","level":"info","message":"vote for location","timestamp":"2015-11-18T10:29:53.087Z"}
+{"location":3,"group":6,"player":1,"value":"1","id":"vote_6_3_1","level":"info","message":"vote for location","timestamp":"2015-11-18T10:29:55.103Z"}
+{"location":3,"group":6,"player":1,"value":"1","id":"vote_6_3_1","level":"info","message":"vote for location","timestamp":"2015-11-18T10:29:58.311Z"}
+{"location":3,"group":6,"player":1,"value":"2","id":"vote_6_3_1","level":"info","message":"vote for location","timestamp":"2015-11-18T10:30:02.128Z"}
+{"location":3,"group":6,"player":1,"value":"3","id":"vote_6_3_1","level":"info","message":"vote for location","timestamp":"2015-11-18T10:30:06.016Z"}
+{"location":3,"group":6,"player":1,"value":"4","id":"vote_6_3_1","level":"info","message":"vote for location","timestamp":"2015-11-18T10:30:07.068Z"}
+{"location":3,"group":6,"player":1,"value":"5","id":"vote_6_3_1","level":"info","message":"vote for location","timestamp":"2015-11-18T10:30:22.941Z"}
+{"location":4,"player":1,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T10:30:26.097Z"}
+{"location":4,"group":6,"player":1,"value":"2","id":"vote_6_4_1","level":"info","message":"vote for location","timestamp":"2015-11-18T10:30:28.553Z"}
+{"location":2,"player":1,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T10:30:32.109Z"}
+{"location":2,"group":6,"player":1,"value":"4","id":"vote_6_2_1","level":"info","message":"vote for location","timestamp":"2015-11-18T10:30:34.195Z"}
+{"location":1,"player":1,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T10:30:36.487Z"}
+{"location":1,"group":6,"player":1,"value":"2","id":"vote_6_1_1","level":"info","message":"vote for location","timestamp":"2015-11-18T10:30:39.020Z"}
+{"location":3,"player":2,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T10:30:53.776Z"}
+{"location":1,"player":2,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T10:30:57.411Z"}
+{"location":1,"group":6,"player":2,"value":"1","id":"vote_6_1_2","level":"info","message":"vote for location","timestamp":"2015-11-18T10:30:59.357Z"}
+{"location":2,"player":2,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T10:31:04.660Z"}
+{"location":2,"group":6,"player":2,"value":"4","id":"vote_6_2_2","level":"info","message":"vote for location","timestamp":"2015-11-18T10:31:06.893Z"}
+{"location":2,"group":6,"player":2,"value":"3","id":"vote_6_2_2","level":"info","message":"vote for location","timestamp":"2015-11-18T10:31:09.635Z"}
+{"location":2,"group":6,"player":2,"value":"2","id":"vote_6_2_2","level":"info","message":"vote for location","timestamp":"2015-11-18T10:31:11.457Z"}
+{"location":2,"group":6,"player":2,"value":"4","id":"vote_6_2_2","level":"info","message":"vote for location","timestamp":"2015-11-18T10:31:12.275Z"}
+{"location":4,"player":2,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T10:31:14.963Z"}
+{"location":4,"group":6,"player":2,"value":"4","id":"vote_6_4_2","level":"info","message":"vote for location","timestamp":"2015-11-18T10:31:16.819Z"}
+{"location":2,"player":2,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T10:31:19.103Z"}
+{"location":2,"player":2,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T10:31:20.543Z"}
+{"location":4,"player":2,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T10:31:21.540Z"}
+{"location":2,"player":2,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T10:31:23.061Z"}
+{"location":1,"player":2,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T10:31:24.190Z"}
+{"location":2,"player":2,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T10:31:26.233Z"}
+{"location":2,"group":6,"player":2,"value":"2","id":"vote_6_2_2","level":"info","message":"vote for location","timestamp":"2015-11-18T10:31:28.442Z"}
+{"location":1,"player":2,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T10:31:30.353Z"}
+{"location":2,"player":2,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T10:31:31.795Z"}
+{"location":4,"player":2,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T10:31:33.406Z"}
+{"location":3,"player":2,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T10:31:35.408Z"}
+{"location":3,"group":6,"player":2,"value":"3","id":"vote_6_3_2","level":"info","message":"vote for location","timestamp":"2015-11-18T10:31:37.254Z"}
+{"location":3,"group":6,"player":2,"value":"2","id":"vote_6_3_2","level":"info","message":"vote for location","timestamp":"2015-11-18T10:31:49.189Z"}
+{"location":3,"group":6,"player":2,"value":"5","id":"vote_6_3_2","level":"info","message":"vote for location","timestamp":"2015-11-18T10:31:50.861Z"}
+{"location":4,"player":2,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T10:31:53.032Z"}
+{"location":3,"player":2,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T10:31:54.750Z"}
+{"location":1,"player":2,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T10:31:56.860Z"}
+{"location":2,"player":2,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T10:31:58.351Z"}
+{"location":3,"player":2,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T10:32:04.183Z"}
+{"id":"note_6_3_2_1","content":"a","location":3,"player":2,"notes":1,"level":"info","message":"add note","timestamp":"2015-11-18T10:32:09.321Z"}
+{"location":4,"player":2,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T10:32:16.892Z"}
+{"location":3,"player":2,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T10:32:19.640Z"}
+{"location":1,"player":3,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T10:32:26.893Z"}
+{"location":1,"group":6,"player":3,"value":"1","id":"vote_6_1_3","level":"info","message":"vote for location","timestamp":"2015-11-18T10:32:30.007Z"}
+{"location":2,"player":3,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T10:32:31.887Z"}
+{"location":2,"group":6,"player":3,"value":"2","id":"vote_6_2_3","level":"info","message":"vote for location","timestamp":"2015-11-18T10:32:34.039Z"}
+{"location":4,"player":3,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T10:32:36.299Z"}
+{"location":4,"group":6,"player":3,"value":"4","id":"vote_6_4_3","level":"info","message":"vote for location","timestamp":"2015-11-18T10:32:38.264Z"}
+{"location":3,"player":3,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T10:32:40.230Z"}
+{"location":3,"group":6,"player":3,"value":"3","id":"vote_6_3_3","level":"info","message":"vote for location","timestamp":"2015-11-18T10:32:42.090Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T12:43:12.800Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T12:52:46.640Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T12:54:50.851Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T12:55:28.136Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T12:55:52.131Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T12:56:21.538Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T12:57:51.675Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T12:59:40.371Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T12:59:57.242Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T13:00:39.008Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T13:01:18.976Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T13:01:53.674Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T13:06:44.399Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T13:07:05.938Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T13:07:16.590Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T13:07:40.409Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T13:08:02.843Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T13:08:20.710Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T13:09:41.734Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T13:15:50.862Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T13:16:41.688Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T13:18:25.874Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T13:19:18.998Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T13:20:45.025Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T13:21:05.617Z"}
+{"location":3,"player":1,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T13:36:28.067Z"}
+{"location":3,"group":6,"player":1,"value":"1","id":"vote_6_3_1","level":"info","message":"vote for location","timestamp":"2015-11-18T13:36:33.090Z"}
+{"location":3,"group":6,"player":1,"value":"2","id":"vote_6_3_1","level":"info","message":"vote for location","timestamp":"2015-11-18T13:36:54.430Z"}
+{"location":3,"group":6,"player":1,"value":"3","id":"vote_6_3_1","level":"info","message":"vote for location","timestamp":"2015-11-18T13:37:11.023Z"}
+{"location":3,"group":6,"player":1,"value":"4","id":"vote_6_3_1","level":"info","message":"vote for location","timestamp":"2015-11-18T13:37:20.921Z"}
+{"location":3,"group":6,"player":1,"value":"5","id":"vote_6_3_1","level":"info","message":"vote for location","timestamp":"2015-11-18T13:37:33.921Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T13:47:46.672Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T13:50:54.337Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T13:51:12.229Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T13:52:30.870Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T13:52:50.920Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T13:55:46.201Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T13:57:22.229Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T13:57:54.966Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T13:59:16.240Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T14:00:02.982Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T14:00:39.867Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T14:01:33.017Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T14:01:49.681Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T14:05:36.766Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T14:07:50.785Z"}
+{"location":3,"level":"info","message":"confirm the location","timestamp":"2015-11-18T14:09:46.945Z"}
+{"location":3,"player":1,"group":6,"level":"info","message":"choose the location","timestamp":"2015-11-18T14:09:46.972Z"}
+{"location":3,"player":2,"group":6,"level":"info","message":"choose the location","timestamp":"2015-11-18T14:09:46.973Z"}
+{"location":3,"player":3,"group":6,"level":"info","message":"choose the location","timestamp":"2015-11-18T14:09:46.973Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T14:50:41.789Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T14:57:20.516Z"}
+{"location":4,"level":"info","message":"confirm the location","timestamp":"2015-11-18T14:57:33.012Z"}
+{"location":4,"player":1,"group":6,"level":"info","message":"choose the location","timestamp":"2015-11-18T14:57:33.034Z"}
+{"location":4,"player":2,"group":6,"level":"info","message":"choose the location","timestamp":"2015-11-18T14:57:33.037Z"}
+{"location":4,"player":3,"group":6,"level":"info","message":"choose the location","timestamp":"2015-11-18T14:57:33.040Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T14:58:48.557Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T15:00:23.940Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T15:06:52.778Z"}
+{"location":4,"level":"info","message":"confirm the location","timestamp":"2015-11-18T15:06:59.031Z"}
+{"location":4,"player":1,"group":6,"level":"info","message":"choose the location","timestamp":"2015-11-18T15:06:59.051Z"}
+{"location":4,"player":2,"group":6,"level":"info","message":"choose the location","timestamp":"2015-11-18T15:06:59.053Z"}
+{"location":4,"player":3,"group":6,"level":"info","message":"choose the location","timestamp":"2015-11-18T15:06:59.053Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T15:09:14.437Z"}
+{"location":4,"level":"info","message":"confirm the location","timestamp":"2015-11-18T15:09:18.751Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T15:11:26.940Z"}
+{"location":4,"level":"info","message":"confirm the location","timestamp":"2015-11-18T15:11:32.155Z"}
+{"location":4,"player":1,"group":6,"level":"info","message":"choose the location","timestamp":"2015-11-18T15:11:59.981Z"}
+{"location":4,"player":2,"group":6,"level":"info","message":"choose the location","timestamp":"2015-11-18T15:11:59.982Z"}
+{"location":4,"player":3,"group":6,"level":"info","message":"choose the location","timestamp":"2015-11-18T15:11:59.982Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T15:13:30.398Z"}
+{"location":4,"level":"info","message":"confirm the location","timestamp":"2015-11-18T15:13:35.876Z"}
+{"location":4,"player":1,"group":6,"level":"info","message":"choose the location","timestamp":"2015-11-18T15:13:40.640Z"}
+{"location":4,"player":2,"group":6,"level":"info","message":"choose the location","timestamp":"2015-11-18T15:13:40.643Z"}
+{"location":4,"player":3,"group":6,"level":"info","message":"choose the location","timestamp":"2015-11-18T15:13:40.643Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T15:14:10.541Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T15:14:41.653Z"}
+{"location":4,"player":1,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T15:14:54.192Z"}
+{"id":"note_6_4_1_1","content":"h","location":4,"player":1,"notes":1,"level":"info","message":"add note","timestamp":"2015-11-18T15:15:00.608Z"}
+{"id":"note_6_4_1_2","content":"lqlqlq","location":4,"player":1,"notes":2,"level":"info","message":"add note","timestamp":"2015-11-18T15:15:04.827Z"}
+{"id":"note_6_4_1_3","content":"attachment\nGet attachment\nDelete attachment\nQuery database\nView cleanup\nDatabase info\nCompaction\nRevision diff\nEvents\nDefault settings\nPlugins\nExtras\nDebug mode\nAPI overview  \n\nPouchDB has an asynchronous API, supporting both callbacks and promises.\n\nMost of the API is exposed as:\n\ndb.doSomething(args..., [options], [callback])\n… where both the options and callback are optional.\n\nCallbacks use the standard Node.js idiom of:\n\nfunction(error, result) { /* ... */ }\n… where the error will be undefined if there’s no error.\n\nIf you don’t specify a callback, then the API returns a promise. In supported browsers or Node.js, native promises are used, falling back to the minimal library lie as needed.\n\nUsing Ionic/Angular? You can wrap PouchDB promises in $q.when(). This will notify Angular to update the UI when the PouchDB promise has resolved.\n\nFor more info, check out the guide to asynchronous code.\n\nCreate a database  \n\nnew PouchDB([name], [options])\nThis method creates a database or opens an existing one. If you use a URL like 'http://domain.com/dbname', then PouchDB will work as a client to an online CouchDB instance. Otherwise it will create a local database using whatever backend is present.\n\nOptions\nname: You can omit the name argument and specify it via options instead. Note that the name is required.\nOptions for local databases:\n\nauto_compaction: This turns on auto compaction, which means compact() is called after every change to the database. Defaults to false.\nadapter: One of 'idb', 'leveldb', 'websql', or 'http'. If unspecified, PouchDB will infer this automatically, preferring IndexedDB to WebSQL in browsers that support both (i.e. Chrome, Opera and Android 4.4+).\nOptions for remote databases:\n\najax: (Remote databases only.) Ajax requester options. For instance, passing in the options {ajax: {timeout: 10000}} will allow you to set the max timeout for an HTTP request. These are passed ver batim to request (in Node.js) or a request shim (in the browser), with the exception of:\najax.cache: Appends a random string to the end of all HTTP GET requests to avoid them being cached on IE. Set this to true to prevent this happening.\najax.headers: The ajax.headers option allows you to customise headers that are sent to the remote HTTP Server.\nauth.username + auth.password: You can specify HTTP auth parameters either by using a database with a name in the form http://user:pass@host/name or via the auth.username + auth.password options.\najax.withCredentials: Set to false to disable transferring cookies or HTTP Auth information (https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS#Requests_with_credentials). Defaults to true.\nskip_setup: Initially PouchDB checks if the database exists, and tries to create it, if it does not exist yet. Set this to true to skip this setup.\nWebSQL-only options:\n\nsize: amount in MB to request for storage, which you will need if you are storing >5MB in order to avoid storage limit errors on iOS/Safari.\nSQLite Plugin-only options:\n\nlocation: where to store data on iOS, which may affect iTunes/iCloud backup, and thus whether or not your app gets rejected by Apple. See SQLite Plugin documentation and iOS data storage guidelines.\ncreateFromLocation: use a pre-populated database, so you can package it with your app and users don’t have to wait for it to load. See the SQLite Plugin documentation.\nandroidDatabaseImplementation: 1 to use the new sqlite4java implementation, 2 to use the older version based on the native Android APIs. Defaults to 1. See the SQLite Plugin documentation.\nNotes:\n\nIn IndexedDB and WebSQL, PouchDB will use _pouch_ to prefix the internal database names. Do not manually create databases with the same prefix.\nWhen acting as a client on Node, any other options given will be passed to request.\nWhen using the 'leveldb' adapter (the default on Node), any other options given will be passed to levelup. The storage layer of leveldb can be replaced by passing a level backend factory (such as MemDOWN) as options.db. The rest of the supported levelup options are documented here.\nExample Usage:\n\nvar db = new PouchDB('dbname');\n// or\nvar db = new PouchDB('http://localhost:5984/dbname');\nCreate a WebSQL-only Pouch (e.g. when using the SQLite Plugin for Cordova/PhoneGap):\n\nvar db = new PouchDB('dbname', {adapter : 'websql'});\nCreate an in-memory Pouch (in Node):\n\nvar db = new PouchDB('dbname', {db : require('memdown')});\nCreate a remote PouchDB with special Ajax options:\n\nvar db = new PouchDB('http://example.com/dbname', {\n  ajax: {\n    cache: false,\n    timeout: 10000,\n    headers: {\n      'X-Some-Special-Header': 'foo'\n    },\n  },\n  auth: {\n    username: 'mysecretusername',\n    password: 'mysecretpassword'\n  }\n});\nFor more info, check out adapters.\n\nDelete a database  \n\ndb.destroy([options], [callback])\nDelete the database. Note that this has no impact on other replicated databases.\n\nOptions\noptions.ajax: (Remote databases only.) Ajax requester options, as described above.\nExample Usage\n\nPromises\nCallbacks\ndb.destroy().then(function (response) {\n  // success\n}).catch(function (err) {\n  console.log(err);\n});\nExample Response:\n\n{\n  \"ok\" : true\n}\nCreate/update a document  \n\nUsing db.put()\ndb.put(doc, [docId], [docRev], [options], [callback])\nCreate a new document or update an existing document. If the document already exists, you must specify its revision _rev, otherwise a conflict will occur.\n\nThere are some restrictions on valid property names of the documents. If you try to store non-JSON data (for instance Date objects) you may see inconsistent results.\n\nExample Usage:\n\nCreate a new doc with an _id of 'mydoc':\n\nPromises\nCallbacks\ndb.put({\n  _id: 'mydoc',\n  title: 'Heroes'\n}).then(function (response) {\n  // handle response\n}).catch(function (err) {\n  console.log(err);\n});\nYou can update an existing doc using _rev:\n\nPromises\nCallbacks\ndb.get('mydoc').then(function(doc) {\n  return db.put({\n    _id: 'mydoc',\n    _rev: doc._rev,\n    title: \"Let's Dance\"\n  });\n}).then(function(response) {\n  // handle response\n}).catch(function (err) {\n  console.log(err);\n});\nInstead of including the _id and _rev in the document, you can also pass them in as options:\n\nPromises\nCallbacks\n","location":4,"player":1,"notes":3,"level":"info","message":"add note","timestamp":"2015-11-18T15:15:14.812Z"}
+{"id":"note_6_4_1_3","location":4,"player":1,"notes":2,"level":"info","message":"delete note","timestamp":"2015-11-18T15:15:30.232Z"}
+{"id":"note_6_4_1_3","content":" guidelines for multi-user applications running on interactive wall displays. These guidelines should aid developers of future applications in ensuring a high multi-user usability. The research approach combines literature analysis with usability studies and controlled laboratory studies. The literature analysis and the usability study will identify aspects specific to multi-user usability. The laboratory studies will deepen the understanding of two selected usability aspects, with readability in a multi-user scenario being one of them.","location":4,"player":1,"notes":3,"level":"info","message":"add note","timestamp":"2015-11-18T15:15:45.820Z"}
+{"id":"note_6_4_1_4","content":"a","location":4,"player":1,"notes":4,"level":"info","message":"add note","timestamp":"2015-11-18T15:16:00.428Z"}
+{"id":"note_6_4_1_5","content":"a","location":4,"player":1,"notes":5,"level":"info","message":"add note","timestamp":"2015-11-18T15:17:11.532Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T15:17:48.035Z"}
+{"id":"note_6_4_1_6","content":"a","location":4,"player":1,"notes":6,"level":"info","message":"add note","timestamp":"2015-11-18T15:17:51.205Z"}
+{"id":"note_6_4_1_7","content":"e","location":4,"player":1,"notes":7,"level":"info","message":"add note","timestamp":"2015-11-18T15:17:57.595Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T15:18:20.437Z"}
+{"id":"note_6_4_1_8","content":"a","location":4,"player":1,"notes":8,"level":"info","message":"add note","timestamp":"2015-11-18T15:18:23.471Z"}
+{"id":"note_6_4_1_9","content":"e","location":4,"player":1,"notes":9,"level":"info","message":"add note","timestamp":"2015-11-18T15:18:31.555Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T15:18:44.392Z"}
+{"id":"note_6_4_1_10","content":"e","location":4,"player":1,"notes":10,"level":"info","message":"add note","timestamp":"2015-11-18T15:18:47.968Z"}
+{"id":"note_6_4_1_4","location":4,"player":1,"notes":9,"level":"info","message":"delete note","timestamp":"2015-11-18T15:19:33.255Z"}
+{"id":"note_6_4_1_6","location":4,"player":1,"notes":8,"level":"info","message":"delete note","timestamp":"2015-11-18T15:19:34.844Z"}
+{"id":"note_6_4_1_7","location":4,"player":1,"notes":7,"level":"info","message":"delete note","timestamp":"2015-11-18T15:19:35.355Z"}
+{"id":"note_6_4_1_8","location":4,"player":1,"notes":6,"level":"info","message":"delete note","timestamp":"2015-11-18T15:19:35.896Z"}
+{"id":"note_6_4_1_9","location":4,"player":1,"notes":5,"level":"info","message":"delete note","timestamp":"2015-11-18T15:19:36.588Z"}
+{"id":"note_6_4_1_5","location":4,"player":1,"notes":4,"level":"info","message":"delete note","timestamp":"2015-11-18T15:19:37.255Z"}
+{"id":"note_6_4_1_10","location":4,"player":1,"notes":3,"level":"info","message":"delete note","timestamp":"2015-11-18T15:19:37.818Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T15:19:41.727Z"}
+{"id":"note_6_4_1_4","content":"a","location":4,"player":1,"notes":4,"level":"info","message":"add note","timestamp":"2015-11-18T15:19:45.535Z"}
+{"id":"note_6_4_1_2","location":4,"player":1,"notes":3,"level":"info","message":"delete note","timestamp":"2015-11-18T15:19:51.970Z"}
+{"id":"note_6_4_1_1","location":4,"player":1,"notes":2,"level":"info","message":"delete note","timestamp":"2015-11-18T15:19:53.709Z"}
+{"location":4,"level":"info","message":"confirm the location","timestamp":"2015-11-18T15:20:05.156Z"}
+{"location":4,"player":1,"group":6,"level":"info","message":"choose the location","timestamp":"2015-11-18T15:20:10.297Z"}
+{"location":4,"player":2,"group":6,"level":"info","message":"choose the location","timestamp":"2015-11-18T15:20:10.298Z"}
+{"location":4,"player":3,"group":6,"level":"info","message":"choose the location","timestamp":"2015-11-18T15:20:10.298Z"}
+{"id":"agu_6_4_1_2","content":"e","location":4,"player":1,"level":"info","message":"add arguments","timestamp":"2015-11-18T15:20:16.931Z"}
+{"id":"agu_6_4_1_3","content":"q","location":4,"player":1,"level":"info","message":"add arguments","timestamp":"2015-11-18T15:22:02.838Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T15:23:26.126Z"}
+{"id":"agu_6_4_1_4","content":"a","location":4,"player":1,"level":"info","message":"add arguments","timestamp":"2015-11-18T15:23:35.084Z"}
+{"location":4,"level":"info","message":"confirm the location","timestamp":"2015-11-18T15:23:44.387Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T16:14:26.131Z"}
+{"location":4,"player":1,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:14:32.605Z"}
+{"location":3,"player":1,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:14:45.465Z"}
+{"location":3,"player":1,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:14:46.775Z"}
+{"location":4,"player":1,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:14:54.528Z"}
+{"location":3,"player":1,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:14:55.861Z"}
+{"location":4,"player":1,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:15:50.103Z"}
+{"id":"note_6_4_1_5","content":"q","location":4,"player":1,"notes":1,"level":"info","message":"add note","timestamp":"2015-11-18T16:15:57.969Z"}
+{"location":4,"level":"info","message":"confirm the location","timestamp":"2015-11-18T16:16:16.728Z"}
+{"location":4,"player":1,"group":6,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:16:33.412Z"}
+{"location":4,"player":2,"group":6,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:16:33.413Z"}
+{"location":4,"player":3,"group":6,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:16:33.415Z"}
+{"id":"agu_6_4_1_5","content":"q","location":4,"player":1,"level":"info","message":"add arguments","timestamp":"2015-11-18T16:16:42.817Z"}
+{"id":"agu_6_4_1_6","content":"过来","location":4,"player":1,"level":"info","message":"add arguments","timestamp":"2015-11-18T16:16:50.703Z"}
+{"location":4,"player":1,"group":6,"aguflag":true,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:24:00.729Z"}
+{"location":4,"player":1,"group":6,"aguflag":true,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:24:03.139Z"}
+{"location":4,"player":1,"group":6,"aguflag":true,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:24:04.187Z"}
+{"location":4,"player":1,"group":6,"aguflag":true,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:24:04.430Z"}
+{"id":"agu_6_4_1_7","content":"a","location":4,"player":1,"level":"info","message":"add arguments","timestamp":"2015-11-18T16:24:08.193Z"}
+{"location":4,"player":1,"group":6,"aguflag":true,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:24:38.138Z"}
+{"id":"agu_6_4_1_8","content":"a","location":4,"player":1,"level":"info","message":"add arguments","timestamp":"2015-11-18T16:24:42.544Z"}
+{"id":"agu_6_4_1_8","location":4,"player":1,"notes":-1,"level":"info","message":"delete note","timestamp":"2015-11-18T16:24:43.847Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T16:25:39.905Z"}
+{"location":4,"player":1,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:25:51.382Z"}
+{"id":"note_6_4_1_6","content":"e","location":4,"player":1,"notes":1,"level":"info","message":"add note","timestamp":"2015-11-18T16:25:54.390Z"}
+{"id":"note_6_4_1_4","location":4,"player":1,"notes":0,"level":"info","message":"delete note","timestamp":"2015-11-18T16:26:01.745Z"}
+{"id":"note_6_4_1_5","location":4,"player":1,"notes":-1,"level":"info","message":"delete note","timestamp":"2015-11-18T16:26:02.700Z"}
+{"id":"note_6_4_1_6","location":4,"player":1,"notes":-2,"level":"info","message":"delete note","timestamp":"2015-11-18T16:26:03.175Z"}
+{"id":"note_6_4_1_3","location":4,"player":1,"notes":-3,"level":"info","message":"delete note","timestamp":"2015-11-18T16:26:08.078Z"}
+{"id":"note_6_4_1_1","content":"where is rabbit?","location":4,"player":1,"notes":-2,"level":"info","message":"add note","timestamp":"2015-11-18T16:26:19.023Z"}
+{"location":4,"level":"info","message":"confirm the location","timestamp":"2015-11-18T16:26:29.017Z"}
+{"location":4,"player":1,"group":6,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:26:29.053Z"}
+{"location":4,"player":2,"group":6,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:26:29.055Z"}
+{"location":4,"player":3,"group":6,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:26:29.056Z"}
+{"id":"agu_6_4_1_8","content":"provide","location":4,"player":1,"level":"info","message":"add arguments","timestamp":"2015-11-18T16:26:40.705Z"}
+{"id":"agu_6_4_1_9","content":"will identify aspects specific to multi-user usability. The laboratory studies will deepen the understanding of two selected usab","location":4,"player":1,"level":"info","message":"add arguments","timestamp":"2015-11-18T16:26:55.647Z"}
+{"id":"agu_6_4_1_10","content":"will identify aspects specific to multi-user usability. The laboratory studies will deepen the understanding of two selected usab","location":4,"player":1,"level":"info","message":"add arguments","timestamp":"2015-11-18T16:26:58.669Z"}
+{"id":"agu_6_4_1_8","location":4,"player":1,"notes":-3,"level":"info","message":"delete note","timestamp":"2015-11-18T16:28:14.074Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T16:28:33.527Z"}
+{"location":4,"player":1,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:28:42.306Z"}
+{"id":"note_6_4_1_2","content":"near the lake","location":4,"player":1,"notes":1,"level":"info","message":"add note","timestamp":"2015-11-18T16:28:50.340Z"}
+{"location":4,"level":"info","message":"confirm the location","timestamp":"2015-11-18T16:28:58.674Z"}
+{"location":4,"player":1,"group":6,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:28:58.713Z"}
+{"location":4,"player":2,"group":6,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:28:58.715Z"}
+{"location":4,"player":3,"group":6,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:28:58.715Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T16:33:28.593Z"}
+{"location":4,"player":1,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:33:36.522Z"}
+{"location":4,"player":1,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:33:37.514Z"}
+{"location":4,"player":1,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:33:38.210Z"}
+{"location":4,"player":1,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:33:38.520Z"}
+{"location":4,"player":1,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:33:38.793Z"}
+{"location":4,"player":1,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:33:39.074Z"}
+{"location":4,"player":1,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:33:39.330Z"}
+{"location":4,"player":1,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:33:39.532Z"}
+{"location":4,"player":1,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:33:39.786Z"}
+{"location":4,"player":1,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:33:40.009Z"}
+{"location":4,"player":1,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:33:40.204Z"}
+{"location":4,"player":1,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:33:40.403Z"}
+{"location":4,"player":1,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:33:40.628Z"}
+{"location":4,"player":1,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:33:47.179Z"}
+{"location":4,"level":"info","message":"confirm the location","timestamp":"2015-11-18T16:34:00.283Z"}
+{"location":4,"player":1,"group":6,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:34:00.318Z"}
+{"location":4,"player":2,"group":6,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:34:00.320Z"}
+{"location":4,"player":3,"group":6,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:34:00.322Z"}
+{"id":"agu_6_4_1_1","content":"a","location":4,"player":1,"level":"info","message":"add arguments","timestamp":"2015-11-18T16:34:09.668Z"}
+{"id":"agu_6_4_1_1","location":4,"player":1,"notes":-1,"level":"info","message":"delete note","timestamp":"2015-11-18T16:34:13.920Z"}
+{"id":"agu_6_4_1_1","content":"d","location":4,"player":1,"level":"info","message":"add arguments","timestamp":"2015-11-18T16:34:20.568Z"}
+{"id":"agu_6_4_1_2","content":"hee","location":4,"player":1,"level":"info","message":"add arguments","timestamp":"2015-11-18T16:34:37.164Z"}
+{"id":"agu_6_4_1_1","location":4,"player":1,"notes":-2,"level":"info","message":"delete note","timestamp":"2015-11-18T16:34:39.141Z"}
+{"id":"agu_6_4_1_3","content":"a","location":4,"player":1,"level":"info","message":"add arguments","timestamp":"2015-11-18T16:35:17.344Z"}
+{"id":"agu_6_4_1_3","location":4,"player":1,"notes":-3,"level":"info","message":"delete note","timestamp":"2015-11-18T16:35:22.909Z"}
+{"id":"agu_6_4_1_3","content":"gere","location":4,"player":1,"level":"info","message":"add arguments","timestamp":"2015-11-18T16:35:40.207Z"}
+{"id":"agu_6_4_1_2","location":4,"player":1,"notes":-4,"level":"info","message":"delete note","timestamp":"2015-11-18T16:35:42.882Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T16:37:22.092Z"}
+{"location":4,"player":1,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:37:25.015Z"}
+{"location":4,"player":1,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:37:25.741Z"}
+{"location":4,"player":1,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:37:26.342Z"}
+{"location":4,"player":1,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:37:32.652Z"}
+{"location":4,"level":"info","message":"confirm the location","timestamp":"2015-11-18T16:37:40.270Z"}
+{"location":4,"player":1,"group":6,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:37:40.305Z"}
+{"location":4,"player":2,"group":6,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:37:40.306Z"}
+{"location":4,"player":3,"group":6,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:37:40.307Z"}
+{"id":"agu_6_4_1_1","content":"a","location":4,"player":1,"level":"info","message":"add arguments","timestamp":"2015-11-18T16:37:44.614Z"}
+{"id":"agu_6_4_1_2","content":"here","location":4,"player":1,"level":"info","message":"add arguments","timestamp":"2015-11-18T16:37:49.147Z"}
+{"id":"agu_6_4_1_1","location":4,"player":1,"notes":-1,"level":"info","message":"delete note","timestamp":"2015-11-18T16:37:50.475Z"}
+{"id":"agu_6_4_1_3","content":"e","location":4,"player":1,"level":"info","message":"add arguments","timestamp":"2015-11-18T16:37:57.995Z"}
+{"id":"agu_6_4_1_3","location":4,"player":1,"notes":-2,"level":"info","message":"delete note","timestamp":"2015-11-18T16:37:59.417Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T16:38:30.212Z"}
+{"location":4,"player":1,"group":6,"aguflag":false,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:38:37.321Z"}
+{"location":4,"level":"info","message":"confirm the location","timestamp":"2015-11-18T16:41:06.919Z"}
+{"location":4,"player":1,"group":6,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:41:06.963Z"}
+{"location":4,"player":2,"group":6,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:41:06.964Z"}
+{"location":4,"player":3,"group":6,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:41:06.965Z"}
+{"id":"agu_6_4_1_1","content":"a","location":4,"player":1,"level":"info","message":"add arguments","timestamp":"2015-11-18T16:41:11.192Z"}
+{"id":"agu_6_4_1_2","content":"e","location":4,"player":1,"level":"info","message":"add arguments","timestamp":"2015-11-18T16:41:13.335Z"}
+{"id":"agu_6_4_1_2","location":4,"player":1,"notes":-1,"level":"info","message":"delete note","timestamp":"2015-11-18T16:41:14.639Z"}
+{"id":"agu_6_4_1_2","content":"a","location":4,"player":1,"level":"info","message":"add arguments","timestamp":"2015-11-18T16:41:36.664Z"}
+{"id":"agu_6_4_1_2","location":4,"player":1,"notes":-2,"level":"info","message":"delete note","timestamp":"2015-11-18T16:41:38.414Z"}
+{"id":"agu_6_4_1_2","content":"here","location":4,"player":1,"level":"info","message":"add arguments","timestamp":"2015-11-18T16:42:07.350Z"}
+{"id":"agu_6_4_1_3","content":"e","location":4,"player":1,"level":"info","message":"add arguments","timestamp":"2015-11-18T16:42:27.402Z"}
+{"id":"agu_6_4_1_3","location":4,"player":1,"notes":-3,"level":"info","message":"delete note","timestamp":"2015-11-18T16:42:59.004Z"}
+{"id":"agu_6_4_1_3","content":"add","location":4,"player":1,"level":"info","message":"add arguments","timestamp":"2015-11-18T16:43:27.952Z"}
+{"id":"agu_6_4_1_3","location":4,"player":1,"notes":-4,"level":"info","message":"delete note","timestamp":"2015-11-18T16:45:05.975Z"}
+{"id":"agu_6_4_1_3","content":"a","location":4,"player":1,"level":"info","message":"add arguments","timestamp":"2015-11-18T16:45:14.561Z"}
+{"location":4,"player":1,"group":6,"aguflag":true,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:45:55.897Z"}
+{"id":"agu_6_4_1_4","content":"a","location":4,"player":1,"level":"info","message":"add arguments","timestamp":"2015-11-18T16:46:03.563Z"}
+{"id":"agu_6_4_1_4","location":4,"player":1,"level":"info","message":"delete Agu","timestamp":"2015-11-18T16:46:17.622Z"}
+{"id":"agu_6_4_1_4","content":"here","location":4,"player":1,"level":"info","message":"add arguments","timestamp":"2015-11-18T16:46:26.818Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T16:48:42.681Z"}
+{"location":4,"level":"info","message":"confirm the location","timestamp":"2015-11-18T16:48:48.008Z"}
+{"location":4,"player":1,"group":6,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:48:48.046Z"}
+{"location":4,"player":2,"group":6,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:48:48.047Z"}
+{"location":4,"player":3,"group":6,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:48:48.048Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T16:49:46.439Z"}
+{"location":4,"level":"info","message":"confirm the location","timestamp":"2015-11-18T16:49:50.958Z"}
+{"location":4,"player":1,"group":6,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:49:50.998Z"}
+{"location":4,"player":2,"group":6,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:49:50.999Z"}
+{"location":4,"player":3,"group":6,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:49:51.001Z"}
+{"location":4,"player":1,"group":6,"aguflag":true,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:50:43.956Z"}
+{"id":"agu_6_4_1_1","content":"ee","location":4,"player":1,"level":"info","message":"add arguments","timestamp":"2015-11-18T16:50:47.077Z"}
+{"id":"agu_6_4_1_1","location":4,"player":1,"level":"info","message":"delete Agu","timestamp":"2015-11-18T16:50:49.136Z"}
+{"id":"agu_6_4_1_1","content":"here","location":4,"player":1,"level":"info","message":"add arguments","timestamp":"2015-11-18T16:50:52.586Z"}
+{"id":"agu_6_4_1_2","content":"will identify aspects specific to multi-user usability. The laboratory studies will deepen the understanding of two selected usab","location":4,"player":1,"level":"info","message":"add arguments","timestamp":"2015-11-18T16:50:59.167Z"}
+{"id":"agu_6_4_1_3","content":"e","location":4,"player":1,"level":"info","message":"add arguments","timestamp":"2015-11-18T16:51:01.648Z"}
+{"id":"agu_6_4_1_4","content":"erer","location":4,"player":1,"level":"info","message":"add arguments","timestamp":"2015-11-18T16:51:04.725Z"}
+{"id":"agu_6_4_1_4","location":4,"player":1,"level":"info","message":"delete Agu","timestamp":"2015-11-18T16:51:24.039Z"}
+{"id":"agu_6_4_1_1","location":4,"player":1,"level":"info","message":"delete Agu","timestamp":"2015-11-18T16:51:25.097Z"}
+{"id":"agu_6_4_1_4","content":"will identify aspects specific to multi-user usability. The laboratory studies will deepen the understanding of two selected usab","location":4,"player":1,"level":"info","message":"add arguments","timestamp":"2015-11-18T16:51:39.605Z"}
+{"id":"agu_6_4_1_5","content":"will identify aspects specific to multi-user usability. The laboratory studies will deepen the understanding of two selected usab","location":4,"player":1,"level":"info","message":"add arguments","timestamp":"2015-11-18T16:51:41.870Z"}
+{"id":"agu_6_4_1_2","location":4,"player":1,"level":"info","message":"delete Agu","timestamp":"2015-11-18T16:52:26.698Z"}
+{"id":"agu_6_4_1_5","location":4,"player":1,"level":"info","message":"delete Agu","timestamp":"2015-11-18T16:52:29.520Z"}
+{"id":"agu_6_4_1_4","location":4,"player":1,"level":"info","message":"delete Agu","timestamp":"2015-11-18T16:52:35.895Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-18T16:54:01.921Z"}
+{"location":4,"level":"info","message":"confirm the location","timestamp":"2015-11-18T16:54:10.185Z"}
+{"location":4,"player":1,"group":6,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:54:10.245Z"}
+{"location":4,"player":2,"group":6,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:54:10.246Z"}
+{"location":4,"player":3,"group":6,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:54:10.247Z"}
+{"location":4,"player":1,"group":6,"aguflag":true,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:54:27.473Z"}
+{"location":4,"player":1,"group":6,"aguflag":true,"level":"info","message":"choose the location","timestamp":"2015-11-18T16:54:32.876Z"}
+{"id":"agu_6_4_1_1","content":"a","location":4,"player":1,"level":"info","message":"add arguments","timestamp":"2015-11-18T16:54:36.133Z"}
+{"id":"agu_6_4_1_2","content":"ere","location":4,"player":1,"level":"info","message":"add arguments","timestamp":"2015-11-18T16:54:38.979Z"}
+{"id":"agu_6_4_1_3","content":"will identify aspects specific to multi-user usability. The laboratory studies will deepen the understanding of two selected usab","location":4,"player":1,"level":"info","message":"add arguments","timestamp":"2015-11-18T16:54:41.092Z"}
+{"id":"agu_6_4_1_1","location":4,"player":1,"level":"info","message":"delete Agu","timestamp":"2015-11-18T16:54:44.349Z"}
+{"id":"agu_6_4_1_2","location":4,"player":1,"level":"info","message":"delete Agu","timestamp":"2015-11-18T16:54:45.843Z"}
+{"id":"agu_6_4_1_4","content":"a","location":4,"player":1,"level":"info","message":"add arguments","timestamp":"2015-11-18T16:54:49.046Z"}
+{"id":"agu_6_4_1_5","content":"ere","location":4,"player":1,"level":"info","message":"add arguments","timestamp":"2015-11-18T16:54:51.709Z"}
+{"id":"agu_6_4_1_6","content":"will identify aspects specific to multi-user usability. The laboratory studies will deepen the understanding of two selected usab","location":4,"player":1,"level":"info","message":"add arguments","timestamp":"2015-11-18T16:54:54.023Z"}
+{"id":"agu_6_4_1_4","location":4,"player":1,"level":"info","message":"delete Agu","timestamp":"2015-11-18T16:54:59.553Z"}
+{"id":"agu_6_4_1_5","location":4,"player":1,"level":"info","message":"delete Agu","timestamp":"2015-11-18T16:55:00.087Z"}
+{"id":"agu_6_4_1_3","location":4,"player":1,"level":"info","message":"delete Agu","timestamp":"2015-11-18T16:55:01.051Z"}
+{"id":"agu_6_4_1_6","location":4,"player":1,"level":"info","message":"delete Agu","timestamp":"2015-11-18T16:55:02.752Z"}
+{"group":6,"level":"info","message":"choose the group","timestamp":"2015-11-20T14:25:04.446Z"}
+{"location":4,"group":6,"player":1,"value":"3","id":"vote_6_4_1","level":"info","message":"vote for location","timestamp":"2015-11-20T14:37:25.535Z"}
+{"location":4,"group":6,"player":1,"value":"4","id":"vote_6_4_1","level":"info","message":"vote for location","timestamp":"2015-11-20T14:37:27.820Z"}
+{"location":4,"group":6,"player":1,"value":"2","id":"vote_6_4_1","level":"info","message":"vote for location","timestamp":"2015-11-20T14:37:29.052Z"}

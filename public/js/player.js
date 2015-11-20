@@ -54,6 +54,10 @@ $(document).ready(function($){
                 Client.deleteNote(this.id);
             });
 
+            $("#showAgu").on('click', '.deleteagu', function(){
+                Client.deleteAgu(this.id);
+            });
+
             $('.choosePlayerBtn').on('click', function(){
                 $('#maskLayer').hide();
                 $('#appLayer').show();
@@ -118,6 +122,7 @@ $(document).ready(function($){
                     Client.showInfoOnTable();
                     Client.attachNote();
                     Client.attachVote();
+                    $('#myNote textarea').val('');
                     if(flag == true){
                         $('#showAgu').show();
                         $('#addAgu').show();
@@ -327,7 +332,8 @@ $(document).ready(function($){
                 $('#chooseLocationDlg').dialog('open');
                 return;
             }
-//    if textarea is empty, return false
+
+            //    clear textarea
             var textarea = $('#myAgu textarea');
             var text = textarea.val();
             if(!text){
@@ -362,7 +368,7 @@ $(document).ready(function($){
                     "number": aguNumber,
                     'content':text
                 }).then(function(){
-                    $('#showAgu span').append('<div class="aguOfPlayer">'+'<p>'+text+'</p>'+'<button id='+id+'  class="btn btn-default btn-xs" onclick="deleteAgu(this.id)">Effacer</button>'+'</div>');
+                    $('#showAgu span').append('<div class="aguOfPlayer">'+'<p>'+text+'</p>'+'<button id='+id+'  class="btn btn-default btn-xs deleteagu">Effacer</button>'+'</div>');
                     socket.emit('addagu', {id: id, content: text, location: locationNumber, player: playerNumber});
                 });
             });

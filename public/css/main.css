@@ -201,7 +201,7 @@ p{
     width: 700px;
     margin-bottom: 10px;
 }
-.glyphicon-unchecked{
+.glyphicon-unchecked, .glyphicon-check{
     font-size: 25px;
     float: left;
 }
@@ -325,25 +325,6 @@ p{
     padding: 5px;
     /*border: 1px solid;*/
 }
-.locationContent .vote{
-    position: absolute;
-    top: 175px;
-    width: 400px;
-    height: 90px;
-    margin-top: 10px;
-    margin-left: 15px;
-}
-.vote span{
-    float: left;
-}
-.glyphicon-star, .glyphicon-ok-circle{
-    font-size: 2em;
-}
-
-.locationContent h4{
-    margin-top: 0;
-    width: 150px;
-}
 .visualPlayers{
     position: absolute;
     top: 70px;
@@ -366,44 +347,64 @@ p{
     width: 100%;
     height: 100%;
 }
+.locationContent .vote{
+    position: absolute;
+    top: 175px;
+    width: 300px;
+    height: 90px;
+    margin-top: 10px;
+    margin-left: 15px;
+}
+.vote span{
+    float: left;
+    text-shadow: 0 0 1px rgba(0, 0, 0, 0.7);
+}
+.glyphicon-star, .glyphicon-ok-circle{
+    font-size: 2em;
+}
+
+.locationContent h4{
+    margin-top: 0;
+    width: 150px;
+}
+
 
 .chooseLocation{
     position: absolute;
-    top: 70px;
-    /*left: 200px;*/
-    width: 190px;
+    top: 175px;
+    left: 230px;
+    width: 90px;
     height: 110px;
     margin-left: 20px;
 }
-
-.location .locationContent .note{
+.chooseLocation button{
+    margin-top: 15px;
+}
+.note{
     width: 370px;
     margin-left: 15px;
     margin-top: 10px;
     position: absolute;
     top: 250px;
 }
-.location .locationContent .arguments{
+.arguments{
     width: 370px;
     margin-left: 15px;
     margin-top: 10px;
     position: absolute;
+    top: 270px;
 }
 .note h4, .arguments h4{
     margin-top: 10px;
 }
-.locations .note{
+.note, .arguments{
     border-top: 1px solid #5D4037;
 }
-.schoolLocations .note, .schoolLocations .arguments{
-    border-top: 1px solid #455A64;
-}
+
 .locations h4{
     color: #4E342E;
 }
-.schoolLocations .note h4{
-    color: #37474F;
-}
+
 .note p, .arguments p{
     border-radius: 5px;
 }
@@ -489,4 +490,8 @@ p{
 }
 .star-best{
     color: #449d44;
+}
+.caption{
+    margin-top: 8px;
+    margin-left: 10px;
 }
