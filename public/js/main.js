@@ -7,29 +7,31 @@ $(document).ready(function() {
     $(document).on('contextmenu', function() {
         return false;
     });
-    var db = new PouchDB('http://localhost:5984/insect');
     var socket = io.connect('http://localhost:8000');
-
     var groupNumber = 0;
     var allRating = 0;
     var chosenNumber = 0;
     var aguFlag = false;
     var stepNumber = 1;
     var white= '#E0E0E0';
+    var locationNames=[];
+    var locationCoordinates = [];
+    var locationAmount;
 
-    var locationNames=[
-        '1. Balcon sur la cascade',
-        '2. Sous les embruns',
-        '3. Au détour du sentier',
-        '4. La clairière'
-    ];
-    var locationCoordinates = [
-        [5.892298,45.395142],
-        [5.891826,45.391789],
-        [5.888789,45.394547],
-        [5.890012,45.398352]
-    ];
-    var locationAmount = locationNames.length;
+    var db = new PouchDB('http://localhost:5984/insect');
+    db.allDocs({
+        include_docs: true,
+        attachements: true,
+        startkey: 'location',
+        endkey: 'location\uffff'
+    }).then(function(locationData){
+        locationAmount = locationData.rows.length;
+        for(var i = 0; i < locationAmount; i++){
+            locationNames[i] = locationData.rows[i].doc.name;
+            locationCoordinates[i] = [Number(locationData.rows[i].doc.long),Number(locationData.rows[i].doc.lati)];
+        }
+        Server.init();
+    });
 
     var Server={
         init: function(){
@@ -66,13 +68,13 @@ $(document).ready(function() {
 
             //------------------initialize progress bar;
             $( "#progressbar1" ).progressbar({
-                max: 4
+                max: locationAmount
             });
             $( "#progressbar2" ).progressbar({
-                max: 4
+                max: locationAmount
             });
             $( "#progressbar3" ).progressbar({
-                max: 4
+                max: locationAmount
             });
             $( ".progressbar" ).on( "progressbarcomplete", function( event, ui ) {
                 allRating++;
@@ -99,7 +101,6 @@ $(document).ready(function() {
             $('.location').touch();
             $('#insectImg').touch();
             $('#energyImg').touch();
-            $('.schoolLocations').hide();
             $('.chooseLocation').hide();
             $('.visualPlayer').hide();
 
@@ -119,7 +120,7 @@ $(document).ready(function() {
 
             // check first step
             $('#step1 span').on('click', function(){
-                if(stepNumber==1){
+                if(stepNumber==1 && allRating==3){
                     // reset timer
                     clearInterval(intervals.main);
                     $('#timer1').remove();
@@ -422,7 +423,7 @@ $(document).ready(function() {
                         progressbar.progressbar({
                             value: rating
                         });
-                        progressbar.next().text(rating + '/4 Emplacements');
+                        progressbar.next().text(rating + '/'+locationAmount+' Emplacements');
                     }
                 }).catch(function(err){
                     console.log(err);
@@ -490,7 +491,7 @@ $(document).ready(function() {
                     $( "#progressbar"+j ).progressbar({
                         value: rating[j-1]
                     });
-                    $(progressbarText[j-1]).text(rating[j-1] + '/4 Emplacements');
+                    $(progressbarText[j-1]).text(rating[j-1] + '/'+locationAmount+' Emplacements');
                 }
                 if(allRating == 3){
                     $('#toStep2').removeAttr('disabled');
@@ -611,7 +612,6 @@ $(document).ready(function() {
             label.css('background-color', color[num-1]);
         }
     };
-    Server.init();
 });
 
 

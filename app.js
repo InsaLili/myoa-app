@@ -16,8 +16,8 @@ var logger = new (winston.Logger)({
     ]
 });
 // Database
-var PouchDB = require('pouchdb');
-var db = new PouchDB('http://localhost:5984/insect');
+//var PouchDB = require('pouchdb');
+//var db = new PouchDB('http://localhost:5984/insect');
 
 var app = express();
 var routes = require('./routes/index');
@@ -33,10 +33,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Make our db accessible to our router
-app.use(function(req,res,next){
-    req.db = db;
-    next();
-});
+//app.use(function(req,res,next){
+//    req.db = db;
+//    next();
+//});
 
 app.use('/', routes);
 //app.use('/users', users);
