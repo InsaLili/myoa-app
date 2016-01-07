@@ -21,11 +21,11 @@ $(document).ready(function() {
                 var location = locations[i];
                 var text = '<div id="location'+location.number+'">';
                 text += '<h3>Location'+location.number+'</h3>';
-                text += 'Longitude: <input class="location-long" type="text" name="longitude" disabled="disabled" value="'+location.long+'">';
-                text += 'Latitude: <input class="location-lati" type="text" name="latitude" disabled="disabled" value="'+location.lati+'">';
-                text += 'Name: <input class="location-name" type="text" name="name" disabled="disabled" value="'+location.name+'">';
-                text += 'Data: <input class="location-data" type="text" name="data" disabled="disabled" value="'+location.data+'">';
-                text += '<button class="editBtn btn" name="edit" value='+location.number+'>Edit</button></div>';
+                text += '<div class="form-group"><label>Longitude:</label><input class="location-long form-control" type="text" name="longitude" disabled="disabled" value="'+location.long+'"></div>';
+                text += '<div class="form-group"><label>Latitude:</label><input class="location-lati form-control" type="text" name="latitude" disabled="disabled" value="'+location.lati+'"></div>';
+                text += '<div class="form-group"><label>Name:</label><input class="location-name form-control" type="text" name="name" disabled="disabled" value="'+location.name+'"></div>';
+                text += '<div class="form-group"><label>Data:</label><textarea class="location-data form-control" type="text" name="data" disabled="disabled" value="'+location.data+'"></textarea></div>';
+                text += '<button class="editBtn btn btn-default" name="edit" value='+location.number+'>Edit</button></div>';
                 $('#locations').append(text);
             }
             $('#locations').on('click', '.editBtn',function(){
@@ -134,11 +134,11 @@ $(document).ready(function() {
             var current = $(button.parentNode);
             if(value == "edit"){
                 button.textContent = "Save";
-                current.children("input").prop('disabled', false);
+                current.find("input").prop('disabled', false);
                 button.name = "save";
             }else{
                 button.textContent = "Edit";
-                current.children("input").prop('disabled', true);
+                current.find("input").prop('disabled', true);
                 button.name = "edit";
                 this.addLocation(current);
             }
