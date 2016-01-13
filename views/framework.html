@@ -12,8 +12,20 @@
 <div class="container">
     <h1>Framework</h1>
     <div id="cfgLocation">
-        <div id="locations" class="form-inline">
-            <h3>Configure locations</h3>
+        <h3>Configure locations</h3>
+        <div id="locations" class="form-inline" data-bind="foreach: locationList">
+            <h3 data-bind="text: title"></h3>
+            <div class="form-inline">
+                <label>Longtitude:</label>
+                <input class="location-long form-control" type="text" name="longtitude" disabled="disabled" data-bind="textInput: long">
+                <label>Latitude:</label>
+                <input class="location-lati form-control" type="text" name="latitude" disabled="disabled" data-bind="textInput: lati">
+                <label>Name: </label>
+                <input class="location-name form-control" type="text" name="name" disabled="disabled" data-bind="textInput: name">
+                <label>Data: </label>
+                <input class="location-data form-control" type="text" name="data" disabled="disabled" data-bind="textInput: data">
+                <button class="editBtn btn btn-default" data-bind="click: $parent.editLocation, text: state, value: number"></button>
+            </div>
         </div>
         <div id="location-input" class="form-inline">
             <div class="form-group">
@@ -39,9 +51,11 @@
 
 <script>
 </script>
+
 <script src="js/jquery-2.1.3.min.js"></script>
 <script src="js/pouchdb-3.4.0.min.js"></script>
 <script src="js/pouchdb-upsert.js"></script>
+<script src="js/knockout-3.2.0.js"></script>
 <script src="js/framework.js"></script>
 </body>
 </html>
