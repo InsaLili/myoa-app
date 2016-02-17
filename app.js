@@ -15,6 +15,7 @@ var logger = new (winston.Logger)({
         new (winston.transports.File)({ filename: filename })
     ]
 });
+
 // Database
 //var PouchDB = require('pouchdb');
 //var db = new PouchDB('http://localhost:5984/insect');
@@ -25,7 +26,7 @@ var routes = require('./routes/index');
 //set express environment
 app.engine('.html', require('ejs').__express);
 app.set('port', process.env.PORT || 8000);
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'public/views'));
 app.set('view engine', 'html');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded( {extended: false} ));
@@ -110,3 +111,5 @@ io.on('connection', function (socket) {
         io.emit('vote', data);
     });
 });
+
+

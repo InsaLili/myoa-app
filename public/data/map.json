@@ -1,0 +1,17 @@
+[{
+    "studentnum": 3,
+    "longtitude": "",
+    "laititude": "",
+    "markers":[{
+        "name":"First marker",
+        "longtitude": 12.12,
+        "laititude": 34.34,
+        "data": "here are data of marker 1"
+    },{
+        "name":"Second marker",
+        "longtitude": 56.56,
+        "laititude": 78.78,
+        "data": "here are data of marker 2"
+    }],
+    "eval":""
+}]

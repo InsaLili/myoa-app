@@ -5,13 +5,17 @@
 
 var express = require('express');
 var router = express.Router();
+var data = require('./data.js');
+// console.log(data);
+
 /* GET home page. */
-router.get('/', function(req, res) {
-    res.render('index', { title: 'Map' });
-});
+// router.get('/map', function(req, res) {
+//     res.render('map', { title: 'Map' });
+// });
 
 router.get('/player', function(req, res){
-    res.render('player', {});
+    res.render('player', {
+    });
 });
 
 router.get('/framework', function(req, res){
