@@ -85,7 +85,7 @@ p{
     height: 177px;
 }
 #insect{
-    width: 10%;
+    /*width: 10%;*/
     float: left;
     background-color: #424242;
     box-shadow: 0 13px 25px 0 rgba(0, 0, 0, 0.3);
@@ -94,7 +94,7 @@ p{
 #insect a{
     width: 50px;
     height: 50px;
-    margin-left: 10%;
+    /*margin-left: 10%;*/
     margin-top: 30px;
 }
 
@@ -107,9 +107,9 @@ p{
     background-color: #fff;
 }
 #leaderboard{
-    margin-left: 1%;
+    /*margin-left: 1%;*/
     float: left;
-    width: 35%;
+    /*width: 35%;*/
     padding-bottom: 5px;
     background-color: #424242;
     box-shadow: 0 13px 25px 0 rgba(0, 0, 0, 0.3);
@@ -186,9 +186,9 @@ p{
     height: 100%;
 }
 #tasks{
-    margin-left: 1%;
+    /*margin-left: 1%;*/
     float: left;
-    width: 42%;
+    /*width: 42%;*/
     background-color: #424242;
     box-shadow: 0 13px 25px 0 rgba(0, 0, 0, 0.3);
 }
@@ -236,7 +236,7 @@ p{
 
 #counter{
     float: right;
-    width: 10%;
+    /*width: 10%;*/
     background-color: #424242;
     box-shadow: 0 13px 25px 0 rgba(0, 0, 0, 0.3);
 }
@@ -282,7 +282,7 @@ p{
 }
 #map{
     width: 100%;
-    height: 81%;
+    height: 500px;
     float: left;
     /*margin-left: 5px;*/
 }
@@ -494,4 +494,7 @@ p{
 .caption{
     margin-top: 8px;
     margin-left: 10px;
+}
+.visualBtns{
+    float: left;
 }

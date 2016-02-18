@@ -1,26 +1,9 @@
 /**
  * Created by Lili on 08/04/15.
  */
-// var mapViewModule = angular.module("MapViewModule", []);
-// // var db = new PouchDB('http://localhost:5984/framework');
-// mapViewModule.controller('GroupCtrl', function($scope, $http, $state, $stateParams) {
-//     db.get("mapsetting").then(function(doc) {
-//         $scope.mapsetting = doc;
-//         console.log($scope.mapsetting);
 
-//         $scope.groups = function(){
-//           var ratings = []; 
-//           for (var i = 0; i < $scope.mapsetting.groupnum; i++) { 
-//             ratings.push(i) 
-//           } 
-//           return ratings;
-//         }
-//     }).catch(function(err){
-//         console.log(err);
-//     });
-// });
 // DOM Ready =============================================================
-
+$(document).ready(function() {
     $(document).on('contextmenu', function() {
         return false;
     });
@@ -629,6 +612,5 @@
             label.css('background-color', color[num-1]);
         }
     };
-
-
+});
 
