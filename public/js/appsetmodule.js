@@ -15,5 +15,6 @@ appSetModule.service('DataService', function(){
 });
 
 appSetModule.controller('StyleCtrl', function($scope, DataService) {
-    console.log(DataService.mapsetting);
+    console.log(DataService);
+    
 });

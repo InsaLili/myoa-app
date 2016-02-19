@@ -41,44 +41,44 @@ $(document).ready(function() {
         },
 
         domInit: function(){
-            for(var i=0; i<locationAmount; i++){
-                var name = locationNames[i];
-                var num = i+1;
-                var leftOffset = i*90+100;
-                var topOffset = 200;
-                $('.locations').append('<div class="location" id="location'+num+'"></div>');
-                var $currentLocation = $('#location'+num);
+//             for(var i=0; i<locationAmount; i++){
+//                 var name = locationNames[i];
+//                 var num = i+1;
+//                 var leftOffset = i*90+100;
+//                 var topOffset = 200;
+//                 $('.locations').append('<div class="location" id="location'+num+'"></div>');
+//                 var $currentLocation = $('#location'+num);
 
-                var title = '<div class="locationTitle"><h3>'+name+'</h3></div>';
+//                 var title = '<div class="locationTitle"><h3>'+name+'</h3></div>';
 
-//                var visual = '<div class="visualPlayers"  id="visualLocation'+num+'"><h4>Visualisation :</h4><div class="visualPlayer visualPlayer1"><img src="img/player1.png"></div><div class="visualPlayer visualPlayer2"><img src="img/player2.png"></div><div class="visualPlayer visualPlayer3"><img src="img/player3.png"></div></div>';
-                var visual = '<div class="visualPlayers"  id="visualLocation'+num+'"><h4>Visualisation :</h4><button type="button" class="btn player1 markerBtn" value="'+num+',1"><img src="/img/player1.png"></button><span class="check1 glyphicon glyphicon-ok-circle grey"></span><button type="button" class="btn player2 markerBtn" value="'+num+',2"><img src="/img/player2.png"></button><span class="check1 glyphicon glyphicon-ok-circle grey"></span><button type="button" class="btn player3 markerBtn" value="'+num+',3"><img src="/img/player3.png"></button><span class="check1 glyphicon glyphicon-ok-circle grey"></span></div>';
+// //                var visual = '<div class="visualPlayers"  id="visualLocation'+num+'"><h4>Visualisation :</h4><div class="visualPlayer visualPlayer1"><img src="img/player1.png"></div><div class="visualPlayer visualPlayer2"><img src="img/player2.png"></div><div class="visualPlayer visualPlayer3"><img src="img/player3.png"></div></div>';
+//                 var visual = '<div class="visualPlayers"  id="visualLocation'+num+'"><h4>Visualisation :</h4><button type="button" class="btn player1 markerBtn" value="'+num+',1"><img src="/img/player1.png"></button><span class="check1 glyphicon glyphicon-ok-circle grey"></span><button type="button" class="btn player2 markerBtn" value="'+num+',2"><img src="/img/player2.png"></button><span class="check1 glyphicon glyphicon-ok-circle grey"></span><button type="button" class="btn player3 markerBtn" value="'+num+',3"><img src="/img/player3.png"></button><span class="check1 glyphicon glyphicon-ok-circle grey"></span></div>';
 
-                var check = '<div></div>'
+//                 var check = '<div></div>'
 
-                var choose = '<div class="chooseLocation"><button class="btn btn-default btn-md submitChoice" name="'+name+'" value='+num+'>Choisir cet<br/>emplacement</button></div>';
-                var vote = '<div class="vote" id="vote'+num+'"><h4>Évaluation :</h4><span class="glyphicon glyphicon-star grey"></span><span class="glyphicon glyphicon-star grey"></span><span class="glyphicon glyphicon-star grey"></span><span class="glyphicon glyphicon-star grey"></span><span class="glyphicon glyphicon-star grey"></span><span class="label label-default caption">Pas Encore Évalué</span></div>';
-                var note = '<div class="note"><h4>Notes :</h4><span id="note'+num+'"></span></div>';
-                var content = '<div class="locationContent">'+visual+choose+vote+note+'</div>';
+//                 var choose = '<div class="chooseLocation"><button class="btn btn-default btn-md submitChoice" name="'+name+'" value='+num+'>Choisir cet<br/>emplacement</button></div>';
+//                 var vote = '<div class="vote" id="vote'+num+'"><h4>Évaluation :</h4><span class="glyphicon glyphicon-star grey"></span><span class="glyphicon glyphicon-star grey"></span><span class="glyphicon glyphicon-star grey"></span><span class="glyphicon glyphicon-star grey"></span><span class="glyphicon glyphicon-star grey"></span><span class="label label-default caption">Pas Encore Évalué</span></div>';
+//                 var note = '<div class="note"><h4>Notes :</h4><span id="note'+num+'"></span></div>';
+//                 var content = '<div class="locationContent">'+visual+choose+vote+note+'</div>';
 
-                $currentLocation.append(title);
-                $currentLocation.append(content);
-                $currentLocation.offset({top: topOffset, left:leftOffset});
-            }
+//                 $currentLocation.append(title);
+//                 $currentLocation.append(content);
+//                 $currentLocation.offset({top: topOffset, left:leftOffset});
+//             }
 
-            //------------------initialize progress bar;
-            $( "#progressbar1" ).progressbar({
-                max: locationAmount
-            });
-            $( "#progressbar2" ).progressbar({
-                max: locationAmount
-            });
-            $( "#progressbar3" ).progressbar({
-                max: locationAmount
-            });
-            $( ".progressbar" ).on( "progressbarcomplete", function( event, ui ) {
-                allRating++;
-            });
+            // //------------------initialize progress bar;
+            // $( "#progressbar1" ).progressbar({
+            //     max: locationAmount
+            // });
+            // $( "#progressbar2" ).progressbar({
+            //     max: locationAmount
+            // });
+            // $( "#progressbar3" ).progressbar({
+            //     max: locationAmount
+            // });
+            // $( ".progressbar" ).on( "progressbarcomplete", function( event, ui ) {
+            //     allRating++;
+            // });
 
             //-------------------set tasks' buttons and color
 //            $('#toStep2').prop('disabled', true);
@@ -106,17 +106,17 @@ $(document).ready(function() {
 
             //--------------bind event to buttons
             $('.chooseGroupBtn').on('click', function(){
-                $('#appLayer').show();
-                $('#maskLayer').hide();
-                groupNumber = parseInt($(this).val());
-                socket.emit('choosegroup', { group: groupNumber});
+                // $('#appLayer').show();
+                // $('#maskLayer').hide();
+                // groupNumber = parseInt($(this).val());
+                // socket.emit('choosegroup', { group: groupNumber});
                 //--------------------initialize map
-                Server.mapInit();
+                // Server.mapInit();
                 Server.attachNotes();
                 Server.attachRating();
 
             });
-            $('#appLayer').hide();
+            // $('#appLayer').hide();
 
             // check first step
             $('#step1 span').on('click', function(){
@@ -537,20 +537,20 @@ $(document).ready(function() {
             });
         },
         chooseLocation: function(element){
-            var buttonValue = element.value.split(',');
-            console.log(buttonValue);
-            var location = parseInt(buttonValue[0]);
-            var player = parseInt(buttonValue[1]);
-            socket.emit('chooselocation', { location: location, player: player, group: groupNumber, aguflag: aguFlag});
+            // var buttonValue = element.value.split(',');
+            // console.log(buttonValue);
+            // var location = parseInt(buttonValue[0]);
+            // var player = parseInt(buttonValue[1]);
+            // socket.emit('chooselocation', { location: location, player: player, group: groupNumber, aguflag: aguFlag});
 
-            $('.visualPlayer'+player).hide();
-            $('div#visualLocation'+location+' .visualPlayer'+player).show();
+            // $('.visualPlayer'+player).hide();
+            // $('div#visualLocation'+location+' .visualPlayer'+player).show();
 
-            var className = element.className;
-            var elements = document.getElementsByClassName(className);
-            $(elements).css({'background-color': '#5bc0de', 'border-color': '#46b8da'});
-            $(element).css({'background-color': '#f0ad4e', 'border-color': '#eea236'});
-            $($(elements)[location-1]).css({'background-color': '#f0ad4e', 'border-color': '#eea236'});
+            // var className = element.className;
+            // var elements = document.getElementsByClassName(className);
+            // $(elements).css({'background-color': '#5bc0de', 'border-color': '#46b8da'});
+            // $(element).css({'background-color': '#f0ad4e', 'border-color': '#eea236'});
+            // $($(elements)[location-1]).css({'background-color': '#f0ad4e', 'border-color': '#eea236'});
         },
 
         confirmChoice: function(map){

@@ -1,4 +1,4 @@
-<div ng-controller="MapCtrl">
+<div ng-controller="AppCtrl">
     <div id="maskLayer">
         <div id="welcomeScreen">
             <h1>Sélectionnez votre groupe :</h1>
@@ -119,7 +119,7 @@
                     <div class="visualPlayers" id="visualLocation{{$index}}">
                         <h4>Visualisation :</h4>
                         <div class="visualBtns" ng-repeat="i in range(studentAmount) track by $index">
-                            <button class="btn player1 markerBtn" type="button" ng-click="checkLocation($event,$parent.$index+1,$index+1)"><img src="/img/player{{$index+1}}.png"></button>
+                            <button class="btn player{{$index+1}} markerBtn" type="button" ng-click="checkLocation($event,$parent.$index+1,$index+1)"><img src="/img/player{{$index+1}}.png"></button>
                             <span class="check1 glyphicon glyphicon-ok-circle grey"></span>
                         </div>
                     </div>    
@@ -184,5 +184,8 @@
             <h4>Vous venez de finir l'activité!</h4>
         </div> -->
     <!-- </div> -->
-    <div id="map"></div>
+    <!-- <div id="map"></div> -->
+</div>
+<div ng-controller="MapCtrl">
+    <leaflet lf-center="center" tiles="tiles" geojson="geojson" markers="markers" width="100%" height="480px"></leaflet>
 </div>
