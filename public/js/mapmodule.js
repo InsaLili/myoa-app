@@ -131,16 +131,20 @@ mapModule.controller("MapCtrl", [ "$scope", "$http", "DataService",function($sco
                 lng: Number(mapsetting.markers[i].longtitude),
                 getMessageScope: function () { return $scope; },
                 message: '<div id="marker'+num+'"><h3>'+name+'</h3><button type="button" class="btn player1 markerBtn" value="'+num+',1" ng-click="checkLocation($event,1,1)"><img src="/img/player1.png"></button><button type="button" class="btn player2 markerBtn" value="'+num+',2"><img src="/img/player2.png"></button><button type="button" class="btn player3 markerBtn" value="'+num+',3"><img src="/img/player3.png"></button></div>',
-                type: 'vectorMarker',
-                icon: 'beer',
-                compileMessage: true
+                compileMessage: true,
+                icon:{
+                    type: 'makiMarker',
+                    icon: 'chemist',
+                    color: '#E91E63',
+                    size: "l"
+                }
             };
             $scope.markers.push(marker);
         }
     }
 
     $scope.addMarkers();
-    
+
      // $scope.mapInit = function(){
     //     L.mapbox.accessToken = 'pk.eyJ1IjoiaW5zYWxpbGkiLCJhIjoickF1VzlYVSJ9.JH9ZrV76fbU5Ub9ZgBhNCw';
     //     var map = L.mapbox.map('map', 'insalili.meikk0a8', {
