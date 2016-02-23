@@ -1,17 +1,32 @@
 [{
     "studentnum": 3,
-    "longtitude": "",
-    "laititude": "",
+    "groupamount":3,
+    "longtitude": 5.890489,
+    "laititude": 45.394547,
+    "eval":"star",
     "markers":[{
         "name":"First marker",
-        "longtitude": 12.12,
-        "laititude": 34.34,
+        "longtitude": 5.891623,
+        "laititude": 45.395306,
         "data": "here are data of marker 1"
     },{
         "name":"Second marker",
-        "longtitude": 56.56,
-        "laititude": 78.78,
+        "longtitude": 5.891042,
+        "laititude": 45.391842,
         "data": "here are data of marker 2"
+    },{
+        "name":"Thirs marker",
+        "longtitude": 5.890284,
+        "laititude": 45.394431,
+        "data": "here are data of marker 3"
+    },{
+        "name":"Fourth marker",
+        "longtitude": 5.890450,
+        "laititude": 45.398661,
+        "data": "here are data of marker 4"
     }],
-    "eval":""
+    "steps":[
+        "Analysez et évaluez chaque emplacement",
+        "Choisissez un emplacement"
+    ]
 }]

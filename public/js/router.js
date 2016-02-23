@@ -1,4 +1,4 @@
-var routerApp = angular.module('routerApp', ['ui.router', 'AppSetModule', 'MapModule','PlayerModule']);
+var routerApp = angular.module('routerApp', ['ui.router', 'AppSetModule', 'GroupModule','MapModule','PlayerModule']);
 
 /**
  * 由于整个应用都会和路由打交道，所以这里把$state和$stateParams这两个对象放到$rootScope上，方便其它地方引用和注入。
@@ -35,5 +35,9 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
         .state('player', {
             url: '/player',
             templateUrl: 'views/player.html'
+        })        
+        .state('group', {
+            url: '/group',
+            templateUrl: 'views/group.html'
         })
 });

@@ -1,7 +1,7 @@
 body{
 	background-color: #fafafa;
 }
-.nav, .pagination, .carousel, .panel-title a {
+.nav, .pagination, .carousel, .panel-title a, li p {
     cursor: pointer;
 }
 

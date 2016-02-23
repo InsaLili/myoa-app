@@ -1,142 +1,88 @@
-<div ng-controller="AppCtrl">
-    <div id="maskLayer">
-        <div id="welcomeScreen">
-            <h1>Sélectionnez votre groupe :</h1>
-        </div>
-        <div id="chooseGroup" class="row">
-            <div class="chooseGroup col-md-offset-2" ng-repeat="i in range(groupamount) track by $index">
-            <!-- <div class="chooseGroup col-md-offset-2" ng-repeat="i in [1,2,3] track by $index"> -->
-                <button class="btn btn-danger chooseGroupBtn" ng-click="chooseGroupNum($event,$index+1)">
-                    <h2>Groupe {{$index+1}}</h2>
-                </button>
-            </div>
-        </div>
-    </div>
-    <div id="appLayer">
-        <div id="status" class="container row">
-            <!--Détails sur l'insecte-->
-            <div id="insect" class="kit col-md-1">
-                <h3>Information</h3>
+<div id="appLayer" ng-controller="DOMCtrl">
+    <div id="status" class="container">
+        <!--Détails sur l'insecte-->
+        <div class="kit col-md-1">
+            <div id="insect" class="col-md-12">
+                <h3>Info</h3>
                 <a id="insectBtn">
                     <img src="img/LogoInsecte.png">
-                </a>
-                <!-- <img id="insectImg" src="img/fourmis.png"> -->
-                <a id="energyBtn">
-                    <img src="img/LogoEnergy.jpg">
-                </a>
-                <!-- <img id="energyImg" src="img/energy.png"> -->
+                </a>    
             </div>
-            <!--Progress of the rating -->
-            <div id="leaderboard" class="kit col-md-5">
-                <h3>Progression</h3>
-                <div class="players">
-                    <div class="player">
+        </div>
+        <!--Progress of the rating -->
+        <div id="leaderboard" class="kit col-md-5">
+            <h3>Progression</h3>
+            <div class="row">
+                <div class="players col-md-10" ng-model="avatarWidth">
+                    <div class="player col-md-{{avatarWidth}}" ng-repeat="i in range(studentAmount) track by $index">
                         <div class="avatars">
-                            <img src="img/player1.png">
+                            <img src="img/player{{$index+1}}.png">
                         </div>
-                        <div class="badges noteBadge">
-                            <img src="img/badgeNoteExplorateur.png">
+                        <div class="noteBadge">
+                            <img src="img/notebadge.png">
                         </div>
-                        <!--<p>Explorateur</p>-->
-                        <div class="progressbar" id="progressbar1"></div>
-                        <P>0/4 Emplacements</P>
-                    </div>
-                    <div class="player">
-                        <div class="avatars">
-                            <img src="img/player2.png">
-                        </div>
-                        <div class="badges noteBadge">
-                            <img src="img/badgeNoteJournaliste.png">
-                        </div>
-                        <!--<p>Journaliste</p>-->
-                        <div class="progressbar" id="progressbar2"></div>
-                        <P>0/4 Emplacements</P>
-                    </div>
-                    <div class="player">
-                        <div class="avatars">
-                            <img src="img/player3.png">
-                        </div>
-                        <div class="badges noteBadge">
-                            <img src="img/badgeNotePhotographe.png">
-                        </div>
-                        <!--<p>Photographe</p>-->
-                        <div class="progressbar" id="progressbar3"></div>
+                        <div class="progressbar col-md-12" id="progressbar{{$index+1}}"></div>
                         <P>0/4 Emplacements</P>
                     </div>
                 </div>
-                <div id="timerBadge" class="badges">
-                    <img src="img/badgeTimer.png">
+                <div class="badges col-md-2">
+                    <p>Timer badge</p>
+                    <div id="timerBadge" >
+                        <img src="img/badgeTimer.png">
+                    </div>
                 </div>
             </div>
-            <!--Show tasks of each step-->
-            <div id="tasks" class="kit col-md-5">
+        </div>
+        <!--Show tasks of each step-->
+        <div class="kit col-md-5">
+            <div class="col-md-12" id="tasks">
                 <h3>Consignes</h3>
-                <!--<button class="btn btn-info btn-circle" id="resetLocationBtn">Repositionner<br>les fiches</button>-->
                 <ul>
-                    <li>
-                        <div class="steps" id="step1">
-                            <span class="glyphicon glyphicon-unchecked"></span>
-                            <p>Étape 1 : Analysez et évaluez chaque emplacement</p>
-                        </div>
-                        <!--<div id="nextStep">-->
-                            <!--<button class="btn btn-warning pull-right" id="toStep2">Validation</button>-->
-                        <!--</div>-->
-                    </li>
-                    <li>
-                        <div class="steps" id="step2">
-                            <span class="glyphicon glyphicon-unchecked"></span>
-                            <p>Étape 2 : Choisissez un emplacement</p>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="steps" id="step3">
-                            <span class="glyphicon glyphicon-unchecked"></span>
-                            <p>Étape 3 : Construisez votre argumentaire</p>
-                        </div>
-                        <!--<div id="finalStep">-->
-                            <!--<button class="btn btn-warning" id="finalStepBtn">Validation</button>-->
-                        <!--</div>-->
+                    <li class="steps" id="step{{$index}}" ng-repeat="step in steps" ng-click="nextStep($event,$index)">
+                        <span class="glyphicon glyphicon-unchecked"></span>
+                        <p>Étape {{$index+1}} : {{step.content}}</p>
                     </li>
                 </ul>
             </div>
-            <!--timer-->
-            <div id="counter" class="kit  col-md-1">
-                <h3>Chrono</h3>
-                <div id="timer1"></div>
-                <div id="timer2"></div>
-                <div id="timer3"></div>
-            </div>
         </div>
-        <!--Here is the map div-->
-        <!--Show the mountain location cards-->
-        <div class="locations">
-            <!-- !!!!todo: improve ng-click -->
-            <div class="location" ng-repeat="marker in markers" id="location{{$index}}" ng-click="activeTouch()">
-                <div class="locationTitle">
-                    <h3>{{$index+1}}.  {{marker.name}}</h3>
+        <!--timer-->
+        <div id="counter" class="kit  col-md-1">
+            <h3>Chrono</h3>
+            <div id="timer1"></div>
+            <div id="timer2"></div>
+            <div id="timer3"></div>
+        </div>
+    </div>
+    <!--Here is the map div-->
+    <!--Show the mountain location cards-->
+    <div class="locations">
+        <!-- !!!!todo: improve ng-click -->
+        <div class="location" ng-repeat="marker in markers" id="location{{$index}}">
+            <div class="locationTitle">
+                <h3>{{$index+1}}.  {{marker.name}}</h3>
+            </div>
+            <div class="locationContent">
+                <div class="chooseLocation">
+                    <button class="btn btn-warning btn-md" name="{{marker.name}}" ng-click="chooseLocation($event, $index+1, marker.name)">Choisir</button>
                 </div>
-                <div class="locationContent">
-                    <div class="visualPlayers" id="visualLocation{{$index}}">
-                        <h4>Visualisation :</h4>
-                        <div class="visualBtns" ng-repeat="i in range(studentAmount) track by $index">
-                            <button class="btn player{{$index+1}} markerBtn" type="button" ng-click="checkLocation($event,$parent.$index+1,$index+1)"><img src="/img/player{{$index+1}}.png"></button>
-                            <span class="check1 glyphicon glyphicon-ok-circle grey"></span>
-                        </div>
-                    </div>    
-                    <div class="chooseLocation">
-                        <button class="btn btn-default btn-md submitChoice" name="{{marker.name}}" ng-click="chooseLocation($event, $index+1)">Choisir cet<br/>emplacementt</button>
+                <div class="visualPlayers row" id="visualLocation{{$index}}" ng-model="avatarWidth">
+                    <h4>Visualisation :</h4>
+                    <div class="visualBtns col-md-{{avatarWidth}}" ng-repeat="i in range(studentAmount) track by $index">
+                        <button class="btn player{{$index+1}} markerBtn col-md-7" type="button" ng-click="checkLocation($event,$parent.$index+1,$index+1)"><img src="/img/player{{$index+1}}.png"></button>
+                        <span class="check1 glyphicon glyphicon-ok-circle grey checkMarker"></span>
                     </div>
-                    <div class="vote" id="vote{{$index+1}}">
-                        <h4>Évaluation :</h4>
-                        <span class="glyphicon glyphicon-star grey" ng-repeat="i in range(5) track by $index"></span><span class="label label-default caption">Pas Encore Évalué</span></div>
-                    </div>
-                    <div class="note">
-                        <h4>Notes :</h4><span id="note{{$index+1}}"></span>
-                    </div>
+                </div>    
+                <div class="vote" id="vote{{$index+1}}">
+                    <h4>Évaluation :</h4>
+                    <span class="glyphicon glyphicon-star grey" ng-repeat="i in range(5) track by $index"></span><span class="label label-default caption">Pas Encore Évalué</span></div>
+                </div>
+                <div class="note">
+                    <h4>Notes :</h4><span id="note{{$index+1}}"></span>
                 </div>
             </div>
         </div>
     </div>
+</div>
     <!--Here are the hiden dialogs-->
     <!-- <div id="dialogSpace">
         <div id="start" title="Consignes">
@@ -185,7 +131,6 @@
         </div> -->
     <!-- </div> -->
     <!-- <div id="map"></div> -->
-</div>
 <div ng-controller="MapCtrl">
     <leaflet lf-center="center" tiles="tiles" geojson="geojson" markers="markers" width="100%" height="480px"></leaflet>
 </div>

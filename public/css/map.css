@@ -67,12 +67,15 @@ p{
     font-size: 13px;
     color: #e0e0e0;
 }
-
-#status{
-    /*margin-left: 5px;*/
+#appLayer{
     width: 100%;
-    height: 200px;
+    height: 210px;
+}
+#status{
+    width: 100%;
+    height: 210px;
     background-color: #303030;
+    padding-left: 0px; 
 }
 #status h4,#status h3{
     text-align: center;
@@ -82,10 +85,10 @@ p{
 .kit{
     /*margin-right: 1%;*/
     margin-top: 10px;
-    height: 177px;
+    height: 187px;
 }
 #insect{
-    /*width: 10%;*/
+    height: 100%;
     float: left;
     background-color: #424242;
     box-shadow: 0 13px 25px 0 rgba(0, 0, 0, 0.3);
@@ -117,15 +120,14 @@ p{
 
 #leaderboard .players {
     height: 150px;
-    width: 80%;
-    margin-left: 20px;
+    /*margin-left: 10px;*/
     float: left;
 }
 .player{
     height: 150px;
-    width: 160px;
+    /*width: 160px;*/
     float: left;
-    margin-right: 3%;
+    /*margin-right: 3%;*/
 }
 .player p{
     float: left;
@@ -142,25 +144,23 @@ p{
 }
 .noteBadge{
     float: left;
-    width: 50px;
-    height: 50px;
+    width: 30px;
     /*margin-left: 10px;*/
     margin-top: 10px;
 }
 .noteBadge img{
     width: 100%;
-    height: 100%;
 }
 #leaderboard .progressbars{
     float: left;
-    width: 250px;
+    /*width: 250px;*/
     height: 100%;
     border-radius: 5px;
     margin-left: 10px;
 }
 
 #leaderboard .progressbar{
-    width: 130px;
+    /*width: 130px;*/
     float: left;
     /*margin-top: 12px;*/
 }
@@ -176,19 +176,25 @@ p{
     border: 1px solid #FF9800;
     background-color: #FF9800;
 }
+.badges{
+    padding-left: 0px;
+    margin-top: -5px;
+}
+.badges p{
+    margin-bottom: 5px;
+    text-align: center;
+}
 #timerBadge{
-    float: right;
-    width: 110px;
-    height: 110px;
+    margin-left: 10px;
 }
 #timerBadge img{
     width: 100%;
-    height: 100%;
+    /*height: 100%;*/
 }
 #tasks{
     /*margin-left: 1%;*/
     float: left;
-    /*width: 42%;*/
+    height: 100%;
     background-color: #424242;
     box-shadow: 0 13px 25px 0 rgba(0, 0, 0, 0.3);
 }
@@ -225,8 +231,9 @@ p{
     width: 150px;
     margin-left: 20px;
 }
-#submitChoice{
-    margin-left: 10px;
+.chooseBtn{
+    float: right;
+    /*margin-left: 10px;*/
 }
 #resetLocationBtn{
     float: right;
@@ -291,7 +298,7 @@ p{
     left: 75px;
     top: 200px;
     z-index: 1;
-    width: 400px;
+    width: 425px;
     height: 400px;
     overflow: visible;
     border-radius: 15px;
@@ -329,23 +336,33 @@ p{
     position: absolute;
     top: 70px;
     /*left: 170px;*/
-    width: 370px;
+    width: 390px;
     height: 100px;
     margin-left: 15px;
     border-bottom: 1px solid #5D4037;
 }
-.visualPlayers button{
+.markerBtn{
     background-color: #5bc0de;
     color: #ffffff;
     border-color: #46b8da;
-    width: 60px;
+    /*width: 50px;*/
     height: 50px;
-    margin-left: 20px;
     margin-bottom: 10px;
+    padding: 6px 6px;
 }
-.visualPlayers img{
-    width: 100%;
+.visualPlayers .markerBtn{
+    /*margin-left: 20px;*/
+}
+.visualBtns{
+    padding-left: 0px;
+}
+.markerBtn img{
+    /*width: 100%;*/
     height: 100%;
+}
+.checkMarker{
+    padding-top: 10px;
+    padding-left: 5px;
 }
 .locationContent .vote{
     position: absolute;
@@ -368,27 +385,26 @@ p{
     width: 150px;
 }
 
-
 .chooseLocation{
     position: absolute;
-    top: 175px;
-    left: 230px;
-    width: 90px;
-    height: 110px;
-    margin-left: 20px;
+    left: 410px;
+    margin-left: 5px;
+    background-color: #5D4037;
+    padding: 10px;
+    border-radius: 15px;
 }
 .chooseLocation button{
-    margin-top: 15px;
+    /*margin-top: 15px;*/
 }
 .note{
-    width: 370px;
+    width: 390px;
     margin-left: 15px;
     margin-top: 10px;
     position: absolute;
     top: 250px;
 }
 .arguments{
-    width: 370px;
+    width: 390px;
     margin-left: 15px;
     margin-top: 10px;
     position: absolute;
@@ -464,8 +480,8 @@ p{
     margin-bottom: 10px;
     width: 100%;
 }
-.markerBtn{
-    margin-right: 5px;
+.mapMarker .markerBtn{
+    margin-right: 10px;
 }
 .markerCheck{
     margin-right: 20px;

@@ -14,9 +14,9 @@ $(document).ready(function() {
     var aguFlag = false;
     var stepNumber = 1;
     var white= '#E0E0E0';
-    var locationNames=[];
-    var locationCoordinates = [];
-    var locationAmount;
+    // var locationNames=[];
+    // var locationCoordinates = [];
+    // var locationAmount;
 
     var db = new PouchDB('http://localhost:5984/framework');
     db.allDocs({
@@ -88,9 +88,9 @@ $(document).ready(function() {
             });
             $('#finalStepBtn').prop('disabled', true);
 //            $('#resetLocationBtn').on('click', Server.resetLocation);
-            $('body').off('click').on('click', '.markerBtn', function(){
-                Server.chooseLocation(this);
-            });
+            // $('body').off('click').on('click', '.markerBtn', function(){
+            //     Server.chooseLocation(this);
+            // });
             $('#step1 p').css('color', white);
             $('#step1 span').css('color', white);
 
@@ -98,14 +98,14 @@ $(document).ready(function() {
             //------------------Enable multi-touch of location cards
             // ------------------Hide school location cards at first
             // ------------------Set initial position of each card
-            $('.location').touch();
-            $('#insectImg').touch();
-            $('#energyImg').touch();
-            $('.chooseLocation').hide();
+            // $('.location').touch();
+            // $('#insectImg').touch();
+            // $('#energyImg').touch();
+            // $('.chooseLocation').hide();
             $('.visualPlayer').hide();
 
             //--------------bind event to buttons
-            $('.chooseGroupBtn').on('click', function(){
+            // $('.chooseGroupBtn').on('click', function(){
                 // $('#appLayer').show();
                 // $('#maskLayer').hide();
                 // groupNumber = parseInt($(this).val());
@@ -115,7 +115,7 @@ $(document).ready(function() {
                 Server.attachNotes();
                 Server.attachRating();
 
-            });
+            // });
             // $('#appLayer').hide();
 
             // check first step
@@ -153,89 +153,89 @@ $(document).ready(function() {
             });
 
         },
-        mapInit: function(){
-            L.mapbox.accessToken = 'pk.eyJ1IjoiaW5zYWxpbGkiLCJhIjoickF1VzlYVSJ9.JH9ZrV76fbU5Ub9ZgBhNCw';
-            var map = L.mapbox.map('map', 'insalili.meikk0a8', {
-                zoomControl: false
-            }).setView([45.394547, 5.890489], 15);
-            //------------------add markers
-            var message = [];
-            for(var i=0; i<locationAmount; i++){
-                var num = i+1;
-                var name = locationNames[i];
-                message[i]= '<div id="marker'+num+'"><h3>'+name+'</h3><img class= "markerImg" src="/img/place'+num+'.jpg"><button type="button" class="btn player1 markerBtn" value="'+num+',1"><img src="/img/player1.png"></button><button type="button" class="btn player2 markerBtn" value="'+num+',2"><img src="/img/player2.png"></button><button type="button" class="btn player3 markerBtn" value="'+num+',3"><img src="/img/player3.png"></button></div>';
-            }
+//         mapInit: function(){
+//             L.mapbox.accessToken = 'pk.eyJ1IjoiaW5zYWxpbGkiLCJhIjoickF1VzlYVSJ9.JH9ZrV76fbU5Ub9ZgBhNCw';
+//             var map = L.mapbox.map('map', 'insalili.meikk0a8', {
+//                 zoomControl: false
+//             }).setView([45.394547, 5.890489], 15);
+//             //------------------add markers
+//             var message = [];
+//             for(var i=0; i<locationAmount; i++){
+//                 var num = i+1;
+//                 var name = locationNames[i];
+//                 message[i]= '<div id="marker'+num+'"><h3>'+name+'</h3><img class= "markerImg" src="/img/place'+num+'.jpg"><button type="button" class="btn player1 markerBtn" value="'+num+',1"><img src="/img/player1.png"></button><button type="button" class="btn player2 markerBtn" value="'+num+',2"><img src="/img/player2.png"></button><button type="button" class="btn player3 markerBtn" value="'+num+',3"><img src="/img/player3.png"></button></div>';
+//             }
 
-            var myLayer = L.mapbox.featureLayer().addTo(map);
+//             var myLayer = L.mapbox.featureLayer().addTo(map);
 
-            //-----------------------JSON data for markers
-            var geoJson = {};
-            geoJson['type'] = 'FeatureCollection';
-            geoJson['features'] = [];
-            for (var k =0; k<locationAmount; k++) {
-                var symbol,color;
-                symbol = "chemist";
-                color = "#E91E63";
-                var newFeature = {
-                    "type": "Feature",
-                    "geometry": {
-                        "type": "Point",
-                        "coordinates": locationCoordinates[k]
-                    },
-                    "properties": {
-                        "title": locationNames[k],
-                        "metadata":k+1,
-                        "content": message[k],
-                        "marker-symbol": k+1,
-                        "marker-color": color,
-                        "marker-size": "large"
-                    }
-                };
-                geoJson['features'].push(newFeature);
-            }
+//             //-----------------------JSON data for markers
+//             var geoJson = {};
+//             geoJson['type'] = 'FeatureCollection';
+//             geoJson['features'] = [];
+//             for (var k =0; k<locationAmount; k++) {
+//                 var symbol,color;
+//                 symbol = "chemist";
+//                 color = "#E91E63";
+//                 var newFeature = {
+//                     "type": "Feature",
+//                     "geometry": {
+//                         "type": "Point",
+//                         "coordinates": locationCoordinates[k]
+//                     },
+//                     "properties": {
+//                         "title": locationNames[k],
+//                         "metadata":k+1,
+//                         "content": message[k],
+//                         "marker-symbol": k+1,
+//                         "marker-color": color,
+//                         "marker-size": "large"
+//                     }
+//                 };
+//                 geoJson['features'].push(newFeature);
+//             }
 
-            myLayer.on('layeradd', function(e) {
-                var marker = e.layer,
-                    feature = marker.feature;
+//             myLayer.on('layeradd', function(e) {
+//                 var marker = e.layer,
+//                     feature = marker.feature;
 
-                var popupContent = feature.properties.content;
+//                 var popupContent = feature.properties.content;
 
-                marker.bindPopup(popupContent,{
-                    closeButton: false,
-                    minWidth:400,
-                    maxWidth: 400
-                });
-            });
+//                 marker.bindPopup(popupContent,{
+//                     closeButton: false,
+//                     minWidth:400,
+//                     maxWidth: 400
+//                 });
+//             });
 
-//----------------Add features to the map.
-            myLayer.setGeoJSON(geoJson);
+// //----------------Add features to the map.
+//             myLayer.setGeoJSON(geoJson);
 
-        },
+//         },
         dialogInit: function(){
             //-------------------set insect information dialog
-            var insectShow = false, energyShow = false;
-            $('#insectBtn').on('click', function(){
-                if(insectShow == false){
-                    $('#insectImg').show();
-                    insectShow = true;
-                }else{
-                    $('#insectImg').hide();
-                    insectShow = false;
-                }
-            });
-            $('#energyBtn').on('click', function(){
-                if(energyShow == false){
-                    $('#energyImg').show();
-                    energyShow = true;
-                }else{
-                    $('#energyImg').hide();
-                    energyShow = false;
-                }
-            });
+            // var insectShow = false, energyShow = false;
+            // $('#insectBtn').on('click', function(){
+            //     if(insectShow == false){
+            //         $('#insectImg').show();
+            //         insectShow = true;
+            //     }else{
+            //         $('#insectImg').hide();
+            //         insectShow = false;
+            //     }
+            // });
+            // $('#energyBtn').on('click', function(){
+            //     if(energyShow == false){
+            //         $('#energyImg').show();
+            //         energyShow = true;
+            //     }else{
+            //         $('#energyImg').hide();
+            //         energyShow = false;
+            //     }
+            // });
 
-            $('.badges img').hide();
-            $('#insectImg').hide();
-            $('#energyImg').hide();
+            // $('.badges img').hide();
+            // $('#insectImg').hide();
+            // $('#energyImg').hide();
 
             //------------------Initialize each dialog
             $( "#start" ).dialog({

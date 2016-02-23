@@ -78,11 +78,11 @@ io.on('connection', function (socket) {
         io.emit('choosegroup', data);
     });
     // Start listening for mouse events
-    socket.on('chooselocation', function (data) {
-        logger.info('choose the location',data);
+    socket.on('checklocation', function (data) {
+        logger.info('check the location',data);
 //        io.emit send message to all clients，socket.emit send message to particular client
         var numLocation = data.location-1;
-        io.emit('chooselocation', data);
+        io.emit('checklocation', data);
     });
 
     socket.on('confirmlocation', function(data){
