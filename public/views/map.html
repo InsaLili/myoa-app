@@ -80,7 +80,7 @@
                     <h4>Notes :</h4>
                     <span id="note{{$index+1}}">
                         <!-- <div ng-repeat="note in notes"> -->
-                            <p ng-repeat="note in notes" ng-if="note.location == $parent.$index+1" class="notePlayer{{note.player}}">{{note.content}}</p>
+                            <p ng-repeat="note in notes track by $index" ng-if="note.location == $parent.$index+1" class="notePlayer{{note.player}}">{{note.content}}</p>
                         <!-- </div> -->
                     </span>
                 </div>

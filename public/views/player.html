@@ -25,8 +25,8 @@
                     <div class="row">
                         <div class="col-md-12" id="addMarkerNote">
                             <h4>Add location notes</h4>
-                            <textarea class="form-control" rows="4" cols="1"></textarea>
-                            <button class="btn btn-default pull-right btn-sm" id="submitNote">Validation</button>
+                            <textarea class="form-control" rows="4" cols="1" ng-model="currentNote"></textarea>
+                            <button class="btn btn-default pull-right btn-sm" ng-disabled="form.$invalid" ng-click="addLocalNote($event)">Validation</button>
                         </div>
                         <div class="col-md-12" id="evaluation">
                             <h4>Evaluation</h4>
@@ -36,16 +36,24 @@
                 </div>
                 <div class="col-md-6" id="markerNote">
                     <h4>Location notes</h4>
-                    <div ng-repeat="note in notes">
+                    <div ng-repeat="note in notes track by $index">
                         <div ng-if="(note.location == currentLocation)">
                             <div class="noteOfPlayer" ng-if="note.player==player">
                                 <p>{{note.content}}</p>
-                                <button class="btn btn-default btn-xs deletenote" ng-click="deleteNote($event)">Effacer</button>
+                                <button class="btn btn-default btn-xs deletenote" ng-click="deleteLocalNote($event)">Effacer</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div id="dialogSpace">
+        <div id="chooseLocationDlg" title="Attention">
+            Choisissez d'abord un emplacement!
+        </div>
+        <div id="writeNoteDlg" title="Attention">
+            Écrivez une note avant de la soumettre!
         </div>
     </div>
     <!-- <div id="addNotes" class="container"> -->
@@ -90,12 +98,4 @@
     </div>
     <div id="locationInfo" class="container">
     </div>  -->
-<!--     <div id="dialogSpace">
-        <div id="chooseLocationDlg" title="Attention">
-            Choisissez d'abord un emplacement!
-        </div>
-        <div id="writeNoteDlg" title="Attention">
-            Écrivez une note avant de la soumettre!
-        </div>
-    </div> -->
 </div>

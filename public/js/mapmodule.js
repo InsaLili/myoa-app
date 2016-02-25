@@ -39,21 +39,25 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         var db = new PouchDB('http://localhost:5984/insect');
         var socket = io.connect('http://localhost:8000');
         //------following parts realize the communication between pages
-        socket.on('addnote', function (data) {
-            console.log(data);
-            var id = data.id;
-            var content = data.content;
-            var player = data.player;
-            var location = data.location;
-            var notes = data.notes;
-            $('#note'+location).append('<p id='+id+' class="notePlayer'+player+'">'+content+'</p>');
-            var noteHeight = $('#location'+location+' .note').height();
-            if(noteHeight+260 > 400){
-                $('#location'+location).height(noteHeight + 260 +'px');
-            }else{
-                $('#location'+location).height(400+'px');
-            }
+        socket.on('addlocalnote', function (data) {
+            $scope.notes = data.notes;
+            $scope.$apply();
+            // var noteHeight = $('#location'+location+' .note').height();
+            // if(noteHeight+260 > 400){
+            //     $('#location'+location).height(noteHeight + 260 +'px');
+            // }else{
+            //     $('#location'+location).height(400+'px');
+            // }
+        });
 
+        socket.on('deletelocalnote', function (data) {
+            $scope.notes = data.notes;
+            $scope.$apply();
+            // if(noteHeight+260 > 400){
+            //     $('#location'+location).height(noteHeight + 260 +'px');
+            // }else{
+            //     $('#location'+location).height(400+'px');
+            // }
         });
 
         socket.on('addagu', function (data) {
@@ -74,20 +78,6 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         });
 
 
-        socket.on('deletenote', function (data) {
-            console.log(data);
-            var id = data.id;
-            $('#'+id).remove();
-            var location = data.location;
-            var player = data.player;
-            var notes = data.notes;
-            var noteHeight = $('#location'+location+' .note').height();
-            if(noteHeight+260 > 400){
-                $('#location'+location).height(noteHeight + 260 +'px');
-            }else{
-                $('#location'+location).height(400+'px');
-            }
-        });
 
         socket.on('deleteagu', function (data) {
             console.log(data);

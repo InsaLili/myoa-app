@@ -89,17 +89,17 @@ io.on('connection', function (socket) {
         logger.info('confirm the location',data);
         io.emit('confirmlocation',data);
     });
-    socket.on('addnote', function(data){
-        logger.info('add note',data);
-        io.emit('addnote', data);
+    socket.on('addlocalnote', function(data){
+        logger.info('add local note',data);
+        io.emit('addlocalnote', data);
     });
     socket.on('addagu', function(data){
         logger.info('add arguments',data);
         io.emit('addagu', data);
     });
-    socket.on('deletenote', function(data){
-        logger.info('delete note',data);
-        io.emit('deletenote', data);
+    socket.on('deletelocalnote', function(data){
+        logger.info('delete local note',data);
+        io.emit('deletelocalnote', data);
     });
     socket.on('deleteagu', function(data){
         logger.info("delete Agu",data);
