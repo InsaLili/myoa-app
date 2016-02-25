@@ -14,24 +14,6 @@ $(document).ready(function() {
     var aguFlag = false;
     var stepNumber = 1;
     var white= '#E0E0E0';
-    // var locationNames=[];
-    // var locationCoordinates = [];
-    // var locationAmount;
-
-    var db = new PouchDB('http://localhost:5984/framework');
-    db.allDocs({
-        include_docs: true,
-        attachements: true,
-        startkey: 'location',
-        endkey: 'location\uffff'
-    }).then(function(locationData){
-        locationAmount = locationData.rows.length;
-        for(var i = 0; i < locationAmount; i++){
-            locationNames[i] = locationData.rows[i].doc.name;
-            locationCoordinates[i] = [Number(locationData.rows[i].doc.long),Number(locationData.rows[i].doc.lati)];
-        }
-        Server.init();
-    });
 
     var Server={
         init: function(){
@@ -41,84 +23,21 @@ $(document).ready(function() {
         },
 
         domInit: function(){
-//             for(var i=0; i<locationAmount; i++){
-//                 var name = locationNames[i];
-//                 var num = i+1;
-//                 var leftOffset = i*90+100;
-//                 var topOffset = 200;
-//                 $('.locations').append('<div class="location" id="location'+num+'"></div>');
-//                 var $currentLocation = $('#location'+num);
 
-//                 var title = '<div class="locationTitle"><h3>'+name+'</h3></div>';
-
-// //                var visual = '<div class="visualPlayers"  id="visualLocation'+num+'"><h4>Visualisation :</h4><div class="visualPlayer visualPlayer1"><img src="img/player1.png"></div><div class="visualPlayer visualPlayer2"><img src="img/player2.png"></div><div class="visualPlayer visualPlayer3"><img src="img/player3.png"></div></div>';
-//                 var visual = '<div class="visualPlayers"  id="visualLocation'+num+'"><h4>Visualisation :</h4><button type="button" class="btn player1 markerBtn" value="'+num+',1"><img src="/img/player1.png"></button><span class="check1 glyphicon glyphicon-ok-circle grey"></span><button type="button" class="btn player2 markerBtn" value="'+num+',2"><img src="/img/player2.png"></button><span class="check1 glyphicon glyphicon-ok-circle grey"></span><button type="button" class="btn player3 markerBtn" value="'+num+',3"><img src="/img/player3.png"></button><span class="check1 glyphicon glyphicon-ok-circle grey"></span></div>';
-
-//                 var check = '<div></div>'
-
-//                 var choose = '<div class="chooseLocation"><button class="btn btn-default btn-md submitChoice" name="'+name+'" value='+num+'>Choisir cet<br/>emplacement</button></div>';
-//                 var vote = '<div class="vote" id="vote'+num+'"><h4>Évaluation :</h4><span class="glyphicon glyphicon-star grey"></span><span class="glyphicon glyphicon-star grey"></span><span class="glyphicon glyphicon-star grey"></span><span class="glyphicon glyphicon-star grey"></span><span class="glyphicon glyphicon-star grey"></span><span class="label label-default caption">Pas Encore Évalué</span></div>';
-//                 var note = '<div class="note"><h4>Notes :</h4><span id="note'+num+'"></span></div>';
-//                 var content = '<div class="locationContent">'+visual+choose+vote+note+'</div>';
-
-//                 $currentLocation.append(title);
-//                 $currentLocation.append(content);
-//                 $currentLocation.offset({top: topOffset, left:leftOffset});
-//             }
-
-            // //------------------initialize progress bar;
-            // $( "#progressbar1" ).progressbar({
-            //     max: locationAmount
-            // });
-            // $( "#progressbar2" ).progressbar({
-            //     max: locationAmount
-            // });
-            // $( "#progressbar3" ).progressbar({
-            //     max: locationAmount
-            // });
-            // $( ".progressbar" ).on( "progressbarcomplete", function( event, ui ) {
-            //     allRating++;
-            // });
-
-            //-------------------set tasks' buttons and color
-//            $('#toStep2').prop('disabled', true);
             $('#finalStepBtn').on('click',function(){
                 $(this).prop('disabled', true);
                 $('#finalDialog').dialog('open');
             });
             $('#finalStepBtn').prop('disabled', true);
-//            $('#resetLocationBtn').on('click', Server.resetLocation);
-            // $('body').off('click').on('click', '.markerBtn', function(){
-            //     Server.chooseLocation(this);
-            // });
+
             $('#step1 p').css('color', white);
             $('#step1 span').css('color', white);
 
-
-            //------------------Enable multi-touch of location cards
-            // ------------------Hide school location cards at first
-            // ------------------Set initial position of each card
-            // $('.location').touch();
-            // $('#insectImg').touch();
-            // $('#energyImg').touch();
-            // $('.chooseLocation').hide();
             $('.visualPlayer').hide();
 
-            //--------------bind event to buttons
-            // $('.chooseGroupBtn').on('click', function(){
-                // $('#appLayer').show();
-                // $('#maskLayer').hide();
-                // groupNumber = parseInt($(this).val());
-                // socket.emit('choosegroup', { group: groupNumber});
-                //--------------------initialize map
-                // Server.mapInit();
                 Server.attachNotes();
                 Server.attachRating();
 
-            // });
-            // $('#appLayer').hide();
-
-            // check first step
             $('#step1 span').on('click', function(){
                 if(stepNumber==1 && allRating==3){
                     // reset timer
@@ -153,91 +72,8 @@ $(document).ready(function() {
             });
 
         },
-//         mapInit: function(){
-//             L.mapbox.accessToken = 'pk.eyJ1IjoiaW5zYWxpbGkiLCJhIjoickF1VzlYVSJ9.JH9ZrV76fbU5Ub9ZgBhNCw';
-//             var map = L.mapbox.map('map', 'insalili.meikk0a8', {
-//                 zoomControl: false
-//             }).setView([45.394547, 5.890489], 15);
-//             //------------------add markers
-//             var message = [];
-//             for(var i=0; i<locationAmount; i++){
-//                 var num = i+1;
-//                 var name = locationNames[i];
-//                 message[i]= '<div id="marker'+num+'"><h3>'+name+'</h3><img class= "markerImg" src="/img/place'+num+'.jpg"><button type="button" class="btn player1 markerBtn" value="'+num+',1"><img src="/img/player1.png"></button><button type="button" class="btn player2 markerBtn" value="'+num+',2"><img src="/img/player2.png"></button><button type="button" class="btn player3 markerBtn" value="'+num+',3"><img src="/img/player3.png"></button></div>';
-//             }
 
-//             var myLayer = L.mapbox.featureLayer().addTo(map);
-
-//             //-----------------------JSON data for markers
-//             var geoJson = {};
-//             geoJson['type'] = 'FeatureCollection';
-//             geoJson['features'] = [];
-//             for (var k =0; k<locationAmount; k++) {
-//                 var symbol,color;
-//                 symbol = "chemist";
-//                 color = "#E91E63";
-//                 var newFeature = {
-//                     "type": "Feature",
-//                     "geometry": {
-//                         "type": "Point",
-//                         "coordinates": locationCoordinates[k]
-//                     },
-//                     "properties": {
-//                         "title": locationNames[k],
-//                         "metadata":k+1,
-//                         "content": message[k],
-//                         "marker-symbol": k+1,
-//                         "marker-color": color,
-//                         "marker-size": "large"
-//                     }
-//                 };
-//                 geoJson['features'].push(newFeature);
-//             }
-
-//             myLayer.on('layeradd', function(e) {
-//                 var marker = e.layer,
-//                     feature = marker.feature;
-
-//                 var popupContent = feature.properties.content;
-
-//                 marker.bindPopup(popupContent,{
-//                     closeButton: false,
-//                     minWidth:400,
-//                     maxWidth: 400
-//                 });
-//             });
-
-// //----------------Add features to the map.
-//             myLayer.setGeoJSON(geoJson);
-
-//         },
         dialogInit: function(){
-            //-------------------set insect information dialog
-            // var insectShow = false, energyShow = false;
-            // $('#insectBtn').on('click', function(){
-            //     if(insectShow == false){
-            //         $('#insectImg').show();
-            //         insectShow = true;
-            //     }else{
-            //         $('#insectImg').hide();
-            //         insectShow = false;
-            //     }
-            // });
-            // $('#energyBtn').on('click', function(){
-            //     if(energyShow == false){
-            //         $('#energyImg').show();
-            //         energyShow = true;
-            //     }else{
-            //         $('#energyImg').hide();
-            //         energyShow = false;
-            //     }
-            // });
-
-            // $('.badges img').hide();
-            // $('#insectImg').hide();
-            // $('#energyImg').hide();
-
-            //------------------Initialize each dialog
             $( "#start" ).dialog({
                 resizable: false,
                 width:600,
@@ -336,104 +172,7 @@ $(document).ready(function() {
                 }
             });
         },
-        serviceInit: function(){
-            //------following parts realize the communication between pages
-            socket.on('addnote', function (data) {
-                console.log(data);
-                var id = data.id;
-                var content = data.content;
-                var player = data.player;
-                var location = data.location;
-                var notes = data.notes;
-                $('#note'+location).append('<p id='+id+' class="notePlayer'+player+'">'+content+'</p>');
-                var noteHeight = $('#location'+location+' .note').height();
-                if(noteHeight+260 > 400){
-                    $('#location'+location).height(noteHeight + 260 +'px');
-                }else{
-                    $('#location'+location).height(400+'px');
-                }
-
-            });
-
-            socket.on('addagu', function (data) {
-                console.log(data);
-                var id = data.id;
-                var content = data.content;
-                var player = data.player;
-                var location = parseInt(data.location);
-                //    var location = data.location;
-                $('.arguments span').append('<p id='+id+' class="aguPlayer'+player+'">'+content+'</p>');
-                var noteHeight = $('#location'+location+' .note').height();
-                var aguHeight = $('#location'+location+' .arguments').height();
-                if(aguHeight > 130){
-                    $('#location'+location).height(noteHeight + aguHeight + 270 +'px');
-                }else{
-                    $('#location'+location).height(noteHeight+400+'px');
-                }
-            });
-
-
-            socket.on('deletenote', function (data) {
-                console.log(data);
-                var id = data.id;
-                $('#'+id).remove();
-                var location = data.location;
-                var player = data.player;
-                var notes = data.notes;
-                var noteHeight = $('#location'+location+' .note').height();
-                if(noteHeight+260 > 400){
-                    $('#location'+location).height(noteHeight + 260 +'px');
-                }else{
-                    $('#location'+location).height(400+'px');
-                }
-            });
-
-            socket.on('deleteagu', function (data) {
-                console.log(data);
-                var id = data.id;
-                $('#'+id).remove();
-                var location = data.location;
-                var player = data.player;
-                var noteHeight = $('#location'+location+' .note').height();
-                var aguHeight = $('#location'+location+' .arguments').height();
-                if(aguHeight > 130){
-                    $('#location'+location).height(noteHeight + aguHeight + 270 +'px');
-                }else{
-                    $('#location'+location).height(noteHeight+400+'px');
-                }
-            });
-
-            socket.on('vote', function(data){
-                var location = data.location;
-                var player = data.player;
-                var id = data.id;
-                var rating = 0;
-                var progressbar;
-                // change check mark
-                var checkMark = $('#location'+location+' span')[player-1];
-                $(checkMark).removeClass('grey');
-                $(checkMark).addClass('star-best');
-
-                // change progressbar
-                db.get(id).then(function(doc) {
-                    if(doc.flag <= 1) {
-                        progressbar = $('#progressbar' + player);
-                        rating = parseInt(progressbar.attr("aria-valuenow"));
-                        rating++;
-                        progressbar.progressbar({
-                            value: rating
-                        });
-                        progressbar.next().text(rating + '/'+locationAmount+' Emplacements');
-                    }
-                }).catch(function(err){
-                    console.log(err);
-                });
-
-                if(allRating == 3){
-                    $('#toStep2').removeAttr('disabled');
-                }
-            });
-        },
+        
         //-----------------Add notes to location card
         attachNotes: function(){
             $('.location p').remove();
@@ -525,7 +264,7 @@ $(document).ready(function() {
             $('#selectLocation').removeAttr('disabled');
             $('#submitChoice').removeAttr('disabled');
 //            $('#step1').css('color', '#616161');
-            $('#step2').css('color', white);
+            // $('#step2').css('color', white);
 
             $('.chooseLocation').show();
 
@@ -536,23 +275,7 @@ $(document).ready(function() {
                 startTime: "05:00"
             });
         },
-        chooseLocation: function(element){
-            // var buttonValue = element.value.split(',');
-            // console.log(buttonValue);
-            // var location = parseInt(buttonValue[0]);
-            // var player = parseInt(buttonValue[1]);
-            // socket.emit('chooselocation', { location: location, player: player, group: groupNumber, aguflag: aguFlag});
-
-            // $('.visualPlayer'+player).hide();
-            // $('div#visualLocation'+location+' .visualPlayer'+player).show();
-
-            // var className = element.className;
-            // var elements = document.getElementsByClassName(className);
-            // $(elements).css({'background-color': '#5bc0de', 'border-color': '#46b8da'});
-            // $(element).css({'background-color': '#f0ad4e', 'border-color': '#eea236'});
-            // $($(elements)[location-1]).css({'background-color': '#f0ad4e', 'border-color': '#eea236'});
-        },
-
+        
         confirmChoice: function(map){
             clearInterval(intervals.main);
             $('#timer2').remove();

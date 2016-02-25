@@ -77,7 +77,12 @@
                     <span class="glyphicon glyphicon-star grey" ng-repeat="i in range(5) track by $index"></span><span class="label label-default caption">Pas Encore Évalué</span></div>
                 </div>
                 <div class="note">
-                    <h4>Notes :</h4><span id="note{{$index+1}}"></span>
+                    <h4>Notes :</h4>
+                    <span id="note{{$index+1}}">
+                        <!-- <div ng-repeat="note in notes"> -->
+                            <p ng-repeat="note in notes" ng-if="note.location == $parent.$index+1" class="notePlayer{{note.player}}">{{note.content}}</p>
+                        <!-- </div> -->
+                    </span>
                 </div>
             </div>
         </div>

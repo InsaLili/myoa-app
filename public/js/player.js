@@ -31,7 +31,7 @@ $(document).ready(function($){
 
             //set avatar src based on user's choice
             var imgSrc = ['img/player1.png','img/player2.png','img/player3.png'];
-
+ 
             //------------------hide arguments part
             $('#showAgu').hide();
             $('#addAgu').hide();

@@ -6,7 +6,8 @@ appSetModule.service('DataService', function(){
     var db = new PouchDB('http://localhost:5984/framework');
     var mapsetting;
     var self = this;
-    self.groupnum = 0;
+    self.groupNum = 0;
+    self.studentNum= 0;
     self.studentAmount = 0;
     // ！！！！todo，用nodejs先在server side获取数据库数据
     db.get("mapsetting").then(function(doc) {
@@ -14,6 +15,16 @@ appSetModule.service('DataService', function(){
     },self).catch(function(err){
         console.log(err);
     });
+
+    db.allDocs({
+        include_docs: true,
+        attachements: true,
+        startkey: 'note',
+        endkey: 'note\uffff'
+    }).then(function(note){
+        console.log(note);
+        self.notes = note;
+    },self);
 });
 
 appSetModule.controller('StyleCtrl', function($scope, DataService) {

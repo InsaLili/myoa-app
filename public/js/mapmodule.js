@@ -13,6 +13,7 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         $scope.avatarWidth = Math.round(12/$scope.studentAmount);
         $scope.markers = DataService.mapsetting.markers;
         $scope.steps = DataService.mapsetting.steps;
+        $scope.notes = DataService.notes.rows[DataService.groupNum-1].doc.notes;
         $scope.allRating = 0;
         $scope.currentStep = 0;
         $scope.locationNames = function(){
@@ -35,8 +36,106 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
     }
 
     $scope.serviceInit = function(){
-        console.log("service init");
+        var db = new PouchDB('http://localhost:5984/insect');
+        var socket = io.connect('http://localhost:8000');
+        //------following parts realize the communication between pages
+        socket.on('addnote', function (data) {
+            console.log(data);
+            var id = data.id;
+            var content = data.content;
+            var player = data.player;
+            var location = data.location;
+            var notes = data.notes;
+            $('#note'+location).append('<p id='+id+' class="notePlayer'+player+'">'+content+'</p>');
+            var noteHeight = $('#location'+location+' .note').height();
+            if(noteHeight+260 > 400){
+                $('#location'+location).height(noteHeight + 260 +'px');
+            }else{
+                $('#location'+location).height(400+'px');
+            }
+
+        });
+
+        socket.on('addagu', function (data) {
+            console.log(data);
+            var id = data.id;
+            var content = data.content;
+            var player = data.player;
+            var location = parseInt(data.location);
+            //    var location = data.location;
+            $('.arguments span').append('<p id='+id+' class="aguPlayer'+player+'">'+content+'</p>');
+            var noteHeight = $('#location'+location+' .note').height();
+            var aguHeight = $('#location'+location+' .arguments').height();
+            if(aguHeight > 130){
+                $('#location'+location).height(noteHeight + aguHeight + 270 +'px');
+            }else{
+                $('#location'+location).height(noteHeight+400+'px');
+            }
+        });
+
+
+        socket.on('deletenote', function (data) {
+            console.log(data);
+            var id = data.id;
+            $('#'+id).remove();
+            var location = data.location;
+            var player = data.player;
+            var notes = data.notes;
+            var noteHeight = $('#location'+location+' .note').height();
+            if(noteHeight+260 > 400){
+                $('#location'+location).height(noteHeight + 260 +'px');
+            }else{
+                $('#location'+location).height(400+'px');
+            }
+        });
+
+        socket.on('deleteagu', function (data) {
+            console.log(data);
+            var id = data.id;
+            $('#'+id).remove();
+            var location = data.location;
+            var player = data.player;
+            var noteHeight = $('#location'+location+' .note').height();
+            var aguHeight = $('#location'+location+' .arguments').height();
+            if(aguHeight > 130){
+                $('#location'+location).height(noteHeight + aguHeight + 270 +'px');
+            }else{
+                $('#location'+location).height(noteHeight+400+'px');
+            }
+        });
+
+        socket.on('vote', function(data){
+            var location = data.location;
+            var player = data.player;
+            var id = data.id;
+            var rating = 0;
+            var progressbar;
+            // change check mark
+            var checkMark = $('#location'+location+' span')[player-1];
+            $(checkMark).removeClass('grey');
+            $(checkMark).addClass('star-best');
+
+            // change progressbar
+            db.get(id).then(function(doc) {
+                if(doc.flag <= 1) {
+                    progressbar = $('#progressbar' + player);
+                    rating = parseInt(progressbar.attr("aria-valuenow"));
+                    rating++;
+                    progressbar.progressbar({
+                        value: rating
+                    });
+                    progressbar.next().text(rating + '/'+locationAmount+' Emplacements');
+                }
+            }).catch(function(err){
+                console.log(err);
+            });
+
+            if(allRating == 3){
+                $('#toStep2').removeAttr('disabled');
+            }
+        });
     }
+
     $scope.nextStep = function($event,step){
         if($scope.currentStep == step){
             var element = $event.target.parentElement;
@@ -51,7 +150,7 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
     $scope.checkLocation = function($event,marker,player){
         var socket = io.connect('http://localhost:8000');
     	console.log(marker,player);
-        socket.emit('checklocation', { location: marker, player: player, group: $scope.groupnum});
+        socket.emit('checklocation', { marker: marker, player: player, group: DataService.groupNum});
 
         var element = $event.currentTarget;
         var className = element.className;
@@ -64,15 +163,13 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
     	console.log(marker,name);
     }
     $scope.init = function(){
+        // get data and initialize service
         $scope.getAppData();
-        //--------------------initialize DOM
-        // $scope.domInit();
-        //--------------------initialize service
         $scope.serviceInit();
         
-        // Server.attachNotes();
         // Server.attachRating();
     }
+    // wait for dom ready
     $timeout(function(){
         // initiate progress bar
         for(var i=0; i<$scope.studentAmount;i++){
@@ -88,6 +185,8 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         // $('.chooseLocation').hide();
         $("#step0 p").css('color', '#E0E0E0');
         $("#step0 span").css('color', '#E0E0E0');
+        $(".chooseLocation").hide();
+
     });
 
     $scope.init();
@@ -122,13 +221,19 @@ mapModule.controller("MapCtrl", [ "$scope", "$http", "DataService",function($sco
 
     $scope.addMarkers = function(){
         var locationAmount = mapsetting.markers.length;
+        var studentAmount = parseInt(DataService.studentAmount);
         for(var i=0; i<locationAmount;i++){
             var num = i+1;
+            var message = '<div id="marker'+num+'" class="mapMarker"><h3>'+mapsetting.markers[i].name+'</h3>';
+            for(var j=1; j<=studentAmount;j++){
+                message += '<button type="button" class="btn player'+j+' markerBtn" ng-click="checkLocation($event,'+num+','+j+')"><img src="/img/player'+j+'.png"></button>'
+            }
+            message += '</div>';
             var marker={
                 lat: Number(mapsetting.markers[i].laititude),
                 lng: Number(mapsetting.markers[i].longtitude),
                 getMessageScope: function () { return $scope; },
-                message: '<div id="marker'+num+'" class="mapMarker"><h3>'+mapsetting.markers[i].name+'</h3><button type="button" class="btn player1 markerBtn" ng-click="checkLocation($event,'+num+',1)"><img src="/img/player1.png"></button><button type="button" class="btn player2 markerBtn" ng-click="checkLocation($event,'+num+',2)"><img src="/img/player2.png"></button><button type="button" class="btn player3 markerBtn" ng-click="checkLocation($event,'+num+',3)"><img src="/img/player3.png"></button></div>',
+                message: message,
                 compileMessage: true,
                 icon:{
                     type: 'makiMarker',
@@ -143,7 +248,7 @@ mapModule.controller("MapCtrl", [ "$scope", "$http", "DataService",function($sco
 
     $scope.checkLocation = function($event,marker,player){
         console.log(marker,player);
-        socket.emit('checklocation', { location: marker, player: player, group: DataService.groupnum});
+        socket.emit('checklocation', { location: marker, player: player, group: DataService.groupNum});
 
         var element = $event.currentTarget;
         var className = element.className;

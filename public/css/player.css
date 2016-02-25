@@ -4,7 +4,7 @@
 }
 .container{
     margin: 0;
-    padding: 0;
+    padding-right: 20px;
     position: relative;
 }
 html{
@@ -48,10 +48,10 @@ p, table{
 }
 #maskLayer .choosePlayer{
     float: left;
-    width: 220px;
+/*    width: 220px;
     height: 200px;
     margin-left: 15px;
-    margin-right: 15px;
+    margin-right: 15px;*/
 }
 #maskLayer button{
     width: 220px;
@@ -62,24 +62,79 @@ p, table{
     width: 100%;
     height: 100%;
 }
-
-#locationInfo{
+#avatar{
+    width:70px;
+    height:70px;
     float: left;
-    width: 60%;
-    height: 510px;
-    background-color: #fff;
-    margin-top: 10px;
     margin-left: 10px;
-    margin-bottom: 10px;
+}
+#sharedSpace{
+    float: left;
+    height: 750px;
+    /*overflow: scroll;*/
+    /*margin-top: 10px;*/
+    margin-left: 10px;
+    background-color: #FAFAFA;
     box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.3);
+}
+#commonNotes{
+    height: 380px;
+    border: 1px solid #009688;
+
+}
+#addCommonNotes{
+    height: 300px;
+    border: 1px solid #009688;
+
+}
+#markerSpace{
+    float: left;
+    height: 750px;
+    /*overflow: scroll;*/
+    /*margin-top: 10px;*/
+    background-color: #FAFAFA;
+    box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.3);
+}
+#markerInfo{
+    height:450px;
+    border: 1px solid #009688;
     /*box-shadow: 10px 10px 5px #888888;*/
 }
-.head{
+#addMarkerNote{
+    height: 200px;
+    border: 1px solid #009688;
+
+}
+#markerNote{
+    height:300px;
+    border: 1px solid #009688;
+
+}
+#evaluation{
+    height: 100px;
+    float: left;
+    border: 1px solid #009688;
+
+}
+.noteOfPlayer{
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+.noteOfPlayer p{
+    background-color: #E0F2F1;
+    /*border: 1px solid;*/
+    color: #009688;
+    font-size: 13px;
+    border-radius: 5px;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+/*.head{
     width: 100%;
     height: 30px;
     margin-top: 0;
     margin-bottom: 10px;
-    /*background-color: #3f51b5;*/
     background-color: #009688;
     color: #FAFAFA;
     padding: 10px 0 10px 10px;
@@ -92,7 +147,7 @@ p, table{
     width: 90%;
     margin: auto;
 }
-
+*/
 #showNotes, #showAgu{
     float: left;
     width: 35%;
@@ -104,12 +159,7 @@ p, table{
     box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.3);
 
 }
-.noteOfPlayer, .aguOfPlayer{
-    float: left;
-    /*border: 1px solid;*/
-    margin-left: 3%;
-    margin-bottom: 10px;
-}
+
 #addNotes, #addAgu{
     float: left;
     width: 35%;
@@ -125,12 +175,7 @@ p, table{
     margin-left: 10px;
     float: left;
 }
-#avatar{
-    width:70px;
-    height:70px;
-    float: left;
-    margin-left: 10px;
-}
+
 #avatar img{
     width: 100%;
     height: 100%;
@@ -138,15 +183,7 @@ p, table{
 #submitNote, #submitAgu{
     margin-top: 5px;
 }
-#note p, #arguments p{
-    background-color: #E0F2F1;
-    /*border: 1px solid;*/
-    color: #009688;
-    font-size: 13px;
-    border-radius: 5px;
-    padding: 5px;
-    margin-bottom: 5px;
-}
+
 
 #vote{
     float: left;

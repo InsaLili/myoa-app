@@ -33,29 +33,16 @@ li{
     color: #fff;
 }
 
-#maskLayer #chooseGroup{
-    width: 1000px;
-    height: 210px;
-    margin-top: 50px;
-    margin-left: auto;
-    margin-right: auto;
-}
 #maskLayer .chooseGroup{
     float: left;
-    width: 220px;
-    height: 200px;
-    margin-right: 25px;
 }
-#maskLayer button{
-    width: 220px;
-    height: 200px;
-}
+
 #blackGroundBtn{
     background-color: #000;
 }
 #maskLayer button img{
-    width: 100%;
-    height: 100%;
+/*    width: 100%;
+    height: 100%;*/
 }
 ul li{
     list-style-type: none;
@@ -391,7 +378,7 @@ p{
     margin-left: 5px;
     background-color: #5D4037;
     padding: 10px;
-    border-radius: 15px;
+    border-radius: 10px;
 }
 .chooseLocation button{
     /*margin-top: 15px;*/
@@ -468,13 +455,13 @@ p{
     visibility: hidden;
 }
 .btn-circle {
-  width: 80px;
+/*  width: 80px;
   height: 80px;
   text-align: center;
   padding: 6px 0;
   font-size: 12px;
   line-height: 1.42;
-  border-radius: 20px;
+  border-radius: 20px;*/
 }
 .markerImg{
     margin-bottom: 10px;

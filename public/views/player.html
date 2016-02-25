@@ -1,178 +1,101 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" media="screen" href="css/bootstrap.min.css">
-    <link rel="stylesheet" media="screen" href="jquery-ui-1.11.4/jquery-ui.css">
-    <link rel="stylesheet" media="screen" href="css/star-rating.min.css">
-    <link rel="stylesheet" media="screen" href="css/player.css">
-    <title>Explorateur</title>
-</head>
-<body>
-<div id="maskLayer">
-    <h1>Choisir un avatar</h1>
-    <div id="choosePlayer">
-        <div class="choosePlayer">
-            <button class="btn btn-default choosePlayerBtn" value=1>
-                <img src="img/player1.png">
-            </button>
-        </div>
-        <div class="choosePlayer">
-            <button class="btn btn-default choosePlayerBtn" value=2>
-                <img src="img/player2.png">
-            </button>
-        </div>
-        <div class="choosePlayer">
-            <button class="btn btn-default choosePlayerBtn" value=3>
-                <img src="img/player3.png">
-            </button>
-        </div>
-    </div>
-</div>
-<div id="appLayer">
-    <div id="locationInfo" class="container">
-        <div class="head">
-            <h5>Données de l'emplacement :  <span id="dataLocation">?</span></h5>
-        </div>
-        <div id="locationDetail">
-            <div class="infoTable">
-                <p><b>Lumière</b></p>
-                <table id="locationLight" class="table table-bordered">
-                    <tr class="active">
-                        <th>Mesure 1</th>
-                        <th>Mesure 2</th>
-                        <th>Mesure 3</th>
-                        <th>Mesure 4</th>
-                        <th>Moyenne</th>
-                    </tr>
-                    <tr>
-                        <td><span></span></td>
-                        <td><span></span></td>
-                        <td><span></span></td>
-                        <td><span></span></td>
-                        <td><span></span></td>
-                    </tr>
-                </table>
-            </div>
-            <div class="infoTable">
-                <p><b>Vent</b></p>
-                <table id="locationWind" class="table table-bordered">
-                    <tr class="active">
-                        <th>Mesure 1</th>
-                        <th>Mesure 2</th>
-                        <th>Mesure 3</th>
-                        <th>Mesure 4</th>
-                        <th>Moyenne</th>
-                    </tr>
-                    <tr>
-                        <td><span></span></td>
-                        <td><span></span></td>
-                        <td><span></span></td>
-                        <td><span></span></td>
-                        <td><span></span></td>
-                    </tr>
-                </table>
-            </div>
-            <div class="infoTable">
-                <p><b>Température du sol</b></p>
-                <table id="locationTemperature" class="table table-bordered">
-                    <tr class="active">
-                        <th>Mesure 1</th>
-                        <th>Mesure 2</th>
-                        <th>Mesure 3</th>
-                        <th>Mesure 4</th>
-                        <th>Moyenne</th>
-                    </tr>
-                    <tr>
-                        <td><span></span></td>
-                        <td><span></span></td>
-                        <td><span></span></td>
-                        <td><span></span></td>
-                        <td><span></span></td>
-                    </tr>
-                </table>
-            </div>
-            <div class="infoTable">
-                <p><b>Nitrates</b></p>
-                <table id="locationPH" class="table table-bordered">
-                    <tr class="active">
-                        <th>Mesure 1</th>
-                        <th>Mesure 2</th>
-                        <th>Mesure 3</th>
-                        <th>Mesure 4</th>
-                        <th>Moyenne</th>
-                    </tr>
-                    <tr>
-                        <td><span></span></td>
-                        <td><span></span></td>
-                        <td><span></span></td>
-                        <td><span></span></td>
-                        <td><span></span></td>
-                    </tr>
-                </table>
+<div id="appLayer"  ng-controller="PlayerCtrl">
+    <div class="container col-md-4">
+        <div class="col-md-12" id="sharedSpace">
+            <div class="row">
+                <div id="avatar"><img src="img/player{{player}}.png"></div>
+                <div class="col-md-12" id="addCommonNotes">
+                    <h4>Add common notes</h4>
+                    <textarea class="form-control" rows="8" cols="1"></textarea>
+                    <button class="btn btn-default pull-right btn-sm" id="submitNote">Validation</button>
+                </div>
+                <div class="col-md-12" id="commonNotes">
+                    <h4>Common notes</h4>
+                </div>
             </div>
         </div>
     </div>
-    <div id="addNotes" class="container">
-        <div class="head">
-            <h5>Ajouter mes notes</h5>
+    <div class="container col-md-8">
+        <div class="col-md-12" id="markerSpace">
+            <div class="row">
+                <div class="col-md-12" id="markerInfo">
+                    <h4>Information</h4>
+                    <p>{{locationInfo}}</p>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-12" id="addMarkerNote">
+                            <h4>Add location notes</h4>
+                            <textarea class="form-control" rows="4" cols="1"></textarea>
+                            <button class="btn btn-default pull-right btn-sm" id="submitNote">Validation</button>
+                        </div>
+                        <div class="col-md-12" id="evaluation">
+                            <h4>Evaluation</h4>
+                            <input id="input" class="rating" data-min="0" data-max="5" data-step="1" data-stars=5  data-show-clear="false" data-size="xs">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" id="markerNote">
+                    <h4>Location notes</h4>
+                    <div ng-repeat="note in notes">
+                        <div ng-if="(note.location == currentLocation)">
+                            <div class="noteOfPlayer" ng-if="note.player==player">
+                                <p>{{note.content}}</p>
+                                <button class="btn btn-default btn-xs deletenote" ng-click="deleteNote($event)">Effacer</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div id="avatar"><img src="img/player1.png"></div>
+    </div>
+    <!-- <div id="addNotes" class="container"> -->
+        <!-- <div class="head"> -->
+            <!-- <h5>Ajouter mes notes</h5> -->
+        <!-- </div> -->
+<!--         <div id="avatar"><img src="img/player{{studentNum}}.png"></div>
         <div id="myNote">
             <textarea class="form-control" rows="3" cols="1"></textarea>
             <button class="btn btn-default pull-right btn-sm" id="submitNote">Validation</button>
         </div>
-    </div>
-    <div id="addAgu" class="container">
+    </div> -->
+<!--     <div id="addAgu" class="container">
         <div class="head">
             <h5>Ajouter mes argumentaires</h5>
         </div>
-        <div id="avatar"><img src="img/player1.png"></div>
+        <div id="avatar"><img src="img/player{{studentNum}}.png"></div>
         <div id="myAgu">
             <textarea class="form-control" rows="3" cols="1"></textarea>
             <button class="btn btn-default pull-right btn-sm" id="submitAgu">Validation</button>
         </div>
-    </div>
+    </div> -->
 
-    <div id="showNotes" class="container">
+<!--     <div id="showNotes" class="container">
         <div class="head">
             <h5>Mes notes</h5>
         </div>
         <span id="note"></span>
-    </div>
-    <div id="showAgu" class="container">
+    </div> -->
+<!--     <div id="showAgu" class="container">
         <div class="head">
             <h5>Mes argumentaires</h5>
         </div>
         <span id="arguments"></span>
-    </div>
-
+    </div> -->
+<!-- 
     <div id="vote" class="container">
         <div class="head">
             <h5>Évaluer cet emplacement</h5>
         </div>
         <input id="input" class="rating" data-min="0" data-max="5" data-step="1" data-stars=5  data-show-clear="false" data-size="xs">
     </div>
-    <div id="dialogSpace">
+    <div id="locationInfo" class="container">
+    </div>  -->
+<!--     <div id="dialogSpace">
         <div id="chooseLocationDlg" title="Attention">
             Choisissez d'abord un emplacement!
         </div>
         <div id="writeNoteDlg" title="Attention">
             Écrivez une note avant de la soumettre!
         </div>
-    </div>
+    </div> -->
 </div>
-
-<script src="js/jquery-2.1.3.min.js"></script>
-<script src="jquery-ui-1.11.4/jquery-ui.js"></script>
-<script src="js/hammer.min.js"></script>
-<script src="js/pouchdb-3.4.0.min.js"></script>
-<script src="js/pouchdb-upsert.js"></script>
-<script src="js/socket.io.js"></script>
-<script src="js/player.js"></script>
-<script src="js/star-rating.min.js"></script>
-<script src="js/screenfull.js"></script>
-<script src="jquery-ui-1.11.4/jquery-ui.min.js"></script>
-</body>
-</html>
