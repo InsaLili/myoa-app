@@ -30,7 +30,9 @@
                         </div>
                         <div class="col-md-12" id="evaluation">
                             <h4>Evaluation</h4>
-                            <input id="input" class="rating" data-min="0" data-max="5" data-step="1" data-stars=5  data-show-clear="false" data-size="xs">
+                            <div class="rating">
+                                <span class="glyphicon glyphicon-star" ng-repeat="i in range(5) track by $index" ng-class="{true: 'star', false: 'grey'}[voteVal>$index]" ng-click="evaluateLocation($index+1)"></span><span class="label label-default caption">Pas Encore Évalué</span>
+                            </div>
                         </div>
                     </div>
                 </div>

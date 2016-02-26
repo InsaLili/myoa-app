@@ -25,6 +25,16 @@ appSetModule.service('DataService', function(){
         console.log(note);
         self.notes = note;
     },self);
+
+    db.allDocs({
+        include_docs: true,
+        attachements: true,
+        startkey: 'vote',
+        endkey: 'vote\uffff'
+    }).then(function(vote){
+        console.log(vote);
+        self.votes = vote;
+    },self);
 });
 
 appSetModule.controller('StyleCtrl', function($scope, DataService) {

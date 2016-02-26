@@ -5,7 +5,7 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         return new Array(n);   
     }
     //!!!!todo,delete some var
-    $scope.getAppData = function(){
+    getAppData = function(){
         $scope.longtitude = parseFloat(DataService.mapsetting.longtitude);
         $scope.laititude = parseFloat(DataService.mapsetting.laititude);
         $scope.locationAmount = DataService.mapsetting.markers.length;
@@ -14,7 +14,8 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         $scope.markers = DataService.mapsetting.markers;
         $scope.steps = DataService.mapsetting.steps;
         $scope.notes = DataService.notes.rows[DataService.groupNum-1].doc.notes;
-        $scope.allRating = 0;
+        $scope.votes = DataService.votes.rows[DataService.groupNum-1].doc.votes;
+        $scope.allVotes = $scope.studentAmount*($scope.markers.length);
         $scope.currentStep = 0;
         $scope.locationNames = function(){
             var names = [];
@@ -35,7 +36,7 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         console.log($scope.locationCoordinates());
     }
 
-    $scope.serviceInit = function(){
+    serviceInit = function(){
         var db = new PouchDB('http://localhost:5984/insect');
         var socket = io.connect('http://localhost:8000');
         //------following parts realize the communication between pages
@@ -95,46 +96,98 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         });
 
         socket.on('vote', function(data){
-            var location = data.location;
-            var player = data.player;
-            var id = data.id;
-            var rating = 0;
-            var progressbar;
-            // change check mark
-            var checkMark = $('#location'+location+' span')[player-1];
-            $(checkMark).removeClass('grey');
-            $(checkMark).addClass('star-best');
-
-            // change progressbar
-            db.get(id).then(function(doc) {
-                if(doc.flag <= 1) {
-                    progressbar = $('#progressbar' + player);
-                    rating = parseInt(progressbar.attr("aria-valuenow"));
-                    rating++;
-                    progressbar.progressbar({
-                        value: rating
-                    });
-                    progressbar.next().text(rating + '/'+locationAmount+' Emplacements');
-                }
-            }).catch(function(err){
-                console.log(err);
-            });
-
-            if(allRating == 3){
-                $('#toStep2').removeAttr('disabled');
-            }
+            updateVote(data);
         });
     }
+    attachProgress = function(){
+        $scope.voteAmount=[];
+        var progressbarText = $('.player p');
 
-    $scope.nextStep = function($event,step){
-        if($scope.currentStep == step){
-            var element = $event.target.parentElement;
-            $(element.children[0]).removeClass('glyphicon-unchecked');
-            $(element.children[0]).addClass('glyphicon-check');
-            if(step<$scope.steps.length-1){
-                $(element.nextElementSibling.children).css('color', '#E0E0E0');
+        // filte all the players, i is the number of player
+        for(var i=0; i<$scope.studentAmount;i++){
+            var player = i+1;
+            var votes = $.grep($scope.votes, function(value) {
+                return value.player == player;
+            });
+            var voteNum = votes.length;
+            $( "#progressbar"+player ).progressbar({
+                value: voteNum
+            });
+            $(progressbarText[i]).text(voteNum + '/'+$scope.locationAmount+' Emplacements');
+            $scope.voteAmount.push(voteNum);
+            // check all the location for the i player, change the checkmark color
+            for(var j=0; j<voteNum;j++){
+                var vote = votes[j];
+                var location = vote.location;
+                var checkMark = $('#location'+location+' span')[i];
+                $(checkMark).removeClass('grey');
+                $(checkMark).addClass('star-best');
             }
-            $scope.currentStep++;
+        }
+
+        console.log($scope.voteAmount);
+    }
+    updateVote = function(data){
+        $scope.votes = data.votes;
+        // 
+        if(data.newvote == false){
+            return;
+        } 
+
+        var location = data.location;
+        var player = data.player;
+        var id = data.id;
+        $scope.voteAmount[player-1]++;
+        // update progressbar
+        var voteNum = $scope.voteAmount[player-1];
+        var progressbarText = $('.player p');
+        $( "#progressbar"+player ).progressbar({
+            value: voteNum
+        });
+        $(progressbarText[player-1]).text(voteNum + '/'+$scope.locationAmount+' Emplacements');
+        // update checkmark
+        var checkMark = $('#location'+location+' span')[player-1];
+        $(checkMark).removeClass('grey');
+        $(checkMark).addClass('star-best');
+    }
+    showVote = function(){
+        $scope.voteValue = [];
+        var color = ['#d9534f','#ec971f','#31b0d5','#337ab7','#449d44'];
+        var caption= ['Très Faible', 'Faible', 'Moyen', 'Bon', 'Très Bon'];
+        
+        for(var i=0; i<$scope.locationAmount;i++){
+            // get all the votes for the same location i
+            var votes = $.grep($scope.votes, function(value){
+                return value.location == i+1;
+            });
+            var value=0;
+            for(var j=0; j<$scope.studentAmount;j++){
+                value += votes[j].vote;
+            }
+            value = Math.round(value/$scope.studentAmount);
+            // change star color
+            $scope.voteValue.push(value);
+            // change caption
+            var location = i+1;
+            var label = $('#vote'+location+' .caption');
+            label.text(caption[value-1]);
+            label.css('background-color', color[value-1]);
+        }
+    }
+    $scope.nextStep = function($event,step){
+        if($scope.votes.length == $scope.allVotes){
+            if($scope.currentStep == step){
+                var element = $event.target.parentElement;
+                $(element.children[0]).removeClass('glyphicon-unchecked');
+                $(element.children[0]).addClass('glyphicon-check');
+                if(step == 0){
+                    showVote();
+                }
+                if(step<$scope.steps.length-1){
+                    $(element.nextElementSibling.children).css('color', '#E0E0E0');
+                }
+                $scope.currentStep++;
+            }
         }
     }
     $scope.checkLocation = function($event,marker,player){
@@ -152,12 +205,10 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
     $scope.chooseLocation = function($event,marker,name){
     	console.log(marker,name);
     }
-    $scope.init = function(){
+    init = function(){
         // get data and initialize service
-        $scope.getAppData();
-        $scope.serviceInit();
-        
-        // Server.attachRating();
+        getAppData();
+        serviceInit();
     }
     // wait for dom ready
     $timeout(function(){
@@ -177,9 +228,10 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         $("#step0 span").css('color', '#E0E0E0');
         $(".chooseLocation").hide();
 
+        attachProgress();
     });
 
-    $scope.init();
+    init();
 });
 
 mapModule.controller("MapCtrl", [ "$scope", "$http", "DataService",function($scope, $http, DataService) {

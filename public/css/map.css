@@ -140,16 +140,16 @@ p{
 }
 #leaderboard .progressbars{
     float: left;
-    /*width: 250px;*/
     height: 100%;
     border-radius: 5px;
     margin-left: 10px;
+
 }
 
 #leaderboard .progressbar{
-    /*width: 130px;*/
     float: left;
-    /*margin-top: 12px;*/
+    padding-left: 0;
+    padding-right: 0;
 }
 #progressbar1 .ui-widget-header{
     border: 1px solid #009688;

@@ -21,7 +21,7 @@
                         <div class="noteBadge">
                             <img src="img/notebadge.png">
                         </div>
-                        <div class="progressbar col-md-12" id="progressbar{{$index+1}}"></div>
+                        <div class="col-md-12 progressbar" id="progressbar{{$index+1}}"></div>
                         <P>0/4 Emplacements</P>
                     </div>
                 </div>
@@ -57,7 +57,7 @@
     <!--Show the mountain location cards-->
     <div class="locations">
         <!-- !!!!todo: improve ng-click -->
-        <div class="location" ng-repeat="marker in markers" id="location{{$index}}">
+        <div class="location" ng-repeat="marker in markers" id="location{{$index+1}}">
             <div class="locationTitle">
                 <h3>{{$index+1}}.  {{marker.name}}</h3>
             </div>
@@ -74,7 +74,7 @@
                 </div>    
                 <div class="vote" id="vote{{$index+1}}">
                     <h4>Évaluation :</h4>
-                    <span class="glyphicon glyphicon-star grey" ng-repeat="i in range(5) track by $index"></span><span class="label label-default caption">Pas Encore Évalué</span></div>
+                    <span class="glyphicon glyphicon-star grey" ng-repeat="i in range(5) track by $index" ng-class="{true: 'star', false: 'grey'}[voteValue[$parent.$index]>$index]" ></span><span class="label label-default caption">Pas Encore Évalué</span></div>
                 </div>
                 <div class="note">
                     <h4>Notes :</h4>
