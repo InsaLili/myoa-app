@@ -16,7 +16,9 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         $scope.notes = DataService.notes.rows[DataService.groupNum-1].doc.notes;
         $scope.votes = DataService.votes.rows[DataService.groupNum-1].doc.votes;
         $scope.allVotes = $scope.studentAmount*($scope.markers.length);
-        $scope.currentStep = 0;
+        $scope.currentStep = 1;
+        $scope.eval = DataService.mapsetting.eval;
+        $scope.studentNotes=[];
         $scope.locationNames = function(){
             var names = [];
             for(var i=0; i<$scope.locationAmount;i++){
@@ -127,6 +129,43 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
 
         console.log($scope.voteAmount);
     }
+    dialogInit = function(){
+        var steps = $scope.steps.length;
+        for(var i=0; i<steps; i++){
+            var step = i+1;
+            $( "#dialog"+step).dialog({
+                autoOpen: false,
+                resizable: false,
+                width:600,
+                height:420,
+                modal: true,
+                buttons: {
+                    "Commencer": function(){
+                        $(this).dialog( "close" );
+                        var step = Number(this.id.match(/\d/)[0])
+                        timerInit(step);
+                    }
+                }
+            });
+            
+        }
+    }
+    timerInit = function(step){
+        // remove the former timer
+        var num = step-1;
+        if($('#timer'+num).length !== 0){
+            clearInterval(intervals.main);
+            $('#timer'+num).remove();
+        }
+        // add a new timer
+        if($scope.steps[num].timer == 'true'){
+            $('#timer'+step).countdown({
+                image: "/img/digits.png",
+                format: "mm:ss",
+                startTime: $scope.steps[num].timerval
+            });
+        }
+    }
     updateVote = function(data){
         $scope.votes = data.votes;
         // 
@@ -180,13 +219,15 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
                 var element = $event.target.parentElement;
                 $(element.children[0]).removeClass('glyphicon-unchecked');
                 $(element.children[0]).addClass('glyphicon-check');
-                if(step == 0){
+
+                if(step == 1){
                     showVote();
                 }
-                if(step<$scope.steps.length-1){
+                if(step<$scope.steps.length){
                     $(element.nextElementSibling.children).css('color', '#E0E0E0');
                 }
                 $scope.currentStep++;
+                $('#dialog'+$scope.currentStep).dialog('open');
             }
         }
     }
@@ -229,6 +270,8 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         $(".chooseLocation").hide();
 
         attachProgress();
+        dialogInit();
+        $('#dialog1').dialog('open');
     });
 
     init();

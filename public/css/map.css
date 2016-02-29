@@ -194,9 +194,12 @@ p{
     width: 700px;
     margin-bottom: 10px;
 }
-.glyphicon-unchecked, .glyphicon-check{
+.glyphicon{
     font-size: 25px;
     float: left;
+}
+.vote span, .glyphicon.heart{
+    text-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
 }
 #tasks ul li p{
     font-size: 20px;
@@ -302,8 +305,7 @@ p{
     border: 3px solid #5D4037;
 }
 .locations .locationTitle{
-    position: absolute;
-    top: 0;
+    float: left;
     width: 100%;
     height: 60px;
     background-color: #5D4037;
@@ -313,6 +315,9 @@ p{
 .locationTitle h3{
     color: #ffffff;
 }
+.locationContent{
+    float: left;
+}
 .location span p {
     float: left;
     margin-right: 5px;
@@ -320,9 +325,7 @@ p{
     /*border: 1px solid;*/
 }
 .visualPlayers{
-    position: absolute;
-    top: 70px;
-    /*left: 170px;*/
+    margin-top: 10px;
     width: 390px;
     height: 100px;
     margin-left: 15px;
@@ -352,19 +355,12 @@ p{
     padding-left: 5px;
 }
 .locationContent .vote{
-    position: absolute;
-    top: 175px;
-    width: 300px;
-    height: 90px;
-    margin-top: 10px;
+    width: 390px;
+    height: 75px;
+    margin-top: 15px;
     margin-left: 15px;
-}
-.vote span{
-    float: left;
-    text-shadow: 0 0 1px rgba(0, 0, 0, 0.7);
-}
-.glyphicon-star, .glyphicon-ok-circle{
-    font-size: 2em;
+    border-bottom: 1px solid #5D4037;
+
 }
 
 .locationContent h4{
@@ -384,11 +380,10 @@ p{
     /*margin-top: 15px;*/
 }
 .note{
+    float: left;
     width: 390px;
     margin-left: 15px;
-    margin-top: 10px;
-    position: absolute;
-    top: 250px;
+    margin-top: 15px;
 }
 .arguments{
     width: 390px;
@@ -396,12 +391,6 @@ p{
     margin-top: 10px;
     position: absolute;
     top: 270px;
-}
-.note h4, .arguments h4{
-    margin-top: 10px;
-}
-.note, .arguments{
-    border-top: 1px solid #5D4037;
 }
 
 .locations h4{

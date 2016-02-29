@@ -18,11 +18,13 @@
                         <div class="avatars">
                             <img src="img/player{{$index+1}}.png">
                         </div>
-                        <div class="noteBadge">
+                        <div class="noteBadge" ng-if="studentNotes[i]>=badgeNote">
                             <img src="img/notebadge.png">
                         </div>
-                        <div class="col-md-12 progressbar" id="progressbar{{$index+1}}"></div>
-                        <P>0/4 Emplacements</P>
+                        <div ng-if="eval == 'star'">
+                            <div class="col-md-12 progressbar" id="progressbar{{$index+1}}"></div>
+                            <P>0/4 Emplacements</P>
+                        </div>
                     </div>
                 </div>
                 <div class="badges col-md-2">
@@ -38,9 +40,9 @@
             <div class="col-md-12" id="tasks">
                 <h3>Consignes</h3>
                 <ul>
-                    <li class="steps" id="step{{$index}}" ng-repeat="step in steps" ng-click="nextStep($event,$index)">
+                    <li class="steps" id="step{{$index}}" ng-repeat="step in steps" ng-click="nextStep($event,$index+1)">
                         <span class="glyphicon glyphicon-unchecked"></span>
-                        <p>Étape {{$index+1}} : {{step.content}}</p>
+                        <p>Étape {{$index+1}} : {{step.summary}}</p>
                     </li>
                 </ul>
             </div>
@@ -48,9 +50,9 @@
         <!--timer-->
         <div id="counter" class="kit  col-md-1">
             <h3>Chrono</h3>
-            <div id="timer1"></div>
-            <div id="timer2"></div>
-            <div id="timer3"></div>
+            <div ng-repeat="step in steps" ng-if="step.timer == 'true'">
+                <div class="timer" id="timer{{$index+1}}"></div>
+            </div>
         </div>
     </div>
     <!--Here is the map div-->
@@ -69,12 +71,13 @@
                     <h4>Visualisation :</h4>
                     <div class="visualBtns col-md-{{avatarWidth}}" ng-repeat="i in range(studentAmount) track by $index">
                         <button class="btn player{{$index+1}} markerBtn col-md-7" type="button" ng-click="checkLocation($event,$parent.$index+1,$index+1)"><img src="/img/player{{$index+1}}.png"></button>
-                        <span class="check1 glyphicon glyphicon-ok-circle grey checkMarker"></span>
+                        <span class="check1 glyphicon glyphicon-ok-circle grey checkMarker" ng-if="eval == 'star'"></span>
+                        <span class="check1 glyphicon glyphicon-heart grey checkMarker" ng-if="eval == 'heart'"></span>
                     </div>
                 </div>    
-                <div class="vote" id="vote{{$index+1}}">
+                <div class="vote" id="vote{{$index+1}}" ng-if="eval == 'star'">
                     <h4>Évaluation :</h4>
-                    <span class="glyphicon glyphicon-star grey" ng-repeat="i in range(5) track by $index" ng-class="{true: 'star', false: 'grey'}[voteValue[$parent.$index]>$index]" ></span><span class="label label-default caption">Pas Encore Évalué</span></div>
+                    <span class="glyphicon glyphicon-star grey" ng-repeat="i in range(5) track by $index" ng-class="{true: 'star', false: 'grey'}[voteValue[$parent.$index]>$index]" ></span><span class="label label-default caption">Pas Encore Évalué</span>
                 </div>
                 <div class="note">
                     <h4>Notes :</h4>
@@ -84,6 +87,16 @@
                         <!-- </div> -->
                     </span>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div id="dialogSpace">
+        <div ng-repeat="step in steps">
+            <div id="dialog{{$index+1}}" class="dialog" title="Consignes">
+                <h4>Étape {{$index+1}} :</h4>
+                <h4>
+                    {{step.content}}
+                </h4>
             </div>
         </div>
     </div>
