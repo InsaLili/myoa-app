@@ -93,17 +93,17 @@ io.on('connection', function (socket) {
         logger.info('add local note',data);
         io.emit('addlocalnote', data);
     });
-    socket.on('addagu', function(data){
-        logger.info('add arguments',data);
-        io.emit('addagu', data);
+    socket.on('addcommonnote', function(data){
+        logger.info('add common note',data);
+        io.emit('addcommonnote', data);
     });
     socket.on('deletelocalnote', function(data){
         logger.info('delete local note',data);
         io.emit('deletelocalnote', data);
     });
-    socket.on('deleteagu', function(data){
-        logger.info("delete Agu",data);
-        io.emit('deleteagu', data);
+    socket.on('deletecommonnote', function(data){
+        logger.info("delete common note",data);
+        io.emit('deletecommonnote', data);
     });
 
     socket.on('vote', function(data){

@@ -14,11 +14,12 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         $scope.markers = DataService.mapsetting.markers;
         $scope.steps = DataService.mapsetting.steps;
         $scope.notes = DataService.notes.rows[DataService.groupNum-1].doc.notes;
+        $scope.commonNotes = DataService.notes.rows[DataService.groupNum-1].doc.common;
         $scope.votes = DataService.votes.rows[DataService.groupNum-1].doc.votes;
         $scope.allVotes = $scope.studentAmount*($scope.markers.length);
         $scope.currentStep = 1;
-        $scope.eval = DataService.mapsetting.eval;
-        $scope.studentNotes=[];
+        $scope.add = DataService.mapsetting.additional;
+        $scope.add.noteNum = Number($scope.add.noteNum);
         $scope.locationNames = function(){
             var names = [];
             for(var i=0; i<$scope.locationAmount;i++){
@@ -44,7 +45,10 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         //------following parts realize the communication between pages
         socket.on('addlocalnote', function (data) {
             $scope.notes = data.notes;
+            $scope.studentNotes[data.player-1]++;
             $scope.$apply();
+            console.log($scope.studentNotes);
+
             // var noteHeight = $('#location'+location+' .note').height();
             // if(noteHeight+260 > 400){
             //     $('#location'+location).height(noteHeight + 260 +'px');
@@ -55,7 +59,10 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
 
         socket.on('deletelocalnote', function (data) {
             $scope.notes = data.notes;
+            $scope.studentNotes[data.player-1]--;
             $scope.$apply();
+            console.log($scope.studentNotes);
+
             // if(noteHeight+260 > 400){
             //     $('#location'+location).height(noteHeight + 260 +'px');
             // }else{
@@ -63,44 +70,45 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
             // }
         });
 
-        socket.on('addagu', function (data) {
-            console.log(data);
-            var id = data.id;
-            var content = data.content;
-            var player = data.player;
-            var location = parseInt(data.location);
-            //    var location = data.location;
-            $('.arguments span').append('<p id='+id+' class="aguPlayer'+player+'">'+content+'</p>');
-            var noteHeight = $('#location'+location+' .note').height();
-            var aguHeight = $('#location'+location+' .arguments').height();
-            if(aguHeight > 130){
-                $('#location'+location).height(noteHeight + aguHeight + 270 +'px');
-            }else{
-                $('#location'+location).height(noteHeight+400+'px');
-            }
+        socket.on('addcommonnote', function (data) {
+            $scope.commonNotes = data.notes;
+            $scope.studentNotes[data.player-1]++;
+
+            $scope.$apply();
+            console.log($scope.studentNotes);
+
+            // if(aguHeight > 130){
+            //     $('#location'+location).height(noteHeight + aguHeight + 270 +'px');
+            // }else{
+            //     $('#location'+location).height(noteHeight+400+'px');
+            // }
         });
 
+        socket.on('deletecommonnote', function (data) {
+            $scope.commonNotes = data.notes;
+            $scope.studentNotes[data.player-1]--;
 
+            $scope.$apply();
+            console.log($scope.studentNotes);
 
-        socket.on('deleteagu', function (data) {
-            console.log(data);
-            var id = data.id;
-            $('#'+id).remove();
-            var location = data.location;
-            var player = data.player;
-            var noteHeight = $('#location'+location+' .note').height();
-            var aguHeight = $('#location'+location+' .arguments').height();
-            if(aguHeight > 130){
-                $('#location'+location).height(noteHeight + aguHeight + 270 +'px');
-            }else{
-                $('#location'+location).height(noteHeight+400+'px');
-            }
+            // var noteHeight = $('#location'+location+' .note').height();
+            // var aguHeight = $('#location'+location+' .arguments').height();
+            // if(aguHeight > 130){
+            //     $('#location'+location).height(noteHeight + aguHeight + 270 +'px');
+            // }else{
+            //     $('#location'+location).height(noteHeight+400+'px');
+            // }
         });
 
         socket.on('vote', function(data){
-            updateVote(data);
+            if($scope.add.eval == 'star'){
+                updateVote(data);
+            }else if($scope.add.eval == "heart"){
+                
+            }
         });
     }
+
     attachProgress = function(){
         $scope.voteAmount=[];
         var progressbarText = $('.player p');
@@ -129,26 +137,55 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
 
         console.log($scope.voteAmount);
     }
+    attachNotes = function(){
+        $scope.studentNotes=[];
+        for(var i=0; i<$scope.studentAmount;i++){
+            var player = i+1;
+            var notes = $.grep($scope.notes, function(value) {
+                return value.player == player;
+            });
+            var commonnotes = $.grep($scope.commonNotes, function(value) {
+                return value.player == player;
+            });
+            var allnote = notes.length+commonnotes.length;
+            $scope.studentNotes.push(allnote);
+        }
+        console.log("notes number");
+        console.log($scope.studentNotes);
+    }
     dialogInit = function(){
         var steps = $scope.steps.length;
-        for(var i=0; i<steps; i++){
-            var step = i+1;
-            $( "#dialog"+step).dialog({
-                autoOpen: false,
-                resizable: false,
-                width:600,
-                height:420,
-                modal: true,
-                buttons: {
-                    "Commencer": function(){
-                        $(this).dialog( "close" );
-                        var step = Number(this.id.match(/\d/)[0])
-                        timerInit(step);
-                    }
+        $( ".dialog").dialog({
+            autoOpen: false,
+            resizable: false,
+            width:600,
+            height:420,
+            modal: true,
+            buttons: {
+                "Commencer": function(){
+                    $(this).dialog( "close" );
+                    var step = Number(this.id.match(/\d/)[0])
+                    timerInit(step);
                 }
-            });
-            
-        }
+            }
+        });
+        $( "#chooseDialog").dialog({
+            autoOpen: false,
+            resizable: false,
+            width:600,
+            height:420,
+            modal: true,
+            buttons: {
+                "Oui": function() {
+                    $( this ).dialog( "close" );
+                    confirmChoice();
+                },
+                "Non": function() {
+                    $( this ).dialog( "close" );
+                }
+            }
+        });
+
     }
     timerInit = function(step){
         // remove the former timer
@@ -213,6 +250,11 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
             label.css('background-color', color[value-1]);
         }
     }
+    confirmChoice = function(){
+        $('.location').hide();
+        $('#location'+$scope.chosenNum).show();
+        $('.chooseLocation').hide();
+    }
     $scope.nextStep = function($event,step){
         if($scope.votes.length == $scope.allVotes){
             if($scope.currentStep == step){
@@ -222,6 +264,7 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
 
                 if(step == 1){
                     showVote();
+                    $(".chooseLocation").show();
                 }
                 if(step<$scope.steps.length){
                     $(element.nextElementSibling.children).css('color', '#E0E0E0');
@@ -243,13 +286,17 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         $(element).css({'background-color': '#f0ad4e', 'border-color': '#eea236'});
         $($(elements)[marker-1]).css({'background-color': '#f0ad4e', 'border-color': '#eea236'});
     }    
-    $scope.chooseLocation = function($event,marker,name){
+    $scope.chooseLocation = function(marker,name){
     	console.log(marker,name);
+        $scope.chosenTitle = name;
+        $scope.chosenNum = marker;
+        $('#chooseDialog').dialog('open');
     }
     init = function(){
         // get data and initialize service
         getAppData();
         serviceInit();
+        attachNotes();
     }
     // wait for dom ready
     $timeout(function(){
@@ -264,6 +311,7 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
             $scope.allRating++;
         });
         $('.location').touch();
+        $('#commonSpace').touch();
         // $('.chooseLocation').hide();
         $("#step0 p").css('color', '#E0E0E0');
         $("#step0 span").css('color', '#E0E0E0');
@@ -280,7 +328,7 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
 mapModule.controller("MapCtrl", [ "$scope", "$http", "DataService",function($scope, $http, DataService) {
     var mapsetting = DataService.mapsetting;
     var socket = io.connect('http://localhost:8000');
-
+    $scope.commonSpace = mapsetting.additional.commonspace;
     angular.extend($scope, {
         center: {
             lat: Number(mapsetting.laititude),
@@ -333,7 +381,7 @@ mapModule.controller("MapCtrl", [ "$scope", "$http", "DataService",function($sco
 
     $scope.checkLocation = function($event,marker,player){
         console.log(marker,player);
-        socket.emit('checklocation', { location: marker, player: player, group: DataService.groupNum});
+        socket.emit('checklocation', { marker: marker, player: player, group: DataService.groupNum});
 
         var element = $event.currentTarget;
         var className = element.className;

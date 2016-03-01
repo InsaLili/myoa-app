@@ -18,10 +18,12 @@
                         <div class="avatars">
                             <img src="img/player{{$index+1}}.png">
                         </div>
-                        <div class="noteBadge" ng-if="studentNotes[i]>=badgeNote">
-                            <img src="img/notebadge.png">
+                        <div ng-if="add.noteBadge == true">
+                            <div class="noteBadge" ng-if="studentNotes[$index]>=add.noteNum">
+                                <img src="img/notebadge.png">
+                            </div>
                         </div>
-                        <div ng-if="eval == 'star'">
+                        <div ng-if="add.eval == 'star'">
                             <div class="col-md-12 progressbar" id="progressbar{{$index+1}}"></div>
                             <P>0/4 Emplacements</P>
                         </div>
@@ -65,17 +67,17 @@
             </div>
             <div class="locationContent">
                 <div class="chooseLocation">
-                    <button class="btn btn-warning btn-md" name="{{marker.name}}" ng-click="chooseLocation($event, $index+1, marker.name)">Choisir</button>
+                    <button class="btn btn-warning btn-md" name="{{marker.name}}" ng-click="chooseLocation($index+1, marker.name)">Choisir</button>
                 </div>
                 <div class="visualPlayers row" id="visualLocation{{$index}}" ng-model="avatarWidth">
                     <h4>Visualisation :</h4>
                     <div class="visualBtns col-md-{{avatarWidth}}" ng-repeat="i in range(studentAmount) track by $index">
                         <button class="btn player{{$index+1}} markerBtn col-md-7" type="button" ng-click="checkLocation($event,$parent.$index+1,$index+1)"><img src="/img/player{{$index+1}}.png"></button>
-                        <span class="check1 glyphicon glyphicon-ok-circle grey checkMarker" ng-if="eval == 'star'"></span>
-                        <span class="check1 glyphicon glyphicon-heart grey checkMarker" ng-if="eval == 'heart'"></span>
+                        <span class="check1 glyphicon glyphicon-ok-circle grey checkMarker" ng-if="add.eval == 'star'"></span>
+                        <span class="check1 glyphicon glyphicon-heart grey checkMarker" ng-if="add.eval == 'heart'"></span>
                     </div>
                 </div>    
-                <div class="vote" id="vote{{$index+1}}" ng-if="eval == 'star'">
+                <div class="vote" id="vote{{$index+1}}" ng-if="add.eval == 'star'">
                     <h4>Évaluation :</h4>
                     <span class="glyphicon glyphicon-star grey" ng-repeat="i in range(5) track by $index" ng-class="{true: 'star', false: 'grey'}[voteValue[$parent.$index]>$index]" ></span><span class="label label-default caption">Pas Encore Évalué</span>
                 </div>
@@ -89,6 +91,22 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-3 pull-right" id="commonSpace" ng-if="add.commonspace == true">
+            <div id="commonTitle">
+                    <h3>Common space</h3>
+            </div>
+            <div id="commonContent">
+                <div>
+                    <h4>Notes :</h4>
+                    <span id="commonNote">
+                        <!-- <div ng-repeat="note in notes"> -->
+                            <p ng-repeat="note in commonNotes track by $index" class="notePlayer{{note.player}}">{{note.content}}</p>
+                        <!-- </div> -->
+                    </span>
+                </div>
+            </div>
+        </div>
+        
     </div>
     <div id="dialogSpace">
         <div ng-repeat="step in steps">
@@ -97,9 +115,21 @@
                 <h4>
                     {{step.content}}
                 </h4>
+                <h4 ng-if="step.timer == 'true'">
+                    Vous avez {{step.timerval}} mins pour cette étape.
+                </h4>
+                <h4 ng-if="step.timerBadge == true">
+                    Gagnez le badge Timer si vous finissez toutes les évaluation individuelle dans les {{step.timerval}} mins.
+                </h4>
             </div>
         </div>
+        <div id="chooseDialog" title="Choisir un emplacement">
+            <h4>Voulez vous choisir l'emplacement {{chosenTitle}} ?</h4>
+        </div>
     </div>
+</div>
+<div ng-controller="MapCtrl">
+    <leaflet lf-center="center" tiles="tiles" geojson="geojson" markers="markers" height="600px" ng-class="{true: 'col-md-9', false: 'col-md-12'}[commonSpace==true]" ></leaflet>
 </div>
     <!--Here are the hiden dialogs-->
     <!-- <div id="dialogSpace">
@@ -149,6 +179,3 @@
         </div> -->
     <!-- </div> -->
     <!-- <div id="map"></div> -->
-<div ng-controller="MapCtrl">
-    <leaflet lf-center="center" tiles="tiles" geojson="geojson" markers="markers" width="100%" height="480px"></leaflet>
-</div>

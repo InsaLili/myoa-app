@@ -24,19 +24,19 @@ $(document).ready(function() {
 
         domInit: function(){
 
-            $('#finalStepBtn').on('click',function(){
-                $(this).prop('disabled', true);
-                $('#finalDialog').dialog('open');
-            });
-            $('#finalStepBtn').prop('disabled', true);
+            // $('#finalStepBtn').on('click',function(){
+            //     $(this).prop('disabled', true);
+            //     $('#finalDialog').dialog('open');
+            // });
+            // $('#finalStepBtn').prop('disabled', true);
 
-            $('#step1 p').css('color', white);
-            $('#step1 span').css('color', white);
+            // $('#step1 p').css('color', white);
+            // $('#step1 span').css('color', white);
 
-            $('.visualPlayer').hide();
+            // $('.visualPlayer').hide();
 
-                Server.attachNotes();
-                Server.attachRating();
+                // Server.attachNotes();
+                // Server.attachRating();
 
             $('#step1 span').on('click', function(){
                 if(stepNumber==1 && allRating==3){

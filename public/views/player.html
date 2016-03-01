@@ -5,11 +5,17 @@
                 <div id="avatar"><img src="img/player{{player}}.png"></div>
                 <div class="col-md-12" id="addCommonNotes">
                     <h4>Add common notes</h4>
-                    <textarea class="form-control" rows="8" cols="1"></textarea>
-                    <button class="btn btn-default pull-right btn-sm" id="submitNote">Validation</button>
+                    <textarea class="form-control" rows="8" ng-model="currentCommonNote"></textarea>
+                    <button class="btn btn-default pull-right btn-sm" ng-click="addCommonNote($event)">Validation</button>
                 </div>
                 <div class="col-md-12" id="commonNotes">
                     <h4>Common notes</h4>
+                    <div ng-repeat="note in commonNotes track by $index">
+                        <div class="noteOfPlayer" ng-if="note.player==player">
+                            <p class="notePlayer{{player}}">{{note.content}}</p>
+                            <button class="btn btn-default btn-xs deletenote" ng-click="deleteCommonNote($event)" id="{{note.id}}">Effacer</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -25,12 +31,14 @@
                     <div class="row">
                         <div class="col-md-12" id="addMarkerNote">
                             <h4>Add location notes</h4>
-                            <textarea class="form-control" rows="4" cols="1" ng-model="currentNote"></textarea>
+                            <textarea class="form-control" rows="4" ng-model="currentLocalNote"></textarea>
                             <button class="btn btn-default pull-right btn-sm" ng-disabled="form.$invalid" ng-click="addLocalNote($event)">Validation</button>
                         </div>
                         <div class="col-md-12" id="evaluation">
                             <h4>Evaluation</h4>
-                            <div class="rating">
+                            <span class="glyphicon glyphicon-heart" ng-if="add.eval == 'heart'" ng-class="{true: 'heart', false: 'grey'}[voteVal>0]" ng-click="likeLocation()"></span>
+
+                            <div class="rating" ng-if="add.eval == 'star'">
                                 <span class="glyphicon glyphicon-star" ng-repeat="i in range(5) track by $index" ng-class="{true: 'star', false: 'grey'}[voteVal>$index]" ng-click="evaluateLocation($index+1)"></span><span class="label label-default caption">Pas Encore Évalué</span>
                             </div>
                         </div>
@@ -41,8 +49,8 @@
                     <div ng-repeat="note in notes track by $index">
                         <div ng-if="(note.location == currentLocation)">
                             <div class="noteOfPlayer" ng-if="note.player==player">
-                                <p>{{note.content}}</p>
-                                <button class="btn btn-default btn-xs deletenote" ng-click="deleteLocalNote($event)">Effacer</button>
+                                <p class="notePlayer{{player}}">{{note.content}}</p>
+                                <button class="btn btn-default btn-xs deletenote" ng-click="deleteLocalNote($event)" id="{{note.id}}">Effacer</button>
                             </div>
                         </div>
                     </div>

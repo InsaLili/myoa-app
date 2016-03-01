@@ -122,14 +122,30 @@ p, table{
     margin-bottom: 10px;
 }
 .noteOfPlayer p{
-    background-color: #E0F2F1;
-    /*border: 1px solid;*/
-    color: #009688;
     font-size: 13px;
     border-radius: 5px;
     padding: 5px;
     margin-bottom: 5px;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
+
 }
+.notePlayer1, .aguPlayer1{
+    background-color: #E0F2F1;
+    color: #009688;
+}
+.notePlayer2, .aguPlayer2{
+    background-color: #F1F8E9;
+    color: #8BC34A;
+}
+.notePlayer3, .aguPlayer3{
+    background-color: #FFF3E0;
+    color: #FF9800;
+}
+.notePlayer4, .aguPlayer4{
+    background-color: #88c5c3;
+    color: #F5F5F5;
+}
+
 #evaluation span{
     text-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
 }
@@ -139,28 +155,20 @@ p, table{
 .star{
     color: #fde16d;
 }
-.star-worst{
+.heart{
     color: #d9534f;
 }
-.star-bad{
-    color: #ec971f;
-}
-.star-normal{
-    color: #31b0d5;
-}
-.star-good{
-    color: #337ab7;
-}
-.star-best{
-    color: #449d44;
-}
+
 .caption{
     margin-left: 10px;
 }
-.glyphicon-star{
+/*.glyphicon-star{
     font-size: 2em;
+}*/
+.glyphicon{
+    font-size: 25px;
+    float: left;
 }
-
 /*.head{
     width: 100%;
     height: 30px;
