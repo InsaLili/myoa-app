@@ -20,7 +20,10 @@
                         </div>
                         <div ng-if="add.noteBadge == true">
                             <div class="noteBadge" ng-if="studentNotes[$index]>=add.noteNum">
-                                <img src="img/notebadge.png">
+                                <img src="img/badgeNote-show.png">
+                            </div>
+                            <div class="noteBadge" ng-if="studentNotes[$index]<add.noteNum">
+                                <img src="img/badgeNote-hide.png">
                             </div>
                         </div>
                         <div ng-if="add.eval == 'star'">
@@ -31,8 +34,11 @@
                 </div>
                 <div class="badges col-md-2">
                     <p>Timer badge</p>
-                    <div id="timerBadge" >
-                        <img src="img/badgeTimer.png">
+                    <div ng-repeat="step in steps">
+                        <div class="col-md-{{badgeWidth}} timerBadge" ng-if="step.timerBadge == true">
+                            <img src="img/badgeTimer-show.png" ng-show="step.timerWin">
+                            <img src="img/badgeTimer-hide.png" ng-show="!step.timerWin">
+                        </div>
                     </div>
                 </div>
             </div>

@@ -36,6 +36,17 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
             }
             return coordinates;
         }
+        var timerBadgeNum = function(){
+            var time=0;
+            for(var i=0;i<$scope.steps.length;i++){
+                if($scope.steps[i].timerBadge == true)
+                    time++;
+            }
+            if(time>2) time = 2;
+            return time;
+        }
+
+        $scope.badgeWidth = 12/timerBadgeNum();
         console.log($scope.locationNames());
         console.log($scope.locationCoordinates());
     }
@@ -179,14 +190,9 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         });
 
     }
+    // add a new timer
     timerInit = function(step){
-        // remove the former timer
         var num = step-1;
-        if($('#timer'+num).length !== 0){
-            clearInterval(intervals.main);
-            $('#timer'+num).remove();
-        }
-        // add a new timer
         if($scope.steps[num].timer == 'true'){
             $('#timer'+step).countdown({
                 image: "/img/digits.png",
@@ -259,6 +265,18 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
                 $(element.children[0]).removeClass('glyphicon-unchecked');
                 $(element.children[0]).addClass('glyphicon-check');
 
+                // remove the former timer if it exists
+                if($('#timer'+step).length !== 0){
+                    clearInterval(intervals.main);
+                    $('#timer'+step).remove();
+                    if($scope.steps[step-1].timerBadge == true){
+                        if(digits[1].current != 9){
+                            $scope.steps[step-1].timerWin = true;
+                        }else{
+                            $scope.steps[step-1].timerWin = false;
+                        }
+                    }
+                }
                 if(step == 1){
                     if($scope.add.eval == 'star') showVote();
                     $(".chooseLocation").show();
