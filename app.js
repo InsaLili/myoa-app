@@ -7,7 +7,7 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var filename = path.join(__dirname, 'debug1.log');
+var filename = path.join(__dirname, 'debug.log');
 var winston = require('winston');
 var logger = new (winston.Logger)({
     transports: [

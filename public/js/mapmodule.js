@@ -20,6 +20,7 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         $scope.currentStep = 1;
         $scope.add = DataService.mapsetting.additional;
         $scope.add.noteNum = Number($scope.add.noteNum);
+        $scope.groupName = DataService.mapsetting.groups[DataService.groupNum-1].name;
         $scope.locationNames = function(){
             var names = [];
             for(var i=0; i<$scope.locationAmount;i++){
@@ -48,13 +49,6 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
             $scope.studentNotes[data.player-1]++;
             $scope.$apply();
             console.log($scope.studentNotes);
-
-            // var noteHeight = $('#location'+location+' .note').height();
-            // if(noteHeight+260 > 400){
-            //     $('#location'+location).height(noteHeight + 260 +'px');
-            // }else{
-            //     $('#location'+location).height(400+'px');
-            // }
         });
 
         socket.on('deletelocalnote', function (data) {
@@ -62,12 +56,6 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
             $scope.studentNotes[data.player-1]--;
             $scope.$apply();
             console.log($scope.studentNotes);
-
-            // if(noteHeight+260 > 400){
-            //     $('#location'+location).height(noteHeight + 260 +'px');
-            // }else{
-            //     $('#location'+location).height(400+'px');
-            // }
         });
 
         socket.on('addcommonnote', function (data) {
@@ -76,40 +64,25 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
 
             $scope.$apply();
             console.log($scope.studentNotes);
-
-            // if(aguHeight > 130){
-            //     $('#location'+location).height(noteHeight + aguHeight + 270 +'px');
-            // }else{
-            //     $('#location'+location).height(noteHeight+400+'px');
-            // }
         });
 
         socket.on('deletecommonnote', function (data) {
             $scope.commonNotes = data.notes;
             $scope.studentNotes[data.player-1]--;
-
             $scope.$apply();
             console.log($scope.studentNotes);
-
-            // var noteHeight = $('#location'+location+' .note').height();
-            // var aguHeight = $('#location'+location+' .arguments').height();
-            // if(aguHeight > 130){
-            //     $('#location'+location).height(noteHeight + aguHeight + 270 +'px');
-            // }else{
-            //     $('#location'+location).height(noteHeight+400+'px');
-            // }
         });
 
         socket.on('vote', function(data){
             if($scope.add.eval == 'star'){
-                updateVote(data);
+                updateStar(data);
             }else if($scope.add.eval == "heart"){
-                
+                updateHeart(data);
             }
         });
     }
 
-    attachProgress = function(){
+    attachStar = function(){
         $scope.voteAmount=[];
         var progressbarText = $('.player p');
 
@@ -129,13 +102,32 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
             for(var j=0; j<voteNum;j++){
                 var vote = votes[j];
                 var location = vote.location;
-                var checkMark = $('#location'+location+' span')[i];
+                var checkMark = $('#location'+location+' .glyphicon-ok-circle')[i];
                 $(checkMark).removeClass('grey');
-                $(checkMark).addClass('star-best');
+                $(checkMark).addClass('checked');
             }
         }
-
         console.log($scope.voteAmount);
+    }
+    attachHeart = function(){
+        $scope.voteValue=[];
+        for(var i=1;i<=$scope.locationAmount;i++){
+            var locationVote = [];
+            var votes = $.grep($scope.votes, function(value){
+                return value.location == i;
+            });
+            for(var j=1;j<=$scope.studentAmount;j++){
+                var votePlayer = $.grep(votes, function(value){
+                    return value.player == j;
+                });
+                if(votePlayer.length>0){
+                    locationVote.push(votePlayer[0].vote);
+                }else{
+                    locationVote.push(0);
+                }
+            }
+            $scope.voteValue.push(locationVote);
+        }
     }
     attachNotes = function(){
         $scope.studentNotes=[];
@@ -203,16 +195,16 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
             });
         }
     }
-    updateVote = function(data){
+    updateStar = function(data){
         $scope.votes = data.votes;
-        // 
+        // if it is not a new vote, do nothing
         if(data.newvote == false){
             return;
         } 
-
         var location = data.location;
         var player = data.player;
         var id = data.id;
+        // add player's vote progress
         $scope.voteAmount[player-1]++;
         // update progressbar
         var voteNum = $scope.voteAmount[player-1];
@@ -222,10 +214,15 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         });
         $(progressbarText[player-1]).text(voteNum + '/'+$scope.locationAmount+' Emplacements');
         // update checkmark
-        var checkMark = $('#location'+location+' span')[player-1];
+        var checkMark = $('#location'+location+' .glyphicon-ok-circle')[player-1];
         $(checkMark).removeClass('grey');
-        $(checkMark).addClass('star-best');
+        $(checkMark).addClass('checked');
     }
+    updateHeart = function(data){
+        $scope.voteValue[data.location-1][data.player-1] = data.value;
+        $scope.$apply();
+    }
+
     showVote = function(){
         $scope.voteValue = [];
         var color = ['#d9534f','#ec971f','#31b0d5','#337ab7','#449d44'];
@@ -256,14 +253,14 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         $('.chooseLocation').hide();
     }
     $scope.nextStep = function($event,step){
-        if($scope.votes.length == $scope.allVotes){
+        if(($scope.votes.length == $scope.allVotes)||($scope.add.eval == 'heart')){
             if($scope.currentStep == step){
                 var element = $event.target.parentElement;
                 $(element.children[0]).removeClass('glyphicon-unchecked');
                 $(element.children[0]).addClass('glyphicon-check');
 
                 if(step == 1){
-                    showVote();
+                    if($scope.add.eval == 'star') showVote();
                     $(".chooseLocation").show();
                 }
                 if(step<$scope.steps.length){
@@ -317,7 +314,12 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         $("#step0 span").css('color', '#E0E0E0');
         $(".chooseLocation").hide();
 
-        attachProgress();
+        if($scope.add.eval == 'star'){
+            attachStar();
+        }else if($scope.add.eval == 'heart'){
+            attachHeart();
+        }
+
         dialogInit();
         $('#dialog1').dialog('open');
     });

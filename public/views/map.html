@@ -11,7 +11,7 @@
         </div>
         <!--Progress of the rating -->
         <div id="leaderboard" class="kit col-md-5">
-            <h3>Progression</h3>
+            <h3 ng-bind="groupName"></h3>
             <div class="row">
                 <div class="players col-md-10" ng-model="avatarWidth">
                     <div class="player col-md-{{avatarWidth}}" ng-repeat="i in range(studentAmount) track by $index">
@@ -61,7 +61,7 @@
     <!--Show the mountain location cards-->
     <div class="locations">
         <!-- !!!!todo: improve ng-click -->
-        <div class="location" ng-repeat="marker in markers" id="location{{$index+1}}">
+        <div class="location" ng-repeat="marker in markers track by $index" id="location{{$index+1}}">
             <div class="locationTitle">
                 <h3>{{$index+1}}.  {{marker.name}}</h3>
             </div>
@@ -73,31 +73,37 @@
                     <h4>Visualisation :</h4>
                     <div class="visualBtns col-md-{{avatarWidth}}" ng-repeat="i in range(studentAmount) track by $index">
                         <button class="btn player{{$index+1}} markerBtn col-md-7" type="button" ng-click="checkLocation($event,$parent.$index+1,$index+1)"><img src="/img/player{{$index+1}}.png"></button>
-                        <span class="check1 glyphicon glyphicon-ok-circle grey checkMarker" ng-if="add.eval == 'star'"></span>
-                        <span class="check1 glyphicon glyphicon-heart grey checkMarker" ng-if="add.eval == 'heart'"></span>
+                        <div ng-show="add.eval == 'star'">
+                            <span class="checkMarker glyphicon glyphicon-ok-circle grey"></span>
+                        </div>
+                        <div ng-show="add.eval == 'heart'">
+                            <span class="checkMarker glyphicon glyphicon-heart" ng-class="{1: 'heart', 0: 'grey'}[voteValue[$parent.$index][$index]]"></span>
+                        </div>
                     </div>
                 </div>    
-                <div class="vote" id="vote{{$index+1}}" ng-if="add.eval == 'star'">
+                <div class="vote" id="vote{{$index+1}}" ng-show="add.eval == 'star'">
                     <h4>Évaluation :</h4>
                     <span class="glyphicon glyphicon-star grey" ng-repeat="i in range(5) track by $index" ng-class="{true: 'star', false: 'grey'}[voteValue[$parent.$index]>$index]" ></span><span class="label label-default caption">Pas Encore Évalué</span>
                 </div>
-                <div class="note">
+                <div class="note" id="note{{$index+1}}">
                     <h4>Notes :</h4>
-                    <span id="note{{$index+1}}">
-                        <!-- <div ng-repeat="note in notes"> -->
-                            <p ng-repeat="note in notes track by $index" ng-if="note.location == $parent.$index+1" class="notePlayer{{note.player}}">{{note.content}}</p>
-                        <!-- </div> -->
-                    </span>
+                    <div ng-class="{true: 'shortNote', false: 'longNote'}[add.eval=='star']">
+                        <span id="note{{$index+1}}">
+                            <!-- <div ng-repeat="note in notes"> -->
+                                <p ng-repeat="note in notes track by $index" ng-if="note.location == $parent.$index+1" class="notePlayer{{note.player}}">{{note.content}}</p>
+                            <!-- </div> -->
+                        </span>
+                        
+                    </div>
                 </div>
             </div>
         </div>
         <div class="col-md-3 pull-right" id="commonSpace" ng-if="add.commonspace == true">
             <div id="commonTitle">
-                    <h3>Common space</h3>
+                    <h3>Shared notes space</h3>
             </div>
             <div id="commonContent">
                 <div>
-                    <h4>Notes :</h4>
                     <span id="commonNote">
                         <!-- <div ng-repeat="note in notes"> -->
                             <p ng-repeat="note in commonNotes track by $index" class="notePlayer{{note.player}}">{{note.content}}</p>

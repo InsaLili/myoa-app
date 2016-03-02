@@ -36,10 +36,10 @@
                         </div>
                         <div class="col-md-12" id="evaluation">
                             <h4>Evaluation</h4>
-                            <span class="glyphicon glyphicon-heart" ng-if="add.eval == 'heart'" ng-class="{true: 'heart', false: 'grey'}[voteVal>0]" ng-click="likeLocation()"></span>
+                            <span class="glyphicon glyphicon-heart" ng-if="add.eval == 'heart'" ng-class="{true: 'heart', false: 'grey'}[voteVal>0]" ng-click="updateHeart()"></span>
 
                             <div class="rating" ng-if="add.eval == 'star'">
-                                <span class="glyphicon glyphicon-star" ng-repeat="i in range(5) track by $index" ng-class="{true: 'star', false: 'grey'}[voteVal>$index]" ng-click="evaluateLocation($index+1)"></span><span class="label label-default caption">Pas Encore Évalué</span>
+                                <span class="glyphicon glyphicon-star" ng-repeat="i in range(5) track by $index" ng-class="{true: 'star', false: 'grey'}[voteVal>$index]" ng-click="updateStar($index+1)"></span><span class="label label-default caption" ng-bind="caption[voteVal]">Pas Encore Évalué</span>
                             </div>
                         </div>
                     </div>
