@@ -1,14 +1,16 @@
 var playerModule = angular.module("PlayerModule", []);
 
 playerModule.controller('RoleCtrl', function($scope, DataService){
-	$scope.groupNum = 1;
-	DataService.groupNum=1;
-	$scope.studentAmount = parseInt(DataService.mapsetting.groups[$scope.groupNum-1].student);
-	
-	$scope.range = function(n) {
+	// $scope.groupNum = 1;
+	// DataService.groupNum=1;
+    $scope.groups = DataService.mapsetting.groups;
+    $scope.range = function(n) {
         return new Array(n);   
     }
-	
+    $scope.chooseGroup = function(group){
+        DataService.groupNum=group;
+        $scope.studentAmount = parseInt($scope.groups[group-1].student);
+    }
 	$scope.chooseStudentNum = function($event,value){
         DataService.studentNum = value+1;
     }

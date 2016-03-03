@@ -35,6 +35,7 @@ li{
 
 #maskLayer .chooseGroup{
     float: left;
+    margin-right: 20px;
 }
 
 ul li{
