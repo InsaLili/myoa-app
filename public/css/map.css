@@ -476,6 +476,7 @@ p{
 }
 .mapMarker .markerBtn{
     margin-right: 10px;
+    margin-left: 10px;
 }
 .markerCheck{
     margin-right: 20px;
@@ -510,4 +511,10 @@ p{
     height:130px;
     overflow: auto;
     overflow-x: hidden;
+}
+#markerImg{
+    width: 100%;
+}
+element.style {
+    width: 400px;
 }

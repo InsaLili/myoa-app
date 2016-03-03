@@ -378,6 +378,9 @@ mapModule.controller("MapCtrl", [ "$scope", "$http", "DataService",function($sco
         for(var i=0; i<locationAmount;i++){
             var num = i+1;
             var message = '<div id="marker'+num+'" class="mapMarker"><h3>'+mapsetting.markers[i].name+'</h3>';
+            if(mapsetting.markers[i].photo !== undefined){
+                message += '<img class="markerImg" src="'+mapsetting.markers[i].photo+'" />';
+            }
             for(var j=1; j<=studentAmount;j++){
                 message += '<button type="button" class="btn player'+j+' markerBtn" ng-click="checkLocation($event,'+num+','+j+')"><img src="/img/player'+j+'.png"></button>'
             }
