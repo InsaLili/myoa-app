@@ -6,12 +6,10 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
     }
     //!!!!todo,delete some var
     getAppData = function(){
-        $scope.longtitude = parseFloat(DataService.mapsetting.longtitude);
-        $scope.laititude = parseFloat(DataService.mapsetting.laititude);
-        $scope.locationAmount = DataService.mapsetting.markers.length;
+        $scope.locationAmount = DataService.mapstep1.markers.length;
         $scope.studentAmount = parseInt(DataService.studentAmount);
         $scope.avatarWidth = Math.round(12/$scope.studentAmount);
-        $scope.markers = DataService.mapsetting.markers;
+        $scope.markers = DataService.mapstep1.markers;
         $scope.steps = DataService.mapsetting.steps;
         $scope.notes = DataService.notes.rows[DataService.groupNum-1].doc.notes;
         $scope.commonNotes = DataService.notes.rows[DataService.groupNum-1].doc.common;
@@ -21,20 +19,13 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         $scope.add = DataService.mapsetting.additional;
         $scope.add.noteNum = Number($scope.add.noteNum);
         $scope.groupName = DataService.mapsetting.groups[DataService.groupNum-1].name;
-        $scope.locationNames = function(){
-            var names = [];
-            for(var i=0; i<$scope.locationAmount;i++){
-                names.push($scope.markers[i].name)
+        $scope.infos = DataService.mapstep1.infos;
+        
+        for(var i=0; i<$scope.locationAmount;i++){
+            $scope.markers[i].symbol = $scope.markers[i].icon.icon;
+            if(isNaN($scope.markers[i].icon.icon)){
+                $scope.markers[i].symbol = $scope.markers[i].symbol.toUpperCase();
             }
-            return names;
-        }
-        $scope.locationCoordinates = function(){
-            var coordinates=[];
-            for(var i=0; i<$scope.locationAmount;i++){
-                var content=[Number($scope.markers[i].longtitude),Number($scope.markers[i].laititude)];
-                coordinates.push(content);
-            }
-            return coordinates;
         }
         var timerBadgeNum = function(){
             var time=0;
@@ -47,8 +38,6 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         }
 
         $scope.badgeWidth = 12/timerBadgeNum();
-        console.log($scope.locationNames());
-        console.log($scope.locationCoordinates());
     }
 
     serviceInit = function(){
@@ -56,6 +45,8 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         var socket = io.connect('http://localhost:8000');
         //------following parts realize the communication between pages
         socket.on('addlocalnote', function (data) {
+            if(data.group !== DataService.groupNum) return;
+            
             $scope.notes = data.notes;
             $scope.studentNotes[data.player-1]++;
             $scope.$apply();
@@ -63,6 +54,8 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         });
 
         socket.on('deletelocalnote', function (data) {
+            if(data.group !== DataService.groupNum) return;
+
             $scope.notes = data.notes;
             $scope.studentNotes[data.player-1]--;
             $scope.$apply();
@@ -70,14 +63,17 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         });
 
         socket.on('addcommonnote', function (data) {
+            if(data.group !== DataService.groupNum) return;
+
             $scope.commonNotes = data.notes;
             $scope.studentNotes[data.player-1]++;
-
             $scope.$apply();
             console.log($scope.studentNotes);
         });
 
         socket.on('deletecommonnote', function (data) {
+            if(data.group !== DataService.groupNum) return;
+
             $scope.commonNotes = data.notes;
             $scope.studentNotes[data.player-1]--;
             $scope.$apply();
@@ -85,6 +81,8 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         });
 
         socket.on('vote', function(data){
+            if(data.group !== DataService.groupNum) return;
+
             if($scope.add.eval == 'star'){
                 updateStar(data);
             }else if($scope.add.eval == "heart"){
@@ -188,7 +186,18 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
                 }
             }
         });
-
+        $(".infoDlg").dialog({
+            autoOpen: false,
+            resizable: false,
+            width:600,
+            height:420,
+            modal: false,
+            buttons: {
+                "OK": function() {
+                    $( this ).dialog( "close" );
+                }
+            }
+        });
     }
     // add a new timer
     timerInit = function(step){
@@ -257,6 +266,9 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         $('.location').hide();
         $('#location'+$scope.chosenNum).show();
         $('.chooseLocation').hide();
+    }
+    $scope.getInfo = function(num){
+        $('#infoDlg'+num).dialog('open');
     }
     $scope.nextStep = function($event,step){
         if(($scope.votes.length == $scope.allVotes)||($scope.add.eval == 'heart')){
@@ -348,13 +360,11 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
 mapModule.controller("MapCtrl", [ "$scope", "$http", "DataService",function($scope, $http, DataService) {
     var mapsetting = DataService.mapsetting;
     var socket = io.connect('http://localhost:8000');
+
+    $scope.map = DataService.mapstep1.map;
+    $scope.markers = DataService.mapstep1.markers;
     $scope.commonSpace = mapsetting.additional.commonspace;
     angular.extend($scope, {
-        center: {
-            lat: Number(mapsetting.laititude),
-            lng: Number(mapsetting.longtitude),
-            zoom: 15
-        },
         tiles: {
             name: 'MYOA',
             url: 'http://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
@@ -365,40 +375,34 @@ mapModule.controller("MapCtrl", [ "$scope", "$http", "DataService",function($sco
             }
         },
         geojson: {},
-        markers: []
     });
 
     $http.get("data/map.geo.json").success(function(data){
         $scope.geojson.data = data;
     });
 
-    $scope.addMarkers = function(){
-        var locationAmount = mapsetting.markers.length;
+    $scope.addMarkerMsg = function(){
+        var locationAmount = $scope.markers.length;
         var studentAmount = parseInt(DataService.studentAmount);
+        var browse = DataService.mapstep4.share.browse;
         for(var i=0; i<locationAmount;i++){
             var num = i+1;
-            var message = '<div id="marker'+num+'" class="mapMarker"><h3>'+mapsetting.markers[i].name+'</h3>';
-            if(mapsetting.markers[i].photo !== undefined){
-                message += '<img class="markerImg" src="'+mapsetting.markers[i].photo+'" />';
+            var message = '<div id="marker'+num+'" class="mapMarker"><h3>'+$scope.markers[i].name+'</h3>';
+            if($scope.markers[i].photo !== undefined){
+                message += '<img class="markerImg" src="'+$scope.markers[i].photo+'" />';
+            }
+            if(browse == true){
+                message += '<p class="markerInfo">'+$scope.markers[i].data+'</p>';
             }
             for(var j=1; j<=studentAmount;j++){
                 message += '<button type="button" class="btn player'+j+' markerBtn" ng-click="checkLocation($event,'+num+','+j+')"><img src="/img/player'+j+'.png"></button>'
             }
             message += '</div>';
-            var marker={
-                lat: Number(mapsetting.markers[i].laititude),
-                lng: Number(mapsetting.markers[i].longtitude),
-                getMessageScope: function () { return $scope; },
-                message: message,
-                compileMessage: true,
-                icon:{
-                    type: 'makiMarker',
-                    icon: num,
-                    color: '#E91E63',
-                    size: "l"
-                }
-            };
-            $scope.markers.push(marker);
+            $scope.markers[i].getMessageScope = function(){return $scope;};
+            $scope.markers[i].message = message;
+            $scope.markers[i].compileMessage = true;
+            $scope.markers[i].draggable = false;
+
         }
     }
 
@@ -413,5 +417,5 @@ mapModule.controller("MapCtrl", [ "$scope", "$http", "DataService",function($sco
         $(element).css({'background-color': '#f0ad4e', 'border-color': '#eea236'});
         $($(elements)[marker-1]).css({'background-color': '#f0ad4e', 'border-color': '#eea236'});
     }
-    $scope.addMarkers();
+    $scope.addMarkerMsg();
 }]);

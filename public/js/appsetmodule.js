@@ -16,6 +16,27 @@ appSetModule.service('DataService', function(){
         console.log(err);
     });
 
+    db.get("mapstep1").then(function(doc) {
+        self.mapstep1 = doc;
+    },self).catch(function(err){
+        console.log(err);
+    });
+    db.get("mapstep2").then(function(doc) {
+        self.mapstep2 = doc;
+    },self).catch(function(err){
+        console.log(err);
+    });
+    db.get("mapstep3").then(function(doc) {
+        self.mapstep3 = doc;
+    },self).catch(function(err){
+        console.log(err);
+    });
+    db.get("mapstep4").then(function(doc) {
+        self.mapstep4 = doc;
+    },self).catch(function(err){
+        console.log(err);
+    });
+
     db.allDocs({
         include_docs: true,
         attachements: true,

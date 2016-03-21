@@ -2,11 +2,15 @@
     <div id="status" class="container">
         <!--Détails sur l'insecte-->
         <div class="kit col-md-1">
-            <div id="insect" class="col-md-12">
+            <div id="info" class="col-md-12">
                 <h3>Info</h3>
-                <a id="insectBtn">
-                    <img src="img/LogoInsecte.png">
-                </a>    
+                <button class="btn btn-default dropdown-toggle infoBtn" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <!-- <img src="img/info.png" alt="info"> -->
+                    <span class="glyphicon glyphicon-info-sign"></span>
+                </button>
+                <ul class="dropdown-menu col-md-12" aria-labelledby="dropdownMenu1">
+                    <li ng-repeat="info in infos"><a id="info{{$index}}" ng-click="getInfo($index)">{{info.name}}</a></li>
+                </ul>
             </div>
         </div>
         <!--Progress of the rating -->
@@ -69,7 +73,7 @@
         <!-- !!!!todo: improve ng-click -->
         <div class="location" ng-repeat="marker in markers track by $index" id="location{{$index+1}}">
             <div class="locationTitle">
-                <h3>{{$index+1}}.  {{marker.name}}</h3>
+                <h3>{{marker.symbol}} : {{marker.name}}</h3>
             </div>
             <div class="locationContent">
                 <div class="chooseLocation">
@@ -138,10 +142,15 @@
         <div id="chooseDialog" title="Choisir un emplacement">
             <h4>Voulez vous choisir l'emplacement {{chosenTitle}} ?</h4>
         </div>
+        <div ng-repeat="info in infos">
+            <div class="infoDlg" id="infoDlg{{$index}}" title="{{info.name}}">
+                <h4>{{info.data}}</h4>
+            </div>
+        </div>
     </div>
 </div>
 <div ng-controller="MapCtrl">
-    <leaflet lf-center="center" tiles="tiles" geojson="geojson" markers="markers" height="600px" ng-class="{true: 'col-md-9', false: 'col-md-12'}[commonSpace==true]" ></leaflet>
+    <leaflet lf-center="map" tiles="tiles" geojson="geojson" markers="markers" height="600px" ng-class="{true: 'col-md-9', false: 'col-md-12'}[commonSpace==true]" ></leaflet>
 </div>
     <!--Here are the hiden dialogs-->
     <!-- <div id="dialogSpace">

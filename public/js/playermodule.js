@@ -38,14 +38,12 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
     } 
     // communication between devices
 	serviceInit = function(){
-        socket.on('choosegroup', function(data){
-            console.log(data);
-            groupNum = data.group;
-        });
         socket.on('checklocation', function (data) {
+            if(data.group !== $scope.groupNum) return;
         	checklocation(data);
         });
         socket.on('chooselocation', function (data) {
+            if(data.group !== $scope.groupNum) return;
             $scope.chosenNumber = data.location;
         });
     };
@@ -107,7 +105,7 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
         $scope.commonNotes.push(currentCommonNote);
         $scope.currentCommonNote=undefined;
         updateNote();
-        socket.emit('addcommonnote', {player: $scope.player, notes:$scope.commonNotes});
+        socket.emit('addcommonnote', {player: $scope.player, group: $scope.groupNum, notes:$scope.commonNotes});
     }    
     // add note on a location card
     $scope.addLocalNote = function($event){
@@ -129,7 +127,7 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
     	$scope.notes.push(currentLocalNote);
     	$scope.currentLocalNote=undefined;
     	updateNote();
-    	socket.emit('addlocalnote', {player: $scope.player, location:$scope.currentLocation, notes:$scope.notes});
+    	socket.emit('addlocalnote', {player: $scope.player, group: $scope.groupNum, location:$scope.currentLocation, notes:$scope.notes});
     }
     // delete note on the common space
     $scope.deleteCommonNote = function($event){
@@ -141,7 +139,7 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
         });
         // update database
         updateNote();
-        socket.emit('deletecommonnote', {player: $scope.player, notes:$scope.commonNotes});
+        socket.emit('deletecommonnote', {player: $scope.player, group: $scope.groupNum, notes:$scope.commonNotes});
     }    // delete note on a location card
     $scope.deleteLocalNote = function($event){
     	// return the text of <p>
@@ -152,7 +150,7 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
 		});
         // update database
 		updateNote();
-    	socket.emit('deletelocalnote', {player: $scope.player, location:$scope.currentLocation, notes:$scope.notes});
+    	socket.emit('deletelocalnote', {player: $scope.player, group: $scope.groupNum, location:$scope.currentLocation, notes:$scope.notes});
     }
     // submit evaluation of one location
     $scope.updateStar = function(value){
