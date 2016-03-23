@@ -52,9 +52,9 @@
             <div class="col-md-12" id="tasks">
                 <h3>Consignes</h3>
                 <ul>
-                    <li class="steps" id="step{{$index}}" ng-repeat="step in steps" ng-click="nextStep($event,$index+1)">
+                    <li id="step{{$index}}" ng-repeat="step in steps" ng-click="nextStep($event,$index+1)" ng-class="{true: 'moreSteps', false:'lessSteps'}[moreSteps]">
                         <span class="glyphicon glyphicon-unchecked"></span>
-                        <p>Étape {{$index+1}} : {{step.summary}}</p>
+                        <p>Étape {{$index+1}} : {{step.title}}</p>
                     </li>
                 </ul>
             </div>
@@ -76,25 +76,83 @@
                 <h3>{{marker.symbol}} : {{marker.name}}</h3>
             </div>
             <div class="locationContent">
-                <div class="chooseLocation">
+                <div class="chooseLocation" ng-show="seqtype=='unrestricted'||currentStep==2">
                     <button class="btn btn-warning btn-md" name="{{marker.name}}" ng-click="chooseLocation($index+1, marker.name)">Choisir</button>
                 </div>
                 <div class="visualPlayers row" id="visualLocation{{$index}}" ng-model="avatarWidth">
-                    <h4>Visualisation :</h4>
+                    <h4>Press your avatar to check this location:</h4>
                     <div class="visualBtns col-md-{{avatarWidth}}" ng-repeat="i in range(studentAmount) track by $index">
                         <button class="btn player{{$index+1}} markerBtn col-md-7" type="button" ng-click="checkLocation($event,$parent.$index+1,$index+1)"><img src="/img/player{{$index+1}}.png"></button>
-                        <div ng-show="add.eval == 'star'">
+                        <div ng-show="evaltype == 'person'">
                             <span class="checkMarker glyphicon glyphicon-ok-circle grey"></span>
                         </div>
-                        <div ng-show="add.eval == 'heart'">
+                        <!-- <div ng-show="add.eval == 'heart'">
                             <span class="checkMarker glyphicon glyphicon-heart" ng-class="{1: 'heart', 0: 'grey'}[voteValue[$parent.$index][$index]]"></span>
+                        </div> -->
+                    </div>
+                </div> 
+                <!-- config evaluation type -->
+                <div class="vote" id="vote{{$index+1}}" ng-show="add.eval == 'star'">
+                    <h4>Évaluation for criteria:</h4>
+                    <!-- when doing evaluation on personal device, shared display only show the eval results -->
+                    <div ng-if="evalDevice == 'person'">
+                        <div ng-if="cris.num == 0 && steps.s0 == undefined">
+                            <span class="glyphicon glyphicon-star grey" ng-repeat="i in range(steps.s1.scale) track by $index" ng-class="{true: 'star', false: 'grey'}[voteValue[$parent.$index]>$index]" ></span><span class="label label-default caption">{{voteValue[$parent.$index]}}</span>
+                        </div>
+                        <div class="row">
+                            <div ng-show="cris.num !== 0">
+                                <div class="col-md-12">
+                                    Predefined criteria
+                                </div>
+                                <div class="col-md-12" ng-if="cris.num > 0" ng-repeat="cri in cris.teacher">
+                                    <!-- <label>{{cri.name}}</label> -->
+                                    <div class="row">
+                                        <span class="label criName col-md-3">{{cri.name}}</span>
+                                        <div class="col-md-8">
+                                            <span class="glyphicon glyphicon-star grey" ng-repeat="i in range(steps.s1.scale) track by $index" ng-class="{true: 'star', false: 'grey'}[voteValue[$parent.$parent.$index][$parent.$index]>$index]" ></span><span class="label label-default caption">{{voteValue[$parent.$index][$index]}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div ng-show="steps.s0 !== undefined">
+                                <div class="col-md-12">
+                                    Your criteria
+                                </div>
+                                <div class="col-md-12" ng-repeat="cri in cris.student">
+                                    <!-- <label>{{cri.name}}</label> -->
+                                    <div class="row">
+                                        <span class="label criName col-md-3">{{cri.name}}</span>
+                                        <div class="col-md-8">
+                                            <span class="glyphicon glyphicon-star grey" ng-repeat="i in range(steps.s1.scale) track by $index" ng-class="{true: 'star', false: 'grey'}[voteValue[$parent.$parent.$index][$parent.$index]>$index]" ></span><span class="label label-default caption">{{voteValue[$parent.$index][$index]}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>    
-                <div class="vote" id="vote{{$index+1}}" ng-show="add.eval == 'star'">
-                    <h4>Évaluation :</h4>
-                    <span class="glyphicon glyphicon-star grey" ng-repeat="i in range(5) track by $index" ng-class="{true: 'star', false: 'grey'}[voteValue[$parent.$index]>$index]" ></span><span class="label label-default caption">Pas Encore Évalué</span>
+                    <!-- let student do evaluation on shared display -->
+                    <div ng-if="evalDevice !== 'person'">
+                        <div ng-if="cris.num == 0 && steps.s0 == undefined">
+                            <span class="glyphicon glyphicon-star grey" ng-repeat="i in range(steps.s1.scale) track by $index" ng-class="{true: 'star', false: 'grey'}[voteValue[$parent.$parent.$parent.$index]>$index]" ng-click="changeEval($parent.$parent.$parent.$index,$parent.$parent.$index,$index+1)"></span><span class="label label-default caption">{{voteValue[$parent.$index]}}</span>
+                        </div>
+                        <div class="row">
+                            <div ng-show="cris.num !== 0">
+                                <div class="col-md-12">
+                                    Predefined criteria
+                                </div>
+                            <div class="col-md-12" ng-if="cris.num > 0" ng-repeat="cri in cris.teacher track by $index">
+                                <!-- <label>{{cri.name}}</label> -->
+                                <div class="row">
+                                    <span class="label criName col-md-3">{{cri.name}}</span>
+                                    <div class="col-md-8">
+                                        <span class="glyphicon glyphicon-star grey" ng-repeat="i in range(steps.s1.scale) track by $index" ng-class="{true: 'star', false: 'grey'}[voteValue[$parent.$parent.$parent.$index][$parent.$parent.$index]>$index]" ng-click="changeEval($parent.$parent.$parent.$index,$parent.$parent.$index,$index+1)"></span><span class="label label-default caption">{{voteValue[$parent.$parent.$index][$parent.$index]}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
                 <div class="note" id="note{{$index+1}}">
                     <h4>Notes :</h4>
                     <div ng-class="{true: 'shortNote', false: 'longNote'}[add.eval=='star']">
@@ -129,14 +187,14 @@
             <div id="dialog{{$index+1}}" class="dialog" title="Consignes">
                 <h4>Étape {{$index+1}} :</h4>
                 <h4>
-                    {{step.content}}
+                    {{step.dlg}}
                 </h4>
-                <h4 ng-if="step.timer == 'true'">
+                <!-- <h4 ng-if="step.timer == 'true'">
                     Vous avez {{step.timerval}} mins pour cette étape.
                 </h4>
                 <h4 ng-if="step.timerBadge == true">
                     Gagnez le badge Timer si vous finissez toutes les évaluation individuelle dans les {{step.timerval}} mins.
-                </h4>
+                </h4> -->
             </div>
         </div>
         <div id="chooseDialog" title="Choisir un emplacement">

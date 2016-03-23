@@ -6,27 +6,107 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
     }
     //!!!!todo,delete some var
     getAppData = function(){
+        // get location amount
         $scope.locationAmount = DataService.mapstep1.markers.length;
         $scope.studentAmount = parseInt(DataService.studentAmount);
+        $scope.groupNum = DataService.groupNum;
+        // caculate avatar width based on student amount
         $scope.avatarWidth = Math.round(12/$scope.studentAmount);
+        // get markers
         $scope.markers = DataService.mapstep1.markers;
-        $scope.steps = DataService.mapsetting.steps;
-        $scope.notes = DataService.notes.rows[DataService.groupNum-1].doc.notes;
-        $scope.commonNotes = DataService.notes.rows[DataService.groupNum-1].doc.common;
-        $scope.votes = DataService.votes.rows[DataService.groupNum-1].doc.votes;
-        $scope.allVotes = $scope.studentAmount*($scope.markers.length);
-        $scope.currentStep = 1;
-        $scope.add = DataService.mapsetting.additional;
-        $scope.add.noteNum = Number($scope.add.noteNum);
-        $scope.groupName = DataService.mapsetting.groups[DataService.groupNum-1].name;
-        $scope.infos = DataService.mapstep1.infos;
-        
+        // get symbol of each location, and change lower case to upper case
         for(var i=0; i<$scope.locationAmount;i++){
             $scope.markers[i].symbol = $scope.markers[i].icon.icon;
             if(isNaN($scope.markers[i].icon.icon)){
                 $scope.markers[i].symbol = $scope.markers[i].symbol.toUpperCase();
             }
         }
+        // get the type of sequence, and set steps based on the sequence type
+        $scope.seqtype = DataService.mapstep2.seqtype;
+        if($scope.seqtype == "restricted"){
+            $scope.steps = DataService.mapstep2.reseq;
+            if($scope.steps.s0.title == undefined){
+                delete $scope.steps.s0;
+            }else{
+                var s0=true;
+            }
+            if($scope.steps.s3.title == undefined){
+                delete $scope.steps.s3;
+            }else{
+                var s3=true;
+            }
+            if(s0 && s3){
+                $scope.moreSteps = true;
+            }
+        }else{
+            $scope.steps = DataService.mapstep2.unseq;
+            if($scope.steps.s0.title == undefined) delete $scope.steps.s0;
+            if($scope.steps.s2.title == undefined) delete $scope.steps.s2;
+        }
+        // get criterias
+        $scope.cris = DataService.mapstep1.cris;
+        $scope.cris.num = $scope.cris.teacher.length;
+        // get steps and evalate on which device
+        ($scope.steps.s1.eval)?($scope.evaltype = $scope.steps.s1.eval):($scope.evaltype = "group");
+        // judge on which device to make the evaluation
+        if($scope.evaltype == "individual"){
+            $scope.evalDevice = "person";
+            // criLocation used to store cri value of each player corresponding to each location
+            $scope.criLocations = [];
+            for(i=0; i<locationAmount;i++){
+                $scope.criLocations[i]=[];
+            }
+
+        }else{
+            // voteValue are configed when each alternative would be evaluated once
+            if(DataService.mapstep4.share.eval & DataService.mapstep4.person.eval){
+                $scope.evalDevice = "both";
+            }else if(DataService.mapstep4.share.eval == true){
+                $scope.evalDevice = "share";
+            }else{
+                $scope.evalDevice = "person";
+            }
+        }
+        $scope.voteValue = [];
+        // when there is no s0, structure voteValue
+        if($scope.steps.s0 == undefined){
+            // 没有cris的时候，votes为一维数组
+            if($scope.cris.num == 0){
+                $scope.voteValue.length = $scope.locationAmount;
+            }else{
+                // 有多个cris的时候，votes为二维数组，x维是location，y维是cris
+                for(var j=0; j<$scope.locationAmount;j++){
+                    var cris = [];
+                    cris.length = $scope.cris.num;
+                    $scope.voteValue.push(cris);
+                }
+            }
+        }
+        
+        // get votes
+        $scope.votes = DataService.votes.rows[$scope.groupNum-1].doc.votes;
+        // when the votes is empty, rebuild it
+        // actually, we always need to rebuild the array as the cris might be changed which would influence the dimention of votes
+
+        // get notes
+        $scope.notes = DataService.notes.rows[$scope.groupNum-1].doc.notes;
+        // get common notes
+        $scope.commonNotes = DataService.notes.rows[$scope.groupNum-1].doc.common;
+        // caculate the needed number of votes when all evaluation are required
+        $scope.allVotes = $scope.studentAmount*($scope.markers.length);
+        // set the number of the current step
+        $scope.currentStep = 1;
+        // additional functionalities  to be changed
+        $scope.add = DataService.mapsetting.additional;
+        // get or store note number, to update badge
+        $scope.add.noteNum = Number($scope.add.noteNum);
+        // get current group names
+        $scope.groupName = DataService.mapsetting.groups[$scope.groupNum-1].name;
+        // get relevant information
+        $scope.infos = DataService.mapstep1.infos;
+
+        
+        // get required number to win the timer badge
         var timerBadgeNum = function(){
             var time=0;
             for(var i=0;i<$scope.steps.length;i++){
@@ -44,8 +124,16 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         var db = new PouchDB('http://localhost:5984/insect');
         var socket = io.connect('http://localhost:8000');
         //------following parts realize the communication between pages
+
+        // add criteria
+        socket.on('addcri', function (data){
+           if(data.group !== $scope.groupNum) return;
+
+           $scope.cris.teacher.push(data.cri);
+        });
+        // add comment to an alternative
         socket.on('addlocalnote', function (data) {
-            if(data.group !== DataService.groupNum) return;
+            if(data.group !== $scope.groupNum) return;
             
             $scope.notes = data.notes;
             $scope.studentNotes[data.player-1]++;
@@ -53,8 +141,9 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
             console.log($scope.studentNotes);
         });
 
+        // delete comment from alternative
         socket.on('deletelocalnote', function (data) {
-            if(data.group !== DataService.groupNum) return;
+            if(data.group !== $scope.groupNum) return;
 
             $scope.notes = data.notes;
             $scope.studentNotes[data.player-1]--;
@@ -62,8 +151,9 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
             console.log($scope.studentNotes);
         });
 
+        // add comment to common space
         socket.on('addcommonnote', function (data) {
-            if(data.group !== DataService.groupNum) return;
+            if(data.group !== $scope.groupNum) return;
 
             $scope.commonNotes = data.notes;
             $scope.studentNotes[data.player-1]++;
@@ -71,8 +161,9 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
             console.log($scope.studentNotes);
         });
 
+        // delete common comment
         socket.on('deletecommonnote', function (data) {
-            if(data.group !== DataService.groupNum) return;
+            if(data.group !== $scope.groupNum) return;
 
             $scope.commonNotes = data.notes;
             $scope.studentNotes[data.player-1]--;
@@ -80,14 +171,21 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
             console.log($scope.studentNotes);
         });
 
-        socket.on('vote', function(data){
-            if(data.group !== DataService.groupNum) return;
+        // evaluate 
+        socket.on('evaluateperson', function (data){
+            if(data.group !== $scope.groupNum) return;
 
-            if($scope.add.eval == 'star'){
-                updateStar(data);
-            }else if($scope.add.eval == "heart"){
-                updateHeart(data);
+            if($scope.evaltype == 'individual'){
+                criLocations[data.location-1]
+            }else{
+                e
             }
+
+            // if($scope.add.eval == 'star'){
+            //     updateStar(data);
+            // }else if($scope.add.eval == "heart"){
+            //     updateHeart(data);
+            // }
         });
     }
 
@@ -188,7 +286,7 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         });
         $(".infoDlg").dialog({
             autoOpen: false,
-            resizable: false,
+            resizable: true,
             width:600,
             height:420,
             modal: false,
@@ -252,6 +350,7 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
             for(var j=0; j<$scope.studentAmount;j++){
                 value += votes[j].vote;
             }
+            // get average
             value = Math.round(value/$scope.studentAmount);
             // change star color
             $scope.voteValue.push(value);
@@ -270,6 +369,7 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
     $scope.getInfo = function(num){
         $('#infoDlg'+num).dialog('open');
     }
+    // nextStep
     $scope.nextStep = function($event,step){
         if(($scope.votes.length == $scope.allVotes)||($scope.add.eval == 'heart')){
             if($scope.currentStep == step){
@@ -301,10 +401,16 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
             }
         }
     }
+        // submit evaluation of one location
+    $scope.changeEval = function(locationNum,criNum,value){
+        $scope.voteValue[locationNum][criNum] = value;
+        
+        socket.emit('voteOnShare', {group: $scope.groupNum, location: locationNum, cri: criNum, value: value});
+    }
     $scope.checkLocation = function($event,marker,player){
         var socket = io.connect('http://localhost:8000');
     	console.log(marker,player);
-        socket.emit('checklocation', { marker: marker, player: player, group: DataService.groupNum});
+        socket.emit('checklocation', { marker: marker, player: player, group: $scope.groupNum});
 
         var element = $event.currentTarget;
         var className = element.className;
@@ -339,10 +445,9 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         });
         $('.location').touch();
         $('#commonSpace').touch();
-        // $('.chooseLocation').hide();
         $("#step0 p").css('color', '#E0E0E0');
         $("#step0 span").css('color', '#E0E0E0');
-        $(".chooseLocation").hide();
+        // $(".chooseLocation").hide();
 
         if($scope.add.eval == 'star'){
             attachStar();
@@ -391,11 +496,13 @@ mapModule.controller("MapCtrl", [ "$scope", "$http", "DataService",function($sco
             if($scope.markers[i].photo !== undefined){
                 message += '<img class="markerImg" src="'+$scope.markers[i].photo+'" />';
             }
+            // if let students browse information on markers, then hide the avatar inside the marker
             if(browse == true){
                 message += '<p class="markerInfo">'+$scope.markers[i].data+'</p>';
-            }
-            for(var j=1; j<=studentAmount;j++){
-                message += '<button type="button" class="btn player'+j+' markerBtn" ng-click="checkLocation($event,'+num+','+j+')"><img src="/img/player'+j+'.png"></button>'
+            }else{
+                for(var j=1; j<=studentAmount;j++){
+                    message += '<button type="button" class="btn player'+j+' markerBtn" ng-click="checkLocation($event,'+num+','+j+')"><img src="/img/player'+j+'.png"></button>'
+                }
             }
             message += '</div>';
             $scope.markers[i].getMessageScope = function(){return $scope;};
@@ -408,7 +515,7 @@ mapModule.controller("MapCtrl", [ "$scope", "$http", "DataService",function($sco
 
     $scope.checkLocation = function($event,marker,player){
         console.log(marker,player);
-        socket.emit('checklocation', { marker: marker, player: player, group: DataService.groupNum});
+        socket.emit('checklocation', { marker: marker, player: player, group: $scope.groupNum});
 
         var element = $event.currentTarget;
         var className = element.className;

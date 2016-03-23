@@ -16,6 +16,7 @@ li{
 a {
     cursor: pointer;
 }
+
 #maskLayer{
     position: absolute;
     top: 0;
@@ -187,10 +188,11 @@ p{
     float: left;
     margin-left: 20px;
 }
-#tasks .steps{
-    height: 30px;
-    width: 700px;
+.lessSteps p{
     margin-bottom: 10px;
+}
+.moreSteps p{
+    margin-bottom: 0;
 }
 .glyphicon{
     font-size: 25px;
@@ -200,7 +202,7 @@ p{
     font-size: 50px;
     color: #ead222;
 }
-.vote span, .glyphicon.heart{
+.glyphicon-star, .glyphicon-heart{
     text-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
 }
 #tasks ul li p{
@@ -342,11 +344,11 @@ p{
     /*border: 1px solid;*/
 }
 .visualPlayers{
-    margin-top: 10px;
     width: 390px;
     height: 100px;
     margin-left: 15px;
     border-bottom: 1px solid #5D4037;
+    margin-top: 10px;
 }
 .markerBtn{
     background-color: #5bc0de;
@@ -373,16 +375,28 @@ p{
 }
 .locationContent .vote{
     width: 390px;
-    height: 75px;
+    /*height: 75px;*/
     margin-top: 15px;
     margin-left: 15px;
     border-bottom: 1px solid #5D4037;
-
+    padding-bottom: 10px;
 }
-
+.criName{
+    color: #616161;
+    font-size: 85%;
+    text-align: right;
+    margin-top: 5px;
+    margin-left: 10px;
+}
+.caption{
+    color: #ffffff;
+    background-color: #3F51B5;
+    margin-left: 10px;
+    position: relative;
+    top: 2px;
+}
 .locationContent h4{
     margin-top: 0;
-    width: 150px;
 }
 
 .chooseLocation{
@@ -497,10 +511,7 @@ p{
 .checked{
     color: #449d44;
 }
-.caption{
-    margin-top: 8px;
-    margin-left: 10px;
-}
+
 .visualBtns{
     float: left;
 }
