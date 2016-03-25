@@ -24,17 +24,25 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
     }
     // get data from DataService 
     getData = function(){
+        // get player number
         $scope.player = DataService.studentNum;
+        // get group number
         $scope.groupNum = DataService.groupNum;
+        // get sequence type and steps
+        $scope.seqtype = DataService.mapstep2.seqtype;
+        ($scope.seqtype == "restricted")?($scope.steps = DataService.mapstep2.reseq):($scope.steps = DataService.mapstep2.unseq);
+        ($scope.steps.s0.title)?($scope.currentStep = 0):($scope.currentStep = 1);
+
+        $scope.crisTea = DataService.mapstep1.cris.teacher;
+        $scope.crisStu = DataService.mapstep1.cris.student;
+
         $scope.notes = DataService.notes.rows[DataService.groupNum-1].doc.notes;
         $scope.commonNotes = DataService.notes.rows[DataService.groupNum-1].doc.common;
         $scope.votes = DataService.votes.rows[DataService.groupNum-1].doc.votes;
-        $scope.markers = DataService.mapsetting.markers;
+        $scope.markers = DataService.mapstep1.markers;
         $scope.locationInfo = "hello lili";
         $scope.add = DataService.mapsetting.additional;
         $scope.like = false;
-        $scope.caption= ['Pas Encore Évalué','Très Faible', 'Faible', 'Moyen', 'Bon', 'Très Bon'];
-
     } 
     // communication between devices
 	serviceInit = function(){
@@ -42,6 +50,14 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
             if(data.group !== $scope.groupNum) return;
         	checklocation(data);
         });
+        socket.on('changestep', function (data){
+            if(data.group !== $scope.groupNum) return;
+            $scope.currentStep = data.step;
+            if($scope.currentStep == 1){
+                $scope.cris = $scope.crisTea.concat($scope.criStu);
+            }
+            $scope.$apply();
+        })
         socket.on('chooselocation', function (data) {
             if(data.group !== $scope.groupNum) return;
             $scope.chosenNumber = data.location;
@@ -90,6 +106,30 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
             }, 'vote_'+$scope.groupNum, doc._rev);
         });
     }
+    $scope.addCri = function($event){
+        if(!$scope.currentCri){
+            $('#writeNoteDlg').dialog('open');
+            return;
+        }
+        var id = "cri"+$scope.player+'/'+Math.random();
+        var newCri = {
+            name: $scope.currentCri,
+            id:id
+        };
+        $scope.crisStu.push(newCri);
+        socket.emit('addcri',{group: $scope.groupNum, cri: newCri});
+        $scope.currentCri = '';
+    }
+    // delete note on the common space
+    $scope.deleteCri = function($event){
+        // return the text of <p>
+        var id = $event.target.id;
+        // keep all the notes expect the one has id of "id"
+        $scope.crisStu = $.grep($scope.crisStu, function(value) {
+            return value.id != id;
+        });
+        socket.emit('deletecri', {group: $scope.groupNum, id: id});
+    }  
     // add note on the common space
     $scope.addCommonNote = function($event){
         if(!$scope.currentCommonNote){

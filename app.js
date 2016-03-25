@@ -77,6 +77,21 @@ io.on('connection', function (socket) {
         // logger.log('info',data);
         io.emit('choosegroup', data);
     });
+    socket.on('addcri', function(data){
+        logger.info('add a criteria',data);
+        // logger.log('info',data);
+        io.emit('addcri', data);
+    });
+    socket.on('deletecri', function(data){
+        logger.info('delete a criteria',data);
+        // logger.log('info',data);
+        io.emit('deletecri', data);
+    });
+    socket.on('changestep', function(data){
+        logger.info('change step',data);
+        // logger.log('info',data);
+        io.emit('changestep', data);
+    })
     // Start listening for mouse events
     socket.on('checklocation', function (data) {
         logger.info('check the location',data);

@@ -1,6 +1,8 @@
 var mapModule = angular.module("MapModule", ["leaflet-directive"]);
 
 mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
+    var socket = io.connect('http://localhost:8000');
+
     $scope.range = function(n) {
         return new Array(n);   
     }
@@ -45,17 +47,12 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         }
         // get criterias
         $scope.cris = DataService.mapstep1.cris;
-        $scope.cris.num = $scope.cris.teacher.length;
+        $scope.cris.numTeacher = $scope.cris.teacher.length;
         // get steps and evalate on which device
         ($scope.steps.s1.eval)?($scope.evaltype = $scope.steps.s1.eval):($scope.evaltype = "group");
         // judge on which device to make the evaluation
         if($scope.evaltype == "individual"){
             $scope.evalDevice = "person";
-            // criLocation used to store cri value of each player corresponding to each location
-            $scope.criLocations = [];
-            for(i=0; i<locationAmount;i++){
-                $scope.criLocations[i]=[];
-            }
 
         }else{
             // voteValue are configed when each alternative would be evaluated once
@@ -71,18 +68,25 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         // when there is no s0, structure voteValue
         if($scope.steps.s0 == undefined){
             // 没有cris的时候，votes为一维数组
-            if($scope.cris.num == 0){
+            if($scope.cris.numTeacher == 0){
                 $scope.voteValue.length = $scope.locationAmount;
             }else{
                 // 有多个cris的时候，votes为二维数组，x维是location，y维是cris
                 for(var j=0; j<$scope.locationAmount;j++){
                     var cris = [];
-                    cris.length = $scope.cris.num;
+                    cris.length = $scope.cris.numTeacher;
                     $scope.voteValue.push(cris);
                 }
             }
+            // set the number of the current step, 不让学生添加cris的时候第一步为1
+            $scope.currentStep = 1;
+        }else{
+            // 让学生添加cris的时候，第一步为0
+            $scope.currentStep = 0;
         }
-        
+        // 判断什么时候可以点击公共屏幕上的星星
+        ($scope.evalDevice !== "person" && $scope.currentStep==1)?($scope.clickStar = true):null;
+
         // get votes
         $scope.votes = DataService.votes.rows[$scope.groupNum-1].doc.votes;
         // when the votes is empty, rebuild it
@@ -94,8 +98,7 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         $scope.commonNotes = DataService.notes.rows[$scope.groupNum-1].doc.common;
         // caculate the needed number of votes when all evaluation are required
         $scope.allVotes = $scope.studentAmount*($scope.markers.length);
-        // set the number of the current step
-        $scope.currentStep = 1;
+        
         // additional functionalities  to be changed
         $scope.add = DataService.mapsetting.additional;
         // get or store note number, to update badge
@@ -122,14 +125,20 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
 
     serviceInit = function(){
         var db = new PouchDB('http://localhost:5984/insect');
-        var socket = io.connect('http://localhost:8000');
         //------following parts realize the communication between pages
 
         // add criteria
         socket.on('addcri', function (data){
            if(data.group !== $scope.groupNum) return;
-
-           $scope.cris.teacher.push(data.cri);
+           $scope.cris.student.push(data.cri);
+           $scope.$apply();
+        });
+        socket.on('deletecri', function (data){
+           if(data.group !== $scope.groupNum) return;
+           $scope.cris.student = $.grep($scope.cris.student, function(value) {
+                return value.id != data.id;
+            });
+           $scope.$apply();
         });
         // add comment to an alternative
         socket.on('addlocalnote', function (data) {
@@ -176,9 +185,9 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
             if(data.group !== $scope.groupNum) return;
 
             if($scope.evaltype == 'individual'){
-                criLocations[data.location-1]
+                $scope.voteValue[data.location][data.cri][data.player] = data.value;
             }else{
-                e
+                $scope.voteValue[data.location][data.cri] = data.value;
             }
 
             // if($scope.add.eval == 'star'){
@@ -300,13 +309,13 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
     // add a new timer
     timerInit = function(step){
         var num = step-1;
-        if($scope.steps[num].timer == 'true'){
-            $('#timer'+step).countdown({
-                image: "/img/digits.png",
-                format: "mm:ss",
-                startTime: $scope.steps[num].timerval
-            });
-        }
+        // if($scope.steps[num].timer == 'true'){
+        //     $('#timer'+step).countdown({
+        //         image: "/img/digits.png",
+        //         format: "mm:ss",
+        //         startTime: $scope.steps[num].timerval
+        //     });
+        // }
     }
     updateStar = function(data){
         $scope.votes = data.votes;
@@ -366,46 +375,82 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         $('#location'+$scope.chosenNum).show();
         $('.chooseLocation').hide();
     }
+
     $scope.getInfo = function(num){
         $('#infoDlg'+num).dialog('open');
     }
     // nextStep
-    $scope.nextStep = function($event,step){
-        if(($scope.votes.length == $scope.allVotes)||($scope.add.eval == 'heart')){
-            if($scope.currentStep == step){
-                var element = $event.target.parentElement;
-                $(element.children[0]).removeClass('glyphicon-unchecked');
-                $(element.children[0]).addClass('glyphicon-check');
+    $scope.nextStep = function($event, index){
+        // skip step 0 when there is no s0
+        var step;
+        ($scope.steps.s0==undefined)?(step = index+1):(step = index);
 
-                // remove the former timer if it exists
-                if($('#timer'+step).length !== 0){
-                    clearInterval(intervals.main);
-                    $('#timer'+step).remove();
-                    if($scope.steps[step-1].timerBadge == true){
-                        if(digits[1].current != 9){
-                            $scope.steps[step-1].timerWin = true;
-                        }else{
-                            $scope.steps[step-1].timerWin = false;
-                        }
+        if(step == $scope.currentStep){
+            // change the check mark
+            var element = $event.target.parentElement;
+            $(element.children[0]).removeClass('glyphicon-unchecked');
+            $(element.children[0]).addClass('glyphicon-check');
+            // change color of next task
+            // if(step<$scope.steps.length){
+            ($(element.nextElementSibling))?($(element.nextElementSibling.children).css('color', '#E0E0E0')):null;
+            // $(element.nextElementSibling.children).css('color', '#E0E0E0');
+            // }
+            // remove the former timer if it exists
+            if($('#timer'+step).length !== 0){
+                clearInterval(intervals.main);
+                $('#timer'+step).remove();
+                if($scope.steps[step-1].timerBadge == true){
+                    if(digits[1].current != 9){
+                        $scope.steps[step-1].timerWin = true;
+                    }else{
+                        $scope.steps[step-1].timerWin = false;
                     }
                 }
-                if(step == 1){
-                    if($scope.add.eval == 'star') showVote();
-                    $(".chooseLocation").show();
-                }
-                if(step<$scope.steps.length){
-                    $(element.nextElementSibling.children).css('color', '#E0E0E0');
-                }
-                $scope.currentStep++;
-                $('#dialog'+$scope.currentStep).dialog('open');
             }
+            // reset clickStar
+            $scope.clickStar = false;
+            // open the dialogue of next step
+            var dlgIndex = index+1;
+            $('#dialog'+dlgIndex).dialog('open');
+            switch (step){
+                // to step 1; prepare the array for store vote value
+                case 0:
+                    // make stars clickable when students are allowed to evaluate on the shared display
+                    ($scope.evalDevice !== "person")?($scope.clickStar = true):null;
+                    // get the length of the current criteria
+                    $scope.cris.num = $scope.cris.numTeacher+$scope.cris.student.length;
+                    for(var j=0; j<$scope.locationAmount;j++){
+                        var cris = [];
+                        // if evluating individually, add the player dimention to the array
+                        if($scope.evaltype=="individual"){
+                            for(var k=0;k<$scope.cris.num;k++){
+                                var crisplayer = [];
+                                crisplayer.length = $scope.studentAmount;
+                                cris.push(crisplayer);
+                            }
+                        }
+                        $scope.voteValue.push(cris);
+                    }
+                    break;
+                case 1:
+                    // ($scope.evaltype == "individual")?(showVote()):null;
+                    $(".chooseLocation").show();
+                    break;
+                case 2: 
+                    break;
+                case 3:
+                    break;
+            }
+            
+            $scope.currentStep++;
+            socket.emit("changestep", {group: $scope.groupNum, step:$scope.currentStep});
         }
     }
         // submit evaluation of one location
     $scope.changeEval = function(locationNum,criNum,value){
         $scope.voteValue[locationNum][criNum] = value;
         
-        socket.emit('voteOnShare', {group: $scope.groupNum, location: locationNum, cri: criNum, value: value});
+        // socket.emit('voteOnShare', {group: $scope.groupNum, location: locationNum, cri: criNum, value: value});
     }
     $scope.checkLocation = function($event,marker,player){
         var socket = io.connect('http://localhost:8000');
@@ -456,7 +501,7 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         }
 
         dialogInit();
-        $('#dialog1').dialog('open');
+        $('#dialog0').dialog('open');
     });
 
     init();
