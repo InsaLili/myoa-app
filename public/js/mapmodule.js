@@ -47,7 +47,8 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         }
         // get criterias
         $scope.cris = DataService.mapstep1.cris;
-        $scope.cris.numTeacher = $scope.cris.teacher.length;
+        $scope.crisTea = $scope.cris.teacher.length;
+        $scope.cris.num = 0;
         // get steps and evalate on which device
         ($scope.steps.s1.eval)?($scope.evaltype = $scope.steps.s1.eval):($scope.evaltype = "group");
         // judge on which device to make the evaluation
@@ -55,7 +56,7 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
             $scope.evalDevice = "person";
 
         }else{
-            // voteValue are configed when each alternative would be evaluated once
+            // evalVal are configed when each alternative would be evaluated once
             if(DataService.mapstep4.share.eval & DataService.mapstep4.person.eval){
                 $scope.evalDevice = "both";
             }else if(DataService.mapstep4.share.eval == true){
@@ -64,18 +65,18 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
                 $scope.evalDevice = "person";
             }
         }
-        $scope.voteValue = [];
-        // when there is no s0, structure voteValue
+        $scope.evalVal = [];
+        // when there is no s0, structure evalVal
         if($scope.steps.s0 == undefined){
             // 没有cris的时候，votes为一维数组
-            if($scope.cris.numTeacher == 0){
-                $scope.voteValue.length = $scope.locationAmount;
+            if($scope.cris.teacher.length == 0){
+                $scope.evalVal.length = $scope.locationAmount;
             }else{
                 // 有多个cris的时候，votes为二维数组，x维是location，y维是cris
                 for(var j=0; j<$scope.locationAmount;j++){
                     var cris = [];
-                    cris.length = $scope.cris.numTeacher;
-                    $scope.voteValue.push(cris);
+                    cris.length = $scope.cris.teacher.length;
+                    $scope.evalVal.push(cris);
                 }
             }
             // set the number of the current step, 不让学生添加cris的时候第一步为1
@@ -181,20 +182,15 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         });
 
         // evaluate 
-        socket.on('evaluateperson', function (data){
+        socket.on('evaluate', function (data){
             if(data.group !== $scope.groupNum) return;
 
             if($scope.evaltype == 'individual'){
-                $scope.voteValue[data.location][data.cri][data.player] = data.value;
+                $scope.evalVal[data.location-1][data.cri][data.player-1] = data.value;
             }else{
-                $scope.voteValue[data.location][data.cri] = data.value;
+                $scope.evalVal[data.location-1][data.cri] = data.value;
             }
-
-            // if($scope.add.eval == 'star'){
-            //     updateStar(data);
-            // }else if($scope.add.eval == "heart"){
-            //     updateHeart(data);
-            // }
+            $scope.$apply();
         });
     }
 
@@ -226,7 +222,7 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         console.log($scope.voteAmount);
     }
     attachHeart = function(){
-        $scope.voteValue=[];
+        $scope.evalVal=[];
         for(var i=1;i<=$scope.locationAmount;i++){
             var locationVote = [];
             var votes = $.grep($scope.votes, function(value){
@@ -242,7 +238,7 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
                     locationVote.push(0);
                 }
             }
-            $scope.voteValue.push(locationVote);
+            $scope.evalVal.push(locationVote);
         }
     }
     attachNotes = function(){
@@ -341,12 +337,12 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         $(checkMark).addClass('checked');
     }
     updateHeart = function(data){
-        $scope.voteValue[data.location-1][data.player-1] = data.value;
+        $scope.evalVal[data.location-1][data.player-1] = data.value;
         $scope.$apply();
     }
 
     showVote = function(){
-        $scope.voteValue = [];
+        $scope.evalVal = [];
         var color = ['#d9534f','#ec971f','#31b0d5','#337ab7','#449d44'];
         var caption= ['Très Faible', 'Faible', 'Moyen', 'Bon', 'Très Bon'];
         
@@ -362,7 +358,7 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
             // get average
             value = Math.round(value/$scope.studentAmount);
             // change star color
-            $scope.voteValue.push(value);
+            $scope.evalVal.push(value);
             // change caption
             var location = i+1;
             var label = $('#vote'+location+' .caption');
@@ -418,7 +414,7 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
                     // make stars clickable when students are allowed to evaluate on the shared display
                     ($scope.evalDevice !== "person")?($scope.clickStar = true):null;
                     // get the length of the current criteria
-                    $scope.cris.num = $scope.cris.numTeacher+$scope.cris.student.length;
+                    $scope.cris.num = $scope.cris.teacher.length+$scope.cris.student.length;
                     for(var j=0; j<$scope.locationAmount;j++){
                         var cris = [];
                         // if evluating individually, add the player dimention to the array
@@ -429,7 +425,7 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
                                 cris.push(crisplayer);
                             }
                         }
-                        $scope.voteValue.push(cris);
+                        $scope.evalVal.push(cris);
                     }
                     break;
                 case 1:
@@ -448,14 +444,21 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
     }
         // submit evaluation of one location
     $scope.changeEval = function(locationNum,criNum,value){
-        $scope.voteValue[locationNum][criNum] = value;
+        $scope.evalVal[locationNum][criNum] = value;
         
         // socket.emit('voteOnShare', {group: $scope.groupNum, location: locationNum, cri: criNum, value: value});
     }
     $scope.checkLocation = function($event,marker,player){
         var socket = io.connect('http://localhost:8000');
     	console.log(marker,player);
-        socket.emit('checklocation', { marker: marker, player: player, group: $scope.groupNum});
+        // in s0, cris.num always equal to 0, so vote=[]
+        var vote = [];
+        for(var i=0; i<$scope.cris.num;i++){
+            var value;
+            ($scope.evaltype == "individual")?(value=$scope.evalVal[marker-1][i][player]):(value=$scope.evalVal[marker-1][i])
+            vote.push(value);
+        }
+        socket.emit('checklocation', { location: marker, player: player, group: $scope.groupNum, vote: vote});
 
         var element = $event.currentTarget;
         var className = element.className;

@@ -121,9 +121,9 @@ io.on('connection', function (socket) {
         io.emit('deletecommonnote', data);
     });
 
-    socket.on('vote', function(data){
-        logger.info('vote for location',data);
-        io.emit('vote', data);
+    socket.on('evaluate', function(data){
+        logger.info('evaluate the location',data);
+        io.emit('evaluate', data);
     });
 });
 

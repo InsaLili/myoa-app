@@ -10,6 +10,7 @@ playerModule.controller('RoleCtrl', function($scope, DataService){
     $scope.chooseGroup = function(group){
         DataService.groupNum=group;
         $scope.studentAmount = parseInt($scope.groups[group-1].student);
+        DataService.studentAmount = $scope.studentAmount;
     }
 	$scope.chooseStudentNum = function($event,value){
         DataService.studentNum = value+1;
@@ -28,17 +29,23 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
         $scope.player = DataService.studentNum;
         // get group number
         $scope.groupNum = DataService.groupNum;
+        // get student amount
+        $scope.studentAmount = DataService.studentAmount;
         // get sequence type and steps
         $scope.seqtype = DataService.mapstep2.seqtype;
         ($scope.seqtype == "restricted")?($scope.steps = DataService.mapstep2.reseq):($scope.steps = DataService.mapstep2.unseq);
+        // get current step, check whether there is s0 or not
         ($scope.steps.s0.title)?($scope.currentStep = 0):($scope.currentStep = 1);
+        // get the evaluation type
+        ($scope.steps.s1.eval)?($scope.evaltype = $scope.steps.s1.eval):($scope.evaltype = "group");
 
         $scope.crisTea = DataService.mapstep1.cris.teacher;
         $scope.crisStu = DataService.mapstep1.cris.student;
 
         $scope.notes = DataService.notes.rows[DataService.groupNum-1].doc.notes;
         $scope.commonNotes = DataService.notes.rows[DataService.groupNum-1].doc.common;
-        $scope.votes = DataService.votes.rows[DataService.groupNum-1].doc.votes;
+        // $scope.voteValue = DataService.votes.rows[DataService.groupNum-1].doc.votes;
+        $scope.evalVal = [];
         $scope.markers = DataService.mapstep1.markers;
         $scope.locationInfo = "hello lili";
         $scope.add = DataService.mapsetting.additional;
@@ -54,7 +61,7 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
             if(data.group !== $scope.groupNum) return;
             $scope.currentStep = data.step;
             if($scope.currentStep == 1){
-                $scope.cris = $scope.crisTea.concat($scope.criStu);
+                $scope.cris = $scope.crisTea.concat($scope.crisStu);
             }
             $scope.$apply();
         })
@@ -66,24 +73,10 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
     // load data, vote and note of a location
     checklocation = function(data){
 		if(data.player == $scope.player){
-            $scope.currentLocation = data.marker;
+            $scope.currentLocation = data.location;
             $scope.locationInfo = $scope.markers[$scope.currentLocation-1].data;
             var id = $scope.player+'/'+$scope.currentLocation;
-            var vote = $.grep($scope.votes, function(value) {
-                return value.id == id;
-            });
-            if(vote.length>0){
-                $scope.voteVal=vote[0].vote;
-            }else{
-                $scope.voteVal=0;
-            }
-            // update caption
-            if($scope.add.eval == 'star'){
-                var color = ['##777','#d9534f','#ec971f','#31b0d5','#337ab7','#449d44'];
-                var location = $scope.currentLocation;
-                var label = $('#evaluation .caption');
-                label.css('background-color', color[$scope.voteVal]);
-            }
+            $scope.evalVal = data.vote;
         	$scope.$apply();
     	}
     }
@@ -193,44 +186,18 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
     	socket.emit('deletelocalnote', {player: $scope.player, group: $scope.groupNum, location:$scope.currentLocation, notes:$scope.notes});
     }
     // submit evaluation of one location
-    $scope.updateStar = function(value){
+    $scope.changeEval = function(index,value){
         if(!$scope.currentLocation){
             $('#chooseLocationDlg').dialog('open');
             return;
         }
-        $scope.voteVal = value;
-        // set color and description of the caption
-        var color = ['#d9534f','#ec971f','#31b0d5','#337ab7','#449d44'];
-        var location = $scope.currentLocation;
-        var label = $('#evaluation .caption');
-        // update caption
-        // label.text($scope.caption[value]);
-        label.css('background-color', color[value-1]);
-        // update $scope.votes
-        var id = $scope.player+'/'+location;
-        var vote = $.grep($scope.votes, function(value) {
-            return value.id == id;
-        });
-        var newVote = false;
-        // if the vote already exists, update the vote value;
-        // if not, push a new vote object to the votes array
-        if(vote.length>0){
-            var index = $scope.votes.indexOf(vote[0]);
-            $scope.votes[index].vote = value;
-            newVote = false;
-        }else {
-            var newVote={
-                id: id,
-                player: $scope.player,
-                location: $scope.currentLocation,
-                vote: value
-            }
-            $scope.votes.push(newVote);
-            newVote = true;
-        }
+        var newVote;
+        ($scope.evalVal[index] == undefined)?(newVote = true):(newVote = false);
+        $scope.evalVal[index] = value;
+               
         // store new vote to db
-        updateVote();
-        socket.emit('vote', {location: $scope.currentLocation, group: $scope.chosenNumber, player: $scope.player, newvote:newVote, id: id, votes: $scope.votes});
+        // updateVote();
+        socket.emit('evaluate', {group: $scope.groupNum, location: $scope.currentLocation, cri:index, player: $scope.player, newvote:newVote, value: value});
     }
     $scope.updateHeart = function(){
         if(!$scope.currentLocation){

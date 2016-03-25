@@ -87,7 +87,7 @@
                             <span class="checkMarker glyphicon glyphicon-ok-circle grey"></span>
                         </div>
                         <!-- <div ng-show="add.eval == 'heart'">
-                            <span class="checkMarker glyphicon glyphicon-heart" ng-class="{1: 'heart', 0: 'grey'}[voteValue[$parent.$index][$index]]"></span>
+                            <span class="checkMarker glyphicon glyphicon-heart" ng-class="{1: 'heart', 0: 'grey'}[evalVal[$parent.$index][$index]]"></span>
                         </div> -->
                     </div>
                 </div> 
@@ -95,11 +95,11 @@
                 <div class="vote" id="vote{{$index+1}}" ng-show="add.eval == 'star'">
                     <h4>Évaluation for criteria:</h4>
                     <!-- when doing evaluation on personal device, shared display only show the eval results -->
-                    <div ng-if="cris.numTeacher == 0 && steps.s0 == undefined">
-                        <span class="glyphicon glyphicon-star grey" ng-repeat="i in range(steps.s1.scale) track by $index" ng-class="{true: 'star', false: 'grey'}[voteValue[$parent.$parent.$index]>$index]" ng-click="!clickStar||changeEval($parent.$parent.$parent.$index,$parent.$parent.$index,$index+1)"></span><span class="label label-default caption" ng-hide="evaltype == 'individual' && currentStep == 1">{{voteValue[$parent.$index]}}</span>
+                    <div ng-if="crisTea == 0 && steps.s0 == undefined">
+                        <span class="glyphicon glyphicon-star grey" ng-repeat="i in range(steps.s1.scale) track by $index" ng-class="{true: 'star', false: 'grey'}[evalVal[$parent.$parent.$index]>$index]" ng-click="!clickStar||changeEval($parent.$parent.$parent.$index,$parent.$parent.$index,$index+1)"></span><span class="label label-default caption" ng-hide="evaltype == 'individual' && currentStep == 1">{{evalVal[$parent.$index]}}</span>
                     </div>
                     <div class="row">
-                        <div ng-show="cris.numTeacher !== 0">
+                        <div ng-show="crisTea !== 0">
                             <div class="col-md-12">
                                 Predefined criteria
                             </div>
@@ -108,7 +108,7 @@
                                 <div class="row">
                                     <span class="label criName col-md-3">{{cri.name}}</span>
                                     <div class="col-md-8">
-                                        <span class="glyphicon glyphicon-star grey" ng-repeat="i in range(steps.s1.scale) track by $index" ng-class="{true: 'star', false: 'grey'}[voteValue[$parent.$parent.$index][$parent.$index]>$index]" ng-click="!clickStar||changeEval($parent.$parent.$index,$parent.$index,$index+1)"></span><span class="label label-default caption" ng-hide="evaltype == 'individual' && currentStep == 1">{{voteValue[$parent.$index][$index]}}</span>
+                                        <span class="glyphicon glyphicon-star grey" ng-repeat="i in range(steps.s1.scale) track by $index" ng-class="{true: 'star', false: 'grey'}[evalVal[$parent.$parent.$index][$parent.$index]>$index]" ng-click="!clickStar||changeEval($parent.$parent.$index,$parent.$index,$index+1)"></span><span class="label label-default caption" ng-hide="evaltype == 'individual' && currentStep == 1">{{evalVal[$parent.$index][$index]}}</span>
                                     </div>
                                 </div>
                             </div>
@@ -122,7 +122,7 @@
                                 <div class="row">
                                     <span class="label criName col-md-3">{{cri.name}}</span>
                                     <div class="col-md-8">
-                                        <span class="glyphicon glyphicon-star grey" ng-repeat="i in range(steps.s1.scale) track by $index" ng-class="{true: 'star', false: 'grey'}[voteValue[$parent.$parent.$index][$parent.$index+cris.numTeacher]>$index]" ng-click="!clickStar||changeEval($parent.$parent.$index,$parent.$index+cris.numTeacher,$index+1)"></span><span class="label label-default caption" ng-hide="evaltype == 'individual' && currentStep == 1">{{voteValue[$parent.$index][$index+cris.numTeacher]}}</span>
+                                        <span class="glyphicon glyphicon-star grey" ng-repeat="i in range(steps.s1.scale) track by $index" ng-class="{true: 'star', false: 'grey'}[evalVal[$parent.$parent.$index][$parent.$index+crisTea]>$index]" ng-click="!clickStar||changeEval($parent.$parent.$index,$parent.$index+crisTea,$index+1)"></span><span class="label label-default caption" ng-hide="evaltype == 'individual' && currentStep == 1">{{evalVal[$parent.$index][$index+crisTea]}}</span>
                                     </div>
                                 </div>
                             </div>
@@ -131,7 +131,7 @@
                     <!-- let student do evaluation on shared display -->
                     <!-- <div ng-if="evalDevice !== 'person'">
                         <div ng-if="cris.num == 0 && steps.s0 == undefined">
-                            <span class="glyphicon glyphicon-star grey" ng-repeat="i in range(steps.s1.scale) track by $index" ng-class="{true: 'star', false: 'grey'}[voteValue[$parent.$parent.$parent.$index]>$index]" ng-click="changeEval($parent.$parent.$parent.$index,$parent.$parent.$index,$index+1)"></span><span class="label label-default caption">{{voteValue[$parent.$index]}}</span>
+                            <span class="glyphicon glyphicon-star grey" ng-repeat="i in range(steps.s1.scale) track by $index" ng-class="{true: 'star', false: 'grey'}[evalVal[$parent.$parent.$parent.$index]>$index]" ng-click="changeEval($parent.$parent.$parent.$index,$parent.$parent.$index,$index+1)"></span><span class="label label-default caption">{{evalVal[$parent.$index]}}</span>
                         </div>
                         <div class="row">
                             <div ng-show="cris.num !== 0">
@@ -142,7 +142,7 @@
                                 <div class="row">
                                     <span class="label criName col-md-3">{{cri.name}}</span>
                                     <div class="col-md-8">
-                                        <span class="glyphicon glyphicon-star grey" ng-repeat="i in range(steps.s1.scale) track by $index" ng-class="{true: 'star', false: 'grey'}[voteValue[$parent.$parent.$parent.$index][$parent.$parent.$index]>$index]" ng-click="changeEval($parent.$parent.$parent.$index,$parent.$parent.$index,$index+1)"></span><span class="label label-default caption">{{voteValue[$parent.$parent.$index][$parent.$index]}}</span>
+                                        <span class="glyphicon glyphicon-star grey" ng-repeat="i in range(steps.s1.scale) track by $index" ng-class="{true: 'star', false: 'grey'}[evalVal[$parent.$parent.$parent.$index][$parent.$parent.$index]>$index]" ng-click="changeEval($parent.$parent.$parent.$index,$parent.$parent.$index,$index+1)"></span><span class="label label-default caption">{{evalVal[$parent.$parent.$index][$parent.$index]}}</span>
                                     </div>
                                 </div>
                             </div>

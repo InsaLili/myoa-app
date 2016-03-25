@@ -86,7 +86,20 @@ p, table{
 #markerInfo{
     height: 250px;
 }
-
+.criName{
+    color: #616161;
+    font-size: 85%;
+    text-align: right;
+    margin-top: 5px;
+    margin-left: 10px;
+}
+.caption{
+    color: #ffffff;
+    background-color: #3F51B5;
+    margin-left: 10px;
+    position: relative;
+    top: 2px;
+}
 .noteOfPlayer{
     float: left;
     margin-right: 10px;
@@ -117,7 +130,7 @@ p, table{
     color: #F5F5F5;
 }
 
-#evaluation span{
+.glyphicon-star, .glyphicon-heart{
     text-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
 }
 .grey{

@@ -43,7 +43,7 @@ appSetModule.service('DataService', function(){
         startkey: 'note',
         endkey: 'note\uffff'
     }).then(function(note){
-        console.log(note);
+        // console.log(note);
         self.notes = note;
     },self);
 
@@ -53,7 +53,7 @@ appSetModule.service('DataService', function(){
         startkey: 'vote',
         endkey: 'vote\uffff'
     }).then(function(vote){
-        console.log(vote);
+        // console.log(vote);
         self.votes = vote;
     },self);
 });
