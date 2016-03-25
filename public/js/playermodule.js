@@ -41,6 +41,7 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
 
         $scope.crisTea = DataService.mapstep1.cris.teacher;
         $scope.crisStu = DataService.mapstep1.cris.student;
+        $scope.cris = $scope.crisTea.concat($scope.crisStu);
 
         $scope.notes = DataService.notes.rows[DataService.groupNum-1].doc.notes;
         $scope.commonNotes = DataService.notes.rows[DataService.groupNum-1].doc.common;

@@ -68,14 +68,22 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         $scope.evalVal = [];
         // when there is no s0, structure evalVal
         if($scope.steps.s0 == undefined){
+            $scope.cris.num = $scope.cris.teacher.length;
             // 没有cris的时候，votes为一维数组
-            if($scope.cris.teacher.length == 0){
+            if($scope.cris.num == 0){
                 $scope.evalVal.length = $scope.locationAmount;
             }else{
                 // 有多个cris的时候，votes为二维数组，x维是location，y维是cris
                 for(var j=0; j<$scope.locationAmount;j++){
                     var cris = [];
-                    cris.length = $scope.cris.teacher.length;
+                    // if evluating individually, add the player dimention to the array
+                    if($scope.evaltype=="individual"){
+                        for(var k=0;k<$scope.cris.num;k++){
+                            var crisplayer = [];
+                            crisplayer.length = $scope.studentAmount;
+                            cris.push(crisplayer);
+                        }
+                    }
                     $scope.evalVal.push(cris);
                 }
             }
@@ -455,7 +463,7 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         var vote = [];
         for(var i=0; i<$scope.cris.num;i++){
             var value;
-            ($scope.evaltype == "individual")?(value=$scope.evalVal[marker-1][i][player]):(value=$scope.evalVal[marker-1][i])
+            ($scope.evaltype == "individual")?(value=$scope.evalVal[marker-1][i][player-1]):(value=$scope.evalVal[marker-1][i])
             vote.push(value);
         }
         socket.emit('checklocation', { location: marker, player: player, group: $scope.groupNum, vote: vote});
@@ -497,11 +505,11 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         $("#step0 span").css('color', '#E0E0E0');
         // $(".chooseLocation").hide();
 
-        if($scope.add.eval == 'star'){
-            attachStar();
-        }else if($scope.add.eval == 'heart'){
-            attachHeart();
-        }
+        // if($scope.add.eval == 'star'){
+        //     attachStar();
+        // }else if($scope.add.eval == 'heart'){
+        //     attachHeart();
+        // }
 
         dialogInit();
         $('#dialog0').dialog('open');
