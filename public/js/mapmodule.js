@@ -69,7 +69,7 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
                 $scope.evalDevice = "person";
             }
             // caculate the needed number of evaluation in restricted/individual type
-            $scope.needEvals = $scope.locationAmount*$scope.cris.num;
+            $scope.needEvals = $scope.locationAmount;
             $scope.currentEval = 0;
         }
         $scope.evalVal = [];
@@ -90,6 +90,8 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
                             crisplayer.length = $scope.studentAmount;
                             cris.push(crisplayer);
                         }
+                    }else{
+                        cris.length = $scope.cris.num;
                     }
                     $scope.evalVal.push(cris);
                 }
@@ -207,8 +209,12 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
                     updateProg(data);
                 }
             }else{
-                if($scope.evalVal[data.location-1][data.cri] == undefined) $scope.currentEval++;
-                $scope.evalVal[data.location-1][data.cri] = data.value;
+                if($scope.evalVal[data.location-1][data.cri] == undefined){
+                    $scope.evalVal[data.location-1][data.cri] = data.value;
+                    ifNewLocation(data.location-1);
+                }else{
+                    $scope.evalVal[data.location-1][data.cri] = data.value;
+                }
             }
             $scope.$apply();
         });
@@ -427,6 +433,24 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
             }
         }
     }
+
+    // check if finished evaluation of a location
+    ifNewLocation = function(locationNum){
+        var neweval = true;
+        for(var i=0; i<$scope.cris.num;i++){
+            if($scope.evalVal[locationNum][i] == undefined){
+                neweval = false;
+                break;
+            }
+        }
+        if(neweval == true){
+            $scope.currentEval++;
+            $( "#progressGroup" ).progressbar({
+                value: $scope.currentEval
+            });
+            $("#groupProgTxt").text($scope.currentEval + '/'+$scope.locationAmount+' Emplacements');
+        }
+    }
     $scope.getInfo = function(num){
         $('#infoDlg'+num).dialog('open');
     }
@@ -454,6 +478,8 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
                                 crisplayer.length = $scope.studentAmount;
                                 cris.push(crisplayer);
                             }
+                        }else{
+                            cris.length = $scope.cris.num;
                         }
                         $scope.evalVal.push(cris);
                     }
@@ -480,11 +506,14 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         }
     }
 
-        // submit evaluation of one location
+    // submit evaluation of one location
     $scope.changeEval = function(locationNum,criNum,value){
-        if($scope.evalVal[locationNum][criNum] == undefined) $scope.currentEval++;
-        $scope.evalVal[locationNum][criNum] = value;
-        
+        if($scope.evalVal[locationNum][criNum] == undefined){
+            $scope.evalVal[locationNum][criNum] = value;
+            ifNewLocation(locationNum);
+        }else{
+            $scope.evalVal[locationNum][criNum] = value;
+        }
         socket.emit('evalOnShare', {group: $scope.groupNum, location: locationNum, cri: criNum, value: value});
     }
     $scope.checkLocation = function($event,marker,player){

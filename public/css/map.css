@@ -102,6 +102,10 @@ p{
 #progressGroup{
     margin-right: 10px;
 }
+#groupProgress{
+    float: left;
+    margin-top: 15px;
+}
 #leaderboard .players {
     float: left;
 }
