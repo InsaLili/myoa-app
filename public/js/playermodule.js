@@ -66,9 +66,12 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
             }
             $scope.$apply();
         })
-        socket.on('chooselocation', function (data) {
-            if(data.group !== $scope.groupNum) return;
-            $scope.chosenNumber = data.location;
+        socket.on('evalOnShare', function (data) {
+            // {group: $scope.groupNum, location: locationNum, cri: criNum, value: value}
+            var location = data.location+1;
+            if($scope.groupNum !== data.group || $scope.currentLocation !== location) return;
+            $scope.evalVal[data.cri]=data.value;
+            $scope.$apply();
         });
     };
     // load data, vote and note of a location
@@ -193,7 +196,14 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
             return;
         }
         var newVote;
-        ($scope.evalVal[index] == undefined)?(newVote = true):(newVote = false);
+        if($scope.evalVal[index] == undefined){
+            var newarray = $scope.evalVal.slice(0);
+            newarray.splice(index,1);
+            var nullExist = newarray.reduce(function(a,b){return a&&b;});
+            (nullExist == null)?(newVote = false):(newVote = true);
+        }else{
+            newVote = false;
+        }
         $scope.evalVal[index] = value;
                
         // store new vote to db

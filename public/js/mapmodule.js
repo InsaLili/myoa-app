@@ -40,6 +40,7 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
             if(s0 && s3){
                 $scope.moreSteps = true;
             }
+
         }else{
             $scope.steps = DataService.mapstep2.unseq;
             if($scope.steps.s0.title == undefined) delete $scope.steps.s0;
@@ -55,6 +56,9 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         if($scope.evaltype == "individual"){
             $scope.evalDevice = "person";
 
+            // caculate the needed number of evaluation in restricted/individual type
+            $scope.needEvals = $scope.studentAmount * $scope.locationAmount;
+            $scope.currentEval = 0;
         }else{
             // evalVal are configed when each alternative would be evaluated once
             if(DataService.mapstep4.share.eval & DataService.mapstep4.person.eval){
@@ -64,6 +68,9 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
             }else{
                 $scope.evalDevice = "person";
             }
+            // caculate the needed number of evaluation in restricted/individual type
+            $scope.needEvals = $scope.locationAmount*$scope.cris.num;
+            $scope.currentEval = 0;
         }
         $scope.evalVal = [];
         // when there is no s0, structure evalVal
@@ -94,19 +101,20 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
             $scope.currentStep = 0;
         }
         // 判断什么时候可以点击公共屏幕上的星星
-        ($scope.evalDevice !== "person" && $scope.currentStep==1)?($scope.clickStar = true):null;
+        ($scope.evalDevice !== "person" && $scope.currentStep==1)?($scope.clickStar = true):($scope.clickStar=false);
 
         // get votes
         $scope.votes = DataService.votes.rows[$scope.groupNum-1].doc.votes;
         // when the votes is empty, rebuild it
         // actually, we always need to rebuild the array as the cris might be changed which would influence the dimention of votes
 
+        // store the number of evaluated location of each student
+        $scope.evalAmount=[];
+
         // get notes
         $scope.notes = DataService.notes.rows[$scope.groupNum-1].doc.notes;
         // get common notes
         $scope.commonNotes = DataService.notes.rows[$scope.groupNum-1].doc.common;
-        // caculate the needed number of votes when all evaluation are required
-        $scope.allVotes = $scope.studentAmount*($scope.markers.length);
         
         // additional functionalities  to be changed
         $scope.add = DataService.mapsetting.additional;
@@ -195,7 +203,11 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
 
             if($scope.evaltype == 'individual'){
                 $scope.evalVal[data.location-1][data.cri][data.player-1] = data.value;
+                if(data.newvote == true){
+                    updateProg(data);
+                }
             }else{
+                if($scope.evalVal[data.location-1][data.cri] == undefined) $scope.currentEval++;
                 $scope.evalVal[data.location-1][data.cri] = data.value;
             }
             $scope.$apply();
@@ -203,7 +215,6 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
     }
 
     attachStar = function(){
-        $scope.voteAmount=[];
         var progressbarText = $('.player p');
 
         // filte all the players, i is the number of player
@@ -321,19 +332,14 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         //     });
         // }
     }
-    updateStar = function(data){
-        $scope.votes = data.votes;
-        // if it is not a new vote, do nothing
-        if(data.newvote == false){
-            return;
-        } 
+    updateProg = function(data){
         var location = data.location;
         var player = data.player;
         var id = data.id;
         // add player's vote progress
-        $scope.voteAmount[player-1]++;
+        ($scope.evalAmount[player-1] == null)?($scope.evalAmount[player-1]=1):($scope.evalAmount[player-1]++);
         // update progressbar
-        var voteNum = $scope.voteAmount[player-1];
+        var voteNum = $scope.evalAmount[player-1];
         var progressbarText = $('.player p');
         $( "#progressbar"+player ).progressbar({
             value: voteNum
@@ -343,12 +349,41 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         var checkMark = $('#location'+location+' .glyphicon-ok-circle')[player-1];
         $(checkMark).removeClass('grey');
         $(checkMark).addClass('checked');
+        // update current number of evaluated locations
+        $scope.currentEval++;
     }
     updateHeart = function(data){
         $scope.evalVal[data.location-1][data.player-1] = data.value;
         $scope.$apply();
     }
-
+    updateStep = function($event,index,step){
+        // change the check mark
+        var element = $event.target.parentElement;
+        $(element.children[0]).removeClass('glyphicon-unchecked');
+        $(element.children[0]).addClass('glyphicon-check');
+        // change color of next task
+        // if(step<$scope.steps.length){
+        ($(element.nextElementSibling))?($(element.nextElementSibling.children).css('color', '#E0E0E0')):null;
+        // $(element.nextElementSibling.children).css('color', '#E0E0E0');
+        // }
+        // remove the former timer if it exists
+        if($('#timer'+step).length !== 0){
+            clearInterval(intervals.main);
+            $('#timer'+step).remove();
+            if($scope.steps[step-1].timerBadge == true){
+                if(digits[1].current != 9){
+                    $scope.steps[step-1].timerWin = true;
+                }else{
+                    $scope.steps[step-1].timerWin = false;
+                }
+            }
+        }
+        // reset clickStar
+        $scope.clickStar = false;
+        // open the dialogue of next step
+        var dlgIndex = index+1;
+        $('#dialog'+dlgIndex).dialog('open');
+    }
     showVote = function(){
         $scope.evalVal = [];
         var color = ['#d9534f','#ec971f','#31b0d5','#337ab7','#449d44'];
@@ -380,6 +415,18 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         $('.chooseLocation').hide();
     }
 
+    getEvalAvg = function(){
+        for(var i=0; i<$scope.locationAmount; i++){
+            for(var j=0; j<$scope.cris.num;j++){
+                var crisEval = 0;
+                for(var k=0;k<$scope.studentAmount;k++){
+                    crisEval += $scope.evalVal[i][j][k];
+                }
+                crisEval = Math.round(crisEval/$scope.studentAmount);
+                $scope.evalVal[i][j] = crisEval;
+            }
+        }
+    }
     $scope.getInfo = function(num){
         $('#infoDlg'+num).dialog('open');
     }
@@ -390,35 +437,10 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         ($scope.steps.s0==undefined)?(step = index+1):(step = index);
 
         if(step == $scope.currentStep){
-            // change the check mark
-            var element = $event.target.parentElement;
-            $(element.children[0]).removeClass('glyphicon-unchecked');
-            $(element.children[0]).addClass('glyphicon-check');
-            // change color of next task
-            // if(step<$scope.steps.length){
-            ($(element.nextElementSibling))?($(element.nextElementSibling.children).css('color', '#E0E0E0')):null;
-            // $(element.nextElementSibling.children).css('color', '#E0E0E0');
-            // }
-            // remove the former timer if it exists
-            if($('#timer'+step).length !== 0){
-                clearInterval(intervals.main);
-                $('#timer'+step).remove();
-                if($scope.steps[step-1].timerBadge == true){
-                    if(digits[1].current != 9){
-                        $scope.steps[step-1].timerWin = true;
-                    }else{
-                        $scope.steps[step-1].timerWin = false;
-                    }
-                }
-            }
-            // reset clickStar
-            $scope.clickStar = false;
-            // open the dialogue of next step
-            var dlgIndex = index+1;
-            $('#dialog'+dlgIndex).dialog('open');
             switch (step){
                 // to step 1; prepare the array for store vote value
                 case 0:
+                    updateStep($event,index,step);
                     // make stars clickable when students are allowed to evaluate on the shared display
                     ($scope.evalDevice !== "person")?($scope.clickStar = true):null;
                     // get the length of the current criteria
@@ -437,12 +459,19 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
                     }
                     break;
                 case 1:
-                    // ($scope.evaltype == "individual")?(showVote()):null;
+                    // in a restricted sequence, can only move to step2 when students evaluated all the locations
+                    if($scope.seqtype == "restricted" && $scope.currentEval !== $scope.needEvals) return;
+                    
+                    if($scope.evaltype == "individual") getEvalAvg();
+
+                    updateStep($event,index,step);
                     $(".chooseLocation").show();
                     break;
-                case 2: 
+                case 2:
+                    updateStep($event,index,step);
                     break;
                 case 3:
+                    updateStep($event,index,step);
                     break;
             }
             
@@ -450,11 +479,13 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
             socket.emit("changestep", {group: $scope.groupNum, step:$scope.currentStep});
         }
     }
+
         // submit evaluation of one location
     $scope.changeEval = function(locationNum,criNum,value){
+        if($scope.evalVal[locationNum][criNum] == undefined) $scope.currentEval++;
         $scope.evalVal[locationNum][criNum] = value;
         
-        // socket.emit('voteOnShare', {group: $scope.groupNum, location: locationNum, cri: criNum, value: value});
+        socket.emit('evalOnShare', {group: $scope.groupNum, location: locationNum, cri: criNum, value: value});
     }
     $scope.checkLocation = function($event,marker,player){
         var socket = io.connect('http://localhost:8000');
@@ -490,15 +521,24 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
     // wait for dom ready
     $timeout(function(){
         // initiate progress bar
-        for(var i=0; i<$scope.studentAmount;i++){
-            var num = i+1;
-            $( "#progressbar"+num ).progressbar({
-            max: $scope.locationAmount
-        });
+        if($scope.seqtype == "restricted"){
+            if($scope.evaltype == "individual"){
+                for(var i=0; i<$scope.studentAmount;i++){
+                    var num = i+1;
+                    $( "#progressbar"+num ).progressbar({
+                        max: $scope.locationAmount
+                    });
+                }
+            }else{
+                $( "#progressGroup" ).progressbar({
+                    max: $scope.locationAmount
+                });
+            }
+            $( ".progressbar" ).on( "progressbarcomplete", function( event, ui ) {
+                $scope.allRating++;
+            });
         }
-        $( ".progressbar" ).on( "progressbarcomplete", function( event, ui ) {
-            $scope.allRating++;
-        });
+        
         $('.location').touch();
         $('#commonSpace').touch();
         $("#step0 p").css('color', '#E0E0E0');

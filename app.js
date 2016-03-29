@@ -124,6 +124,11 @@ io.on('connection', function (socket) {
     socket.on('evaluate', function(data){
         logger.info('evaluate the location',data);
         io.emit('evaluate', data);
+    }); 
+
+    socket.on('evalOnShare', function(data){
+        logger.info('evaluate the location on the shared display',data);
+        io.emit('evalOnShare', data);
     });
 });
 

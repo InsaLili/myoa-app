@@ -23,6 +23,7 @@
                             <img src="img/player{{$index+1}}.png">
                         </div>
                         <div ng-if="add.noteBadge == true">
+                            <p>Note badge</p>
                             <div class="noteBadge" ng-if="studentNotes[$index]>=add.noteNum">
                                 <img src="img/badgeNote-show.png">
                             </div>
@@ -30,10 +31,15 @@
                                 <img src="img/badgeNote-hide.png">
                             </div>
                         </div>
-                        <div ng-if="add.eval == 'star'">
+                        <div ng-if="evaltype == 'individual'" class="progspace">
                             <div class="col-md-12 progressbar" id="progressbar{{$index+1}}"></div>
-                            <P>0/4 Emplacements</P>
+                            <P>0/{{locationAmount}} Emplacements</P>
                         </div>
+                    </div>
+                    <div ng-if="seqtype == 'restricted' && evaltype == 'group'" id="">
+                        <p class="col-md-3">Group progress:</p>
+                        <div class="col-md-5 progressbar" id="progressGroup"></div>
+                        <P class="col-md-3">0/{{locationAmount}} Emplacements</P>
                     </div>
                 </div>
                 <div class="badges col-md-2">
@@ -99,7 +105,7 @@
                         <span class="glyphicon glyphicon-star grey" ng-repeat="i in range(steps.s1.scale) track by $index" ng-class="{true: 'star', false: 'grey'}[evalVal[$parent.$parent.$index]>$index]" ng-click="!clickStar||changeEval($parent.$parent.$parent.$index,$parent.$parent.$index,$index+1)"></span><span class="label label-default caption" ng-hide="evaltype == 'individual' && currentStep == 1">{{evalVal[$parent.$index]}}</span>
                     </div>
                     <div class="row">
-                        <div ng-show="crisTea !== 0">
+                        <div ng-show="crisTea !== 0" class="cris">
                             <div class="col-md-12">
                                 Predefined criteria
                             </div>
@@ -113,7 +119,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div ng-show="steps.s0 !== undefined">
+                        <div ng-show="steps.s0 !== undefined" class="cris">
                             <div class="col-md-12">
                                 Your criteria
                             </div>
@@ -150,7 +156,7 @@
                     </div> -->
                 </div>
 
-                <div class="note" id="note{{$index+1}}">
+                <div class="note" id="note{{$index+1}}" ng-hide="currentStep == 0">
                     <h4>Notes :</h4>
                     <div ng-class="{true: 'shortNote', false: 'longNote'}[add.eval=='star']">
                         <span id="note{{$index+1}}">
@@ -207,51 +213,3 @@
 <div ng-controller="MapCtrl">
     <leaflet lf-center="map" tiles="tiles" geojson="geojson" markers="markers" height="600px" ng-class="{true: 'col-md-9', false: 'col-md-12'}[commonSpace==true]" ></leaflet>
 </div>
-    <!--Here are the hiden dialogs-->
-    <!-- <div id="dialogSpace">
-        <div id="start" title="Consignes">
-            <h4>Etape 1 :</h4>
-            <h4>Vous devez observer, analyser, et évaluer de façon individuelle les données  collectés.</h4>
-             <h4>Choisissez 1 lieu et visualisez les informations sur votre tablette.</h4>
-            <br>
-             <h4>BONUS :</h4>
-             <h4>Gagnez 1 badge Note en prenant au moins 5 notes pertinentes pour le groupe.</h4>
-             <h4>Gagnez le badge Timer si vous finissez toutes les évaluation individuelle dans les 8 minutes.</h4>
-        </div>
-        <div id="insectInfoWrap">
-            <!-Ver'Epice-->
-            <!-- <div id="insectDialog" class="insects" title="Fourmis">
-                <img src="img/fourmis.jpeg">
-            </div>
-        </div>
-        <div id="choiceConfirm" title="Choisir un emplacement"><h4></h4></div>
-        <div id="secondStepDialog" title="Consignes">
-            <h4>Etape 2 :</h4>
-            <h4>Bravo! Vous avez gagné le badge Timer!</h4>
-            <!-keep for further functionaility-->
-            <!-- <h4 class="winNoteBadge"></h4>
-            <br>
-            <h4>Visualisez les résultats des évaluations.</h4>
-            <h4>Choisissez l'emplacement le plus pertinent pour votre nurserie.</h4>
-            <h4>Vous avez 5 minutes pour cette étape.</h4>
-        </div>
-        <div id="secondStepDialog_noBadge" title="Consignes">
-            <h4>Etape 2 :</h4>
-            <h4 class="winNoteBadge"></h4>
-            <br>
-            <h4>Visualisez les résultats des évaluations.</h4>
-            <h4>Choisissez l'emplacement le plus pertinent pour votre nurserie.</h4>
-            <h4>Vous avez 5 minutes pour cette étape.</h4>
-        </div>
-        <div id="gameEnd" title="Consignes">
-            <h4></h4>
-            <h4>En utilisant vos tablettes, justifiez votre choix en quelques lignes dans la case argumentaire.</h4>
-            <h4>Pensez à l'énergie, les conditions climatiques, etc.</h4>
-            <h4>Vous avez 7 minutes pour cette étape.</h4>
-        </div>
-        <div id="finalDialog" title="Consignes">
-            <h4>Bravo!</h4>
-            <h4>Vous venez de finir l'activité!</h4>
-        </div> -->
-    <!-- </div> -->
-    <!-- <div id="map"></div> -->

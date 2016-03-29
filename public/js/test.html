@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>Click the button to add elements to the array.</p>
+
+<button onclick="myFunction()">Try it</button>
+
+<p id="demo"></p>
+
+<script>
+function counter(test) {
+	switch(test){
+		case 1:
+	  for (var count = 1; ; count++) {  // infinite loop
+    console.log(count + "A"); // until 5
+      if (count === 5) {          
+        return;
+      }
+      console.log(count + "B");  // until 4
+    }
+	  console.log(count + "C");  // never appears
+	  break;
+	 case 2:
+	  console.log("2test");
+	}
+	console.log("3test");
+	
+
+}
+
+counter(1);
+</script>
+
+</body>
+</html>

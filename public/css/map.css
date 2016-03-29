@@ -96,23 +96,25 @@ p{
     background-color: #424242;
     box-shadow: 0 13px 25px 0 rgba(0, 0, 0, 0.3);
 }
-
+.progspace p{
+    float: left;
+}
+#progressGroup{
+    margin-right: 10px;
+}
 #leaderboard .players {
-    height: 150px;
-    /*margin-left: 10px;*/
     float: left;
 }
 .player{
-    height: 150px;
-    /*width: 160px;*/
+    /*height: 150px;*/
     float: left;
-    /*margin-right: 3%;*/
 }
-.player p{
+#leaderboard p{
     font-size: 13px;
     color: #e0e0e0;
-    float: left;
+    margin-bottom: 5px;
 }
+
 .avatars{
     margin-left: 10px;
     width: 80px;
@@ -126,8 +128,6 @@ p{
 .noteBadge{
     float: left;
     width: 30px;
-    /*margin-left: 10px;*/
-    margin-top: 10px;
 }
 .noteBadge img{
     width: 100%;
@@ -247,40 +247,7 @@ p{
     margin-right: auto;
     margin-top: 45px;
 }
-#navigationTab{
-    position: absolute;
-    margin-left: 20px;
-    top: 200px;
-    width: 300px;
-    height: 70px;
-    z-index: 2;
-}
-#navigationTab ul{
-    width: 100%;
-    height: 100%;
-}
-#navigationTab ul li{
-    position: relative;
-    display: block;
-    float: left;
-    height: 100%;
-    background-color: #e0e0e0;
-    border-radius: 0px 0px 10px 10px;
-    /*border-top: 2px solid #303030;*/
-}
-#navigationTab ul li a{
-    height: 100%;
-    position: relative;
-    display: block;
-    color: #303030;
-    padding: 1px 20px;
-    text-decoration: none;
-    border-radius: 0px 0px 10px 10px;
-}
-#navigationTab ul li.activeTab a{
-    background-color: #303030;
-    color: #e0e0e0;
-}
+
 #map{
     width: 100%;
     height: 500px;
@@ -313,7 +280,6 @@ p{
     top: 200px;
     z-index: 1;
     width: 425px;
-    height: 450px;
     overflow: visible;
     border-radius: 15px;
     box-shadow: 0 13px 25px 0 rgba(0, 0, 0, 0.3);
@@ -381,6 +347,10 @@ p{
     border-bottom: 1px solid #5D4037;
     padding-bottom: 10px;
 }
+.cris{
+    float: left;
+    min-height: 40px;
+}
 .criName{
     color: #616161;
     font-size: 85%;
@@ -416,6 +386,7 @@ p{
     width: 390px;
     margin-left: 15px;
     margin-top: 15px;
+    padding-bottom: 10px;
 }
 .arguments{
     width: 390px;
