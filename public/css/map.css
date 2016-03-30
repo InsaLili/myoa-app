@@ -112,6 +112,7 @@ p{
 .player{
     /*height: 150px;*/
     float: left;
+    padding: 0;
 }
 #leaderboard p{
     font-size: 13px;
@@ -136,6 +137,9 @@ p{
 .noteBadge img{
     width: 100%;
 }
+#badgeSpace{
+    max-width: 180px;
+}
 #leaderboard .progressbars{
     float: left;
     height: 100%;
@@ -148,6 +152,7 @@ p{
     float: left;
     padding-left: 0;
     padding-right: 0;
+    margin-top: 2px;
 }
 #progressbar1 .ui-widget-header{
     border: 1px solid #009688;
@@ -166,7 +171,6 @@ p{
     background-color: #88c5c3;
 }
 .badges{
-    padding-left: 0px;
     margin-top: -5px;
 }
 .badges p{
@@ -241,11 +245,11 @@ p{
 
 #counter{
     float: right;
-    /*width: 10%;*/
+    padding-left: 10px;
     background-color: #424242;
     box-shadow: 0 13px 25px 0 rgba(0, 0, 0, 0.3);
 }
-#timer1,#timer2,#timer3 {
+.timer{
     width: 145px;
     margin-left: auto;
     margin-right: auto;

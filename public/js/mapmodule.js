@@ -118,21 +118,28 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         // get common notes
         $scope.commonNotes = DataService.notes.rows[$scope.groupNum-1].doc.common;
         
+        // badge的配置
+        $scope.badge = DataService.mapstep3.badge;
+        ($scope.badge.timer)?($scope.timerWin = []):null;
+        // timer exist or not
+        $scope.timers = DataService.mapstep3.step;
+        // get tips
+        $scope.tips = DataService.mapstep3.tips;
+
         // additional functionalities  to be changed
         $scope.add = DataService.mapsetting.additional;
-        // get or store note number, to update badge
-        $scope.add.noteNum = Number($scope.add.noteNum);
+
         // get current group names
         $scope.groupName = DataService.mapsetting.groups[$scope.groupNum-1].name;
         // get relevant information
         $scope.infos = DataService.mapstep1.infos;
 
         
-        // get required number to win the timer badge
+        // get timer badge number
         var timerBadgeNum = function(){
             var time=0;
-            for(var i=0;i<$scope.steps.length;i++){
-                if($scope.steps[i].timerBadge == true)
+            for(var k=0; k<$scope.timers.length;k++){
+                if($scope.timers[k] == true)
                     time++;
             }
             if(time>2) time = 2;
@@ -329,7 +336,14 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
     }
     // add a new timer
     timerInit = function(step){
-        var num = step-1;
+        if($scope.timers[step]){
+            var timerValue = $scope.tips.timer[step];
+            $('#timer'+step).countdown({
+                image: "/img/digits.png",
+                format: "mm:ss",
+                startTime: timerValue
+            });
+        }
         // if($scope.steps[num].timer == 'true'){
         //     $('#timer'+step).countdown({
         //         image: "/img/digits.png",
@@ -346,7 +360,7 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         ($scope.evalAmount[player-1] == null)?($scope.evalAmount[player-1]=1):($scope.evalAmount[player-1]++);
         // update progressbar
         var voteNum = $scope.evalAmount[player-1];
-        var progressbarText = $('.player p');
+        var progressbarText = $('.progspace p');
         $( "#progressbar"+player ).progressbar({
             value: voteNum
         });
@@ -376,11 +390,11 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         if($('#timer'+step).length !== 0){
             clearInterval(intervals.main);
             $('#timer'+step).remove();
-            if($scope.steps[step-1].timerBadge == true){
+            if($scope.badge.timer == true){
                 if(digits[1].current != 9){
-                    $scope.steps[step-1].timerWin = true;
+                    $scope.timerWin[step] = true;
                 }else{
-                    $scope.steps[step-1].timerWin = false;
+                    $scope.timerWin[step] = false;
                 }
             }
         }
@@ -551,6 +565,7 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
     $timeout(function(){
         // initiate progress bar
         if($scope.seqtype == "restricted"){
+            // init progress bar
             if($scope.evaltype == "individual"){
                 for(var i=0; i<$scope.studentAmount;i++){
                     var num = i+1;
@@ -563,9 +578,9 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
                     max: $scope.locationAmount
                 });
             }
-            $( ".progressbar" ).on( "progressbarcomplete", function( event, ui ) {
-                $scope.allRating++;
-            });
+            // $( ".progressbar" ).on( "progressbarcomplete", function( event, ui ) {
+            //     $scope.allRating++;
+            // });
         }
         
         $('.location').touch();
@@ -604,12 +619,12 @@ mapModule.controller("MapCtrl", [ "$scope", "$http", "DataService",function($sco
                 mapid: 'insalili.meikk0a8'
             }
         },
-        geojson: {},
+        // geojson: {},
     });
 
-    $http.get("data/map.geo.json").success(function(data){
-        $scope.geojson.data = data;
-    });
+    // $http.get("data/map.geo.json").success(function(data){
+    //     $scope.geojson.data = data;
+    // });
 
     $scope.addMarkerMsg = function(){
         var locationAmount = $scope.markers.length;

@@ -22,32 +22,32 @@
                         <div class="avatars">
                             <img src="img/player{{$index+1}}.png">
                         </div>
-                        <div ng-if="add.noteBadge == true">
-                            <p>Note badge</p>
-                            <div class="noteBadge" ng-if="studentNotes[$index]>=add.noteNum">
+                        <div ng-if="badge.comment !== undefined" id="badgeSpace">
+                            <p>Comment badge</p>
+                            <div class="noteBadge" ng-if="studentNotes[$index]>=badge.comment">
                                 <img src="img/badgeNote-show.png">
                             </div>
-                            <div class="noteBadge" ng-if="studentNotes[$index]<add.noteNum">
+                            <div class="noteBadge" ng-if="studentNotes[$index]<badge.comment">
                                 <img src="img/badgeNote-hide.png">
                             </div>
                         </div>
                         <div ng-if="evaltype == 'individual'" class="progspace">
-                            <div class="col-md-12 progressbar" id="progressbar{{$index+1}}"></div>
+                            <div class="col-md-10 progressbar" id="progressbar{{$index+1}}"></div>
                             <P>0/{{locationAmount}} Emplacements</P>
                         </div>
                     </div>
                     <div ng-if="seqtype == 'restricted' && evaltype == 'group'" id="groupProgress" class="col-md-12">
-                        <p class="col-md-3">Group progress:</p>
-                        <div class="col-md-5 progressbar" id="progressGroup"></div>
-                        <p class="col-md-3 groupProgTxt">0/{{locationAmount}} Emplacements</p>
+                        <p class="col-md-4">Group evaluation progress:</p>
+                        <div class="col-md-4 progressbar" id="progressGroup"></div>
+                        <p class="col-md-3" id="groupProgTxt">0/{{locationAmount}} Emplacements</p>
                     </div>
                 </div>
                 <div class="badges col-md-2">
                     <p>Timer badge</p>
-                    <div ng-repeat="step in steps">
-                        <div class="col-md-{{badgeWidth}} timerBadge" ng-if="step.timerBadge == true">
-                            <img src="img/badgeTimer-show.png" ng-show="step.timerWin">
-                            <img src="img/badgeTimer-hide.png" ng-show="!step.timerWin">
+                    <div ng-repeat="timer in timers track by $index">
+                        <div class="col-md-{{badgeWidth}} timerBadge" ng-if="timer">
+                            <img src="img/badgeTimer-show.png" ng-show="timerWin[$index]">
+                            <img src="img/badgeTimer-hide.png" ng-show="!timerWin[$index]">
                         </div>
                     </div>
                 </div>
@@ -68,8 +68,8 @@
         <!--timer-->
         <div id="counter" class="kit  col-md-1">
             <h3>Chrono</h3>
-            <div ng-repeat="step in steps" ng-if="step.timer == 'true'">
-                <div class="timer" id="timer{{$index+1}}"></div>
+            <div ng-repeat="i in timers track by $index" ng-if="i==true">
+                <div class="timer" id="timer{{$index}}"></div>
             </div>
         </div>
     </div>
@@ -157,7 +157,7 @@
                 </div>
 
                 <div class="note" id="note{{$index+1}}" ng-hide="currentStep == 0">
-                    <h4>Notes :</h4>
+                    <h4>Comments :</h4>
                     <div ng-class="{true: 'shortNote', false: 'longNote'}[add.eval=='star']">
                         <span id="note{{$index+1}}">
                             <!-- <div ng-repeat="note in notes"> -->
@@ -171,7 +171,7 @@
         </div>
         <div class="col-md-3 pull-right" id="commonSpace" ng-if="add.commonspace == true">
             <div id="commonTitle">
-                    <h3>Shared notes space</h3>
+                    <h3>Shared comments space</h3>
             </div>
             <div id="commonContent">
                 <div>
@@ -192,12 +192,12 @@
                 <h4>
                     {{step.dlg}}
                 </h4>
-                <!-- <h4 ng-if="step.timer == 'true'">
-                    Vous avez {{step.timerval}} mins pour cette étape.
+                <h4 ng-if="timers[$index]">
+                    Vous avez {{timerValue[$index]}} mins pour cette étape.
                 </h4>
-                <h4 ng-if="step.timerBadge == true">
-                    Gagnez le badge Timer si vous finissez toutes les évaluation individuelle dans les {{step.timerval}} mins.
-                </h4> -->
+                <h4 ng-if="badge.timer && timers[$index]">
+                    Gagnez le badge Timer si vous finissez toutes les évaluation individuelle dans les {{timerValue[$index]}} mins.
+                </h4>
             </div>
         </div>
         <div id="chooseDialog" title="Choisir un emplacement">
