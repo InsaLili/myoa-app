@@ -23,28 +23,47 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
                 $scope.markers[i].symbol = $scope.markers[i].symbol.toUpperCase();
             }
         }
+        // get tips
+        $scope.tips = DataService.mapstep3.tips;
+
         // get the type of sequence, and set steps based on the sequence type
         $scope.seqtype = DataService.mapstep2.seqtype;
         if($scope.seqtype == "restricted"){
+            // rebuild steps
             $scope.steps = DataService.mapstep2.reseq;
-            if($scope.steps.s0.title == undefined){
-                delete $scope.steps.s0;
-            }else{
-                var s0=true;
-            }
             if($scope.steps.s3.title == undefined){
                 delete $scope.steps.s3;
+                // delete $scope.tips.timer[3];
             }else{
                 var s3=true;
             }
+            if($scope.steps.s0.title == undefined){
+                delete $scope.steps.s0;
+                // delete $scope.tips.timerValue[0];
+            }else{
+                var s0=true;
+            }
+            // when there are four steps, change the layout of the UI
             if(s0 && s3){
                 $scope.moreSteps = true;
             }
+            // build an array to store chosen location
+            ($scope.steps.s1.alter !== "one")?($scope.chosenNum = []):null;
 
         }else{
             $scope.steps = DataService.mapstep2.unseq;
-            if($scope.steps.s0.title == undefined) delete $scope.steps.s0;
-            if($scope.steps.s2.title == undefined) delete $scope.steps.s2;
+            delete $scope.tips.timerValue[3];
+            if($scope.steps.s2.title == undefined){
+                delete $scope.steps.s2;
+                // delete $scope.tips.timerValue[2];
+            }
+
+            if($scope.steps.s0.title == undefined){
+                delete $scope.steps.s0;
+                // delete $scope.tips.timerValue[0];
+            }
+            // build an array to store chosen locations
+            $scope.chosenNum = []
         }
         // get criterias
         $scope.cris = DataService.mapstep1.cris;
@@ -121,8 +140,6 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         // badge的配置
         $scope.badge = DataService.mapstep3.badge;
         ($scope.badge.timer)?($scope.timerWin = []):null;
-        // timer exist or not
-        $scope.timers = DataService.mapstep3.step;
         // get tips
         $scope.tips = DataService.mapstep3.tips;
 
@@ -138,8 +155,8 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         // get timer badge number
         var timerBadgeNum = function(){
             var time=0;
-            for(var k=0; k<$scope.timers.length;k++){
-                if($scope.timers[k] == true)
+            for(var k=0; k<$scope.tips.timers.length;k++){
+                if($scope.tips.timers[k] == true)
                     time++;
             }
             if(time>2) time = 2;
@@ -300,8 +317,20 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
             buttons: {
                 "Commencer": function(){
                     $(this).dialog( "close" );
-                    var step = Number(this.id.match(/\d/)[0])
-                    timerInit(step);
+                    // var step = Number(this.id.match(/\d/)[0])
+                    timerInit($scope.currentStep);
+                }
+            }
+        });
+        $("#dialogFinal").dialog({
+            autoOpen: false,
+            resizable: true,
+            width:600,
+            height:420,
+            modal: true,
+            buttons: {
+                "OK": function() {
+                    $( this ).dialog( "close" );
                 }
             }
         });
@@ -336,8 +365,8 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
     }
     // add a new timer
     timerInit = function(step){
-        if($scope.timers[step]){
-            var timerValue = $scope.tips.timer[step];
+        if($scope.tips.timers[step]){
+            var timerValue = $scope.tips.timerValue[step];
             $('#timer'+step).countdown({
                 image: "/img/digits.png",
                 format: "mm:ss",
@@ -383,7 +412,7 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         $(element.children[0]).addClass('glyphicon-check');
         // change color of next task
         // if(step<$scope.steps.length){
-        ($(element.nextElementSibling))?($(element.nextElementSibling.children).css('color', '#E0E0E0')):null;
+        (element.nextElementSibling)?($(element.nextElementSibling.children).css('color', '#E0E0E0')):null;
         // $(element.nextElementSibling.children).css('color', '#E0E0E0');
         // }
         // remove the former timer if it exists
@@ -402,7 +431,8 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         $scope.clickStar = false;
         // open the dialogue of next step
         var dlgIndex = index+1;
-        $('#dialog'+dlgIndex).dialog('open');
+        ($('#dialog'+dlgIndex).length !== 0)?($('#dialog'+dlgIndex).dialog('open')):($('#dialogFinal').dialog('open'))
+        // $('#dialog'+dlgIndex).dialog('open');
     }
     showVote = function(){
         $scope.evalVal = [];
@@ -549,11 +579,25 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         $(element).css({'background-color': '#f0ad4e', 'border-color': '#eea236'});
         $($(elements)[marker-1]).css({'background-color': '#f0ad4e', 'border-color': '#eea236'});
     }    
-    $scope.chooseLocation = function(marker,name){
+    $scope.chooseLocation = function(event, marker,name){
     	console.log(marker,name);
-        $scope.chosenTitle = name;
-        $scope.chosenNum = marker;
-        $('#chooseDialog').dialog('open');
+        if($scope.seqtype == "restricted" && $scope.steps.s2.alter == "one"){
+            $('.choisirBtn').removeClass("btn-success");
+            $(event.target).addClass("btn-success");
+            $scope.chosenNum = marker;
+            // $('#chooseDialog').dialog('open');
+        }else{
+            if($(event.target).hasClass("btn-success")){
+                $(event.target).removeClass("btn-success");
+                $(event.target).addClass("btn-default");
+                var num = $scope.chosenNum.indexOf(marker);
+                $scope.chosenNum.splice(num,1);
+            }else{
+                $(event.target).removeClass("btn-default");
+                $(event.target).addClass("btn-success");
+                $scope.chosenNum.push(marker);
+            }
+        }
     }
     init = function(){
         // get data and initialize service

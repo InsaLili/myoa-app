@@ -1025,3 +1025,210 @@
 {"level":"info","message":"choose the group","timestamp":"2016-03-30T13:34:49.699Z"}
 {"level":"info","message":"choose the group","timestamp":"2016-03-30T13:36:30.514Z"}
 {"level":"info","message":"choose the group","timestamp":"2016-03-30T13:37:46.207Z"}
+{"level":"info","message":"choose the group","timestamp":"2016-03-30T13:57:48.093Z"}
+{"level":"info","message":"choose the group","timestamp":"2016-03-31T08:55:12.553Z"}
+{"level":"info","message":"choose the group","timestamp":"2016-03-31T08:55:34.809Z"}
+{"group":1,"location":3,"cri":0,"value":4,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T08:56:04.390Z"}
+{"group":1,"location":3,"cri":1,"value":3,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T08:56:04.852Z"}
+{"level":"info","message":"choose the group","timestamp":"2016-03-31T08:59:06.879Z"}
+{"level":"info","message":"choose the group","timestamp":"2016-03-31T09:06:28.638Z"}
+{"level":"info","message":"choose the group","timestamp":"2016-03-31T09:06:41.726Z"}
+{"group":1,"location":3,"cri":0,"value":4,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T09:06:48.623Z"}
+{"group":1,"location":3,"cri":1,"value":2,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T09:06:50.025Z"}
+{"group":1,"location":2,"cri":0,"value":5,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T09:06:52.000Z"}
+{"group":1,"location":2,"cri":1,"value":1,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T09:06:53.001Z"}
+{"group":1,"location":1,"cri":0,"value":4,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T09:06:54.659Z"}
+{"group":1,"location":1,"cri":1,"value":4,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T09:06:55.100Z"}
+{"group":1,"location":0,"cri":0,"value":1,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T09:06:56.605Z"}
+{"group":1,"location":0,"cri":1,"value":2,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T09:06:56.954Z"}
+{"group":1,"step":2,"level":"info","message":"change step","timestamp":"2016-03-31T09:07:15.891Z"}
+{"level":"info","message":"choose the group","timestamp":"2016-03-31T09:08:12.386Z"}
+{"group":1,"step":1,"level":"info","message":"change step","timestamp":"2016-03-31T09:08:16.915Z"}
+{"group":1,"location":3,"cri":0,"value":2,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T09:08:24.332Z"}
+{"group":1,"location":3,"cri":1,"value":2,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T09:08:24.740Z"}
+{"group":1,"location":2,"cri":0,"value":3,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T09:08:25.768Z"}
+{"group":1,"location":2,"cri":1,"value":5,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T09:08:26.116Z"}
+{"group":1,"location":1,"cri":0,"value":5,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T09:08:27.689Z"}
+{"group":1,"location":1,"cri":1,"value":2,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T09:08:28.037Z"}
+{"group":1,"location":0,"cri":0,"value":2,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T09:08:33.266Z"}
+{"group":1,"location":0,"cri":1,"value":5,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T09:08:34.364Z"}
+{"group":1,"step":2,"level":"info","message":"change step","timestamp":"2016-03-31T09:08:36.324Z"}
+{"group":1,"location":1,"cri":0,"player":1,"newvote":false,"value":3,"level":"info","message":"evaluate the location","timestamp":"2016-03-31T09:26:05.687Z"}
+{"group":1,"location":1,"cri":0,"player":1,"newvote":false,"value":4,"level":"info","message":"evaluate the location","timestamp":"2016-03-31T09:26:07.487Z"}
+{"level":"info","message":"choose the group","timestamp":"2016-03-31T09:38:08.965Z"}
+{"level":"info","message":"choose the group","timestamp":"2016-03-31T09:40:52.948Z"}
+{"level":"info","message":"choose the group","timestamp":"2016-03-31T09:41:48.484Z"}
+{"level":"info","message":"choose the group","timestamp":"2016-03-31T09:42:30.050Z"}
+{"group":1,"step":1,"level":"info","message":"change step","timestamp":"2016-03-31T09:42:34.283Z"}
+{"group":1,"location":3,"cri":0,"value":1,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T09:42:37.596Z"}
+{"group":1,"location":3,"cri":1,"value":4,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T09:42:38.275Z"}
+{"group":1,"location":2,"cri":0,"value":5,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T09:42:39.283Z"}
+{"group":1,"location":2,"cri":1,"value":3,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T09:42:39.876Z"}
+{"group":1,"location":1,"cri":0,"value":1,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T09:42:41.058Z"}
+{"group":1,"location":1,"cri":1,"value":1,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T09:42:41.434Z"}
+{"group":1,"location":0,"cri":0,"value":1,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T09:42:42.765Z"}
+{"group":1,"location":0,"cri":0,"value":1,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T09:42:43.084Z"}
+{"group":1,"location":0,"cri":1,"value":1,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T09:42:43.767Z"}
+{"group":1,"step":2,"level":"info","message":"change step","timestamp":"2016-03-31T09:42:45.670Z"}
+{"level":"info","message":"choose the group","timestamp":"2016-03-31T09:43:11.306Z"}
+{"group":1,"step":1,"level":"info","message":"change step","timestamp":"2016-03-31T09:43:14.705Z"}
+{"group":1,"location":3,"cri":0,"value":5,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T09:43:18.648Z"}
+{"group":1,"location":3,"cri":1,"value":2,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T09:43:19.239Z"}
+{"group":1,"location":2,"cri":0,"value":1,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T09:43:20.356Z"}
+{"group":1,"location":2,"cri":1,"value":2,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T09:43:20.750Z"}
+{"group":1,"location":1,"cri":0,"value":2,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T09:43:22.293Z"}
+{"group":1,"location":1,"cri":1,"value":1,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T09:43:22.658Z"}
+{"group":1,"location":0,"cri":0,"value":1,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T09:43:27.196Z"}
+{"group":1,"location":0,"cri":1,"value":2,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T09:43:27.666Z"}
+{"group":1,"step":2,"level":"info","message":"change step","timestamp":"2016-03-31T09:43:28.927Z"}
+{"level":"info","message":"choose the group","timestamp":"2016-03-31T09:56:00.526Z"}
+{"group":1,"step":1,"level":"info","message":"change step","timestamp":"2016-03-31T09:56:07.275Z"}
+{"level":"info","message":"choose the group","timestamp":"2016-03-31T09:57:35.532Z"}
+{"group":1,"step":1,"level":"info","message":"change step","timestamp":"2016-03-31T09:57:41.610Z"}
+{"level":"info","message":"choose the group","timestamp":"2016-03-31T10:09:40.040Z"}
+{"group":1,"step":1,"level":"info","message":"change step","timestamp":"2016-03-31T10:09:44.223Z"}
+{"group":1,"step":2,"level":"info","message":"change step","timestamp":"2016-03-31T10:09:48.760Z"}
+{"level":"info","message":"choose the group","timestamp":"2016-03-31T10:10:18.240Z"}
+{"level":"info","message":"choose the group","timestamp":"2016-03-31T10:11:28.522Z"}
+{"level":"info","message":"choose the group","timestamp":"2016-03-31T10:11:50.913Z"}
+{"level":"info","message":"choose the group","timestamp":"2016-03-31T10:12:21.465Z"}
+{"level":"info","message":"choose the group","timestamp":"2016-03-31T10:13:01.226Z"}
+{"group":1,"step":1,"level":"info","message":"change step","timestamp":"2016-03-31T10:13:04.934Z"}
+{"group":1,"step":2,"level":"info","message":"change step","timestamp":"2016-03-31T10:13:08.035Z"}
+{"level":"info","message":"choose the group","timestamp":"2016-03-31T13:17:57.768Z"}
+{"group":1,"step":1,"level":"info","message":"change step","timestamp":"2016-03-31T13:18:02.502Z"}
+{"group":1,"step":2,"level":"info","message":"change step","timestamp":"2016-03-31T13:18:09.571Z"}
+{"level":"info","message":"choose the group","timestamp":"2016-03-31T13:20:15.565Z"}
+{"group":1,"step":1,"level":"info","message":"change step","timestamp":"2016-03-31T13:20:31.473Z"}
+{"level":"info","message":"choose the group","timestamp":"2016-03-31T13:21:47.987Z"}
+{"group":1,"step":1,"level":"info","message":"change step","timestamp":"2016-03-31T13:22:04.520Z"}
+{"level":"info","message":"choose the group","timestamp":"2016-03-31T13:22:27.297Z"}
+{"level":"info","message":"choose the group","timestamp":"2016-03-31T13:28:53.340Z"}
+{"group":1,"step":1,"level":"info","message":"change step","timestamp":"2016-03-31T13:29:48.155Z"}
+{"group":1,"step":2,"level":"info","message":"change step","timestamp":"2016-03-31T13:30:02.234Z"}
+{"level":"info","message":"choose the group","timestamp":"2016-03-31T13:30:29.283Z"}
+{"group":1,"step":1,"level":"info","message":"change step","timestamp":"2016-03-31T13:30:34.964Z"}
+{"group":1,"step":2,"level":"info","message":"change step","timestamp":"2016-03-31T13:30:40.076Z"}
+{"level":"info","message":"choose the group","timestamp":"2016-03-31T13:34:02.116Z"}
+{"group":1,"step":1,"level":"info","message":"change step","timestamp":"2016-03-31T13:34:17.386Z"}
+{"group":1,"step":2,"level":"info","message":"change step","timestamp":"2016-03-31T13:34:27.176Z"}
+{"group":1,"step":3,"level":"info","message":"change step","timestamp":"2016-03-31T13:35:03.503Z"}
+{"level":"info","message":"choose the group","timestamp":"2016-03-31T13:36:08.214Z"}
+{"group":1,"step":2,"level":"info","message":"change step","timestamp":"2016-03-31T13:36:12.360Z"}
+{"group":1,"step":3,"level":"info","message":"change step","timestamp":"2016-03-31T13:36:16.095Z"}
+{"level":"info","message":"choose the group","timestamp":"2016-03-31T13:36:51.891Z"}
+{"group":1,"step":2,"level":"info","message":"change step","timestamp":"2016-03-31T13:36:57.338Z"}
+{"level":"info","message":"choose the group","timestamp":"2016-03-31T13:39:16.695Z"}
+{"group":1,"step":2,"level":"info","message":"change step","timestamp":"2016-03-31T13:39:24.072Z"}
+{"group":1,"step":3,"level":"info","message":"change step","timestamp":"2016-03-31T13:39:31.384Z"}
+{"level":"info","message":"choose the group","timestamp":"2016-03-31T13:40:43.122Z"}
+{"group":1,"step":1,"level":"info","message":"change step","timestamp":"2016-03-31T13:40:55.530Z"}
+{"group":1,"location":3,"cri":0,"value":3,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T13:41:03.694Z"}
+{"group":1,"location":3,"cri":1,"value":2,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T13:41:09.141Z"}
+{"group":1,"location":2,"cri":0,"value":5,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T13:41:10.603Z"}
+{"group":1,"location":2,"cri":1,"value":5,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T13:41:10.936Z"}
+{"group":1,"location":1,"cri":0,"value":5,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T13:41:12.520Z"}
+{"group":1,"location":1,"cri":1,"value":5,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T13:41:12.853Z"}
+{"group":1,"location":0,"cri":0,"value":2,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T13:41:15.728Z"}
+{"group":1,"location":0,"cri":1,"value":5,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T13:41:16.140Z"}
+{"group":1,"step":2,"level":"info","message":"change step","timestamp":"2016-03-31T13:41:18.867Z"}
+{"group":1,"step":3,"level":"info","message":"change step","timestamp":"2016-03-31T13:41:30.365Z"}
+{"group":1,"step":4,"level":"info","message":"change step","timestamp":"2016-03-31T13:41:36.117Z"}
+{"level":"info","message":"choose the group","timestamp":"2016-03-31T13:47:19.650Z"}
+{"group":1,"step":1,"level":"info","message":"change step","timestamp":"2016-03-31T13:47:24.403Z"}
+{"group":1,"location":3,"cri":0,"value":3,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T13:47:30.851Z"}
+{"group":1,"location":3,"cri":1,"value":2,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T13:47:31.648Z"}
+{"group":1,"location":2,"cri":0,"value":5,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T13:47:33.270Z"}
+{"group":1,"location":2,"cri":1,"value":4,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T13:47:33.742Z"}
+{"group":1,"location":1,"cri":0,"value":2,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T13:47:35.727Z"}
+{"group":1,"location":1,"cri":1,"value":5,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T13:47:36.546Z"}
+{"group":1,"location":0,"cri":0,"value":4,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T13:47:38.043Z"}
+{"group":1,"location":0,"cri":1,"value":2,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-03-31T13:47:38.588Z"}
+{"group":1,"step":2,"level":"info","message":"change step","timestamp":"2016-03-31T13:47:39.828Z"}
+{"group":1,"step":3,"level":"info","message":"change step","timestamp":"2016-03-31T13:47:44.283Z"}
+{"group":1,"step":4,"level":"info","message":"change step","timestamp":"2016-03-31T13:47:50.183Z"}
+{"level":"info","message":"choose the group","timestamp":"2016-03-31T13:52:31.280Z"}
+{"level":"info","message":"choose the group","timestamp":"2016-03-31T13:54:07.203Z"}
+{"level":"info","message":"choose the group","timestamp":"2016-04-01T09:42:33.764Z"}
+{"level":"info","message":"choose the group","timestamp":"2016-04-01T10:10:42.230Z"}
+{"level":"info","message":"choose the group","timestamp":"2016-04-01T10:13:21.692Z"}
+{"group":1,"cri":{"name":"Sunlight","id":"cri1/0.037594469939770336"},"level":"info","message":"add a criteria","timestamp":"2016-04-01T10:14:14.041Z"}
+{"group":1,"cri":{"name":"New","id":"cri1/0.3831885535770885"},"level":"info","message":"add a criteria","timestamp":"2016-04-01T10:14:34.227Z"}
+{"group":1,"id":"cri1/0.3831885535770885","level":"info","message":"delete a criteria","timestamp":"2016-04-01T10:14:38.741Z"}
+{"location":4,"player":1,"group":1,"vote":[],"level":"info","message":"check the location","timestamp":"2016-04-01T10:14:57.742Z"}
+{"location":4,"player":1,"group":1,"vote":[],"level":"info","message":"check the location","timestamp":"2016-04-01T10:15:21.880Z"}
+{"group":1,"step":1,"level":"info","message":"change step","timestamp":"2016-04-01T10:15:32.299Z"}
+{"player":1,"group":1,"location":4,"notes":[{"player":1,"location":4,"content":"For location 4","id":"1/0.5779483054187138"}],"level":"info","message":"add local note","timestamp":"2016-04-01T10:16:06.557Z"}
+{"player":1,"group":1,"notes":[{"player":1,"content":"cool","id":"1/0.6898382577485647"},{"player":1,"content":"great","id":"1/0.5701628271915564"},{"player":1,"content":"new comment","id":"1/0.7722649713624983"}],"level":"info","message":"add common note","timestamp":"2016-04-01T10:16:20.226Z"}
+{"group":1,"location":3,"cri":0,"value":4,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-04-01T10:16:33.415Z"}
+{"group":1,"location":3,"cri":1,"value":2,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-04-01T10:16:35.031Z"}
+{"group":1,"location":4,"cri":2,"player":1,"newvote":true,"value":6,"level":"info","message":"evaluate the location","timestamp":"2016-04-01T10:16:40.451Z"}
+{"location":3,"player":1,"group":1,"vote":[null,null,null],"level":"info","message":"check the location","timestamp":"2016-04-01T10:17:24.895Z"}
+{"group":1,"location":2,"cri":0,"value":3,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-04-01T10:17:26.130Z"}
+{"group":1,"location":2,"cri":1,"value":1,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-04-01T10:17:26.991Z"}
+{"group":1,"location":2,"cri":2,"value":6,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-04-01T10:17:28.232Z"}
+{"location":2,"player":1,"group":1,"vote":[null,null,null],"level":"info","message":"check the location","timestamp":"2016-04-01T10:17:39.508Z"}
+{"group":1,"location":2,"cri":0,"player":1,"newvote":false,"value":4,"level":"info","message":"evaluate the location","timestamp":"2016-04-01T10:17:41.919Z"}
+{"group":1,"location":2,"cri":2,"player":1,"newvote":false,"value":2,"level":"info","message":"evaluate the location","timestamp":"2016-04-01T10:17:42.647Z"}
+{"group":1,"location":2,"cri":1,"player":1,"newvote":true,"value":4,"level":"info","message":"evaluate the location","timestamp":"2016-04-01T10:17:43.724Z"}
+{"group":1,"location":0,"cri":0,"value":3,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-04-01T10:17:47.656Z"}
+{"group":1,"location":0,"cri":2,"value":2,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-04-01T10:17:49.316Z"}
+{"group":1,"location":0,"cri":1,"value":5,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-04-01T10:18:06.594Z"}
+{"group":1,"step":2,"level":"info","message":"change step","timestamp":"2016-04-01T10:18:10.585Z"}
+{"group":1,"step":3,"level":"info","message":"change step","timestamp":"2016-04-01T10:18:26.020Z"}
+{"player":1,"group":1,"notes":[{"player":1,"content":"cool","id":"1/0.6898382577485647"},{"player":1,"content":"great","id":"1/0.5701628271915564"},{"player":1,"content":"new comment","id":"1/0.7722649713624983"},{"player":1,"content":"add","id":"1/0.9586730052329879"}],"level":"info","message":"add common note","timestamp":"2016-04-01T10:20:45.622Z"}
+{"player":1,"group":1,"notes":[{"player":1,"content":"great","id":"1/0.5701628271915564"}],"level":"info","message":"delete common note","timestamp":"2016-04-01T13:54:27.817Z"}
+{"player":1,"group":1,"notes":[],"level":"info","message":"delete common note","timestamp":"2016-04-01T13:54:29.956Z"}
+{"location":4,"player":1,"group":1,"vote":[4,2,6],"level":"info","message":"check the location","timestamp":"2016-04-01T13:54:31.942Z"}
+{"player":1,"group":1,"notes":[{"player":1,"content":"great","id":"1/0.5701628271915564"},{"player":1,"content":"new comment","id":"1/0.7722649713624983"},{"player":1,"content":"add","id":"1/0.9586730052329879"}],"level":"info","message":"delete common note","timestamp":"2016-04-01T13:54:43.578Z"}
+{"player":1,"group":1,"notes":[{"player":1,"content":"new comment","id":"1/0.7722649713624983"},{"player":1,"content":"add","id":"1/0.9586730052329879"}],"level":"info","message":"delete common note","timestamp":"2016-04-01T13:54:43.984Z"}
+{"player":1,"group":1,"notes":[{"player":1,"content":"add","id":"1/0.9586730052329879"}],"level":"info","message":"delete common note","timestamp":"2016-04-01T13:54:44.240Z"}
+{"player":1,"group":1,"notes":[],"level":"info","message":"delete common note","timestamp":"2016-04-01T13:54:44.424Z"}
+{"player":1,"group":1,"location":4,"notes":[],"level":"info","message":"delete local note","timestamp":"2016-04-01T13:54:49.962Z"}
+{"level":"info","message":"choose the group","timestamp":"2016-04-01T13:56:54.134Z"}
+{"level":"info","message":"choose the group","timestamp":"2016-04-01T13:57:35.327Z"}
+{"group":1,"step":1,"level":"info","message":"change step","timestamp":"2016-04-01T21:26:08.727Z"}
+{"group":1,"location":3,"cri":0,"value":3,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-04-01T21:26:11.244Z"}
+{"group":1,"location":3,"cri":1,"value":3,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-04-01T21:26:11.926Z"}
+{"group":1,"location":2,"cri":0,"value":3,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-04-01T21:26:15.808Z"}
+{"group":1,"location":2,"cri":1,"value":4,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-04-01T21:26:16.464Z"}
+{"group":1,"location":1,"cri":0,"value":2,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-04-01T21:26:18.593Z"}
+{"group":1,"location":1,"cri":1,"value":1,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-04-01T21:26:19.125Z"}
+{"group":1,"location":0,"cri":0,"value":1,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-04-01T21:26:21.062Z"}
+{"group":1,"location":0,"cri":1,"value":2,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-04-01T21:26:21.670Z"}
+{"group":1,"step":2,"level":"info","message":"change step","timestamp":"2016-04-01T21:26:23.003Z"}
+{"level":"info","message":"choose the group","timestamp":"2016-04-01T21:27:53.440Z"}
+{"group":1,"step":1,"level":"info","message":"change step","timestamp":"2016-04-01T21:27:57.592Z"}
+{"group":1,"location":3,"cri":1,"value":5,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-04-01T21:28:05.763Z"}
+{"group":1,"location":3,"cri":0,"value":5,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-04-01T21:28:06.847Z"}
+{"group":1,"location":2,"cri":0,"value":3,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-04-01T21:28:09.856Z"}
+{"group":1,"location":2,"cri":1,"value":1,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-04-01T21:28:10.571Z"}
+{"group":1,"location":1,"cri":1,"value":4,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-04-01T21:28:12.088Z"}
+{"group":1,"location":1,"cri":0,"value":4,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-04-01T21:28:12.932Z"}
+{"group":1,"location":0,"cri":0,"value":2,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-04-01T21:28:14.949Z"}
+{"group":1,"location":0,"cri":1,"value":2,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-04-01T21:28:15.599Z"}
+{"group":1,"step":2,"level":"info","message":"change step","timestamp":"2016-04-01T21:28:19.913Z"}
+{"level":"info","message":"choose the group","timestamp":"2016-04-01T21:28:49.541Z"}
+{"group":1,"step":1,"level":"info","message":"change step","timestamp":"2016-04-01T21:28:54.678Z"}
+{"group":1,"location":3,"cri":0,"value":4,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-04-01T21:29:03.980Z"}
+{"group":1,"location":3,"cri":1,"value":5,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-04-01T21:29:05.259Z"}
+{"group":1,"location":2,"cri":0,"value":4,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-04-01T21:29:06.800Z"}
+{"group":1,"location":2,"cri":1,"value":6,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-04-01T21:29:07.683Z"}
+{"group":1,"location":1,"cri":0,"value":3,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-04-01T21:29:09.995Z"}
+{"group":1,"location":1,"cri":1,"value":3,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-04-01T21:29:10.994Z"}
+{"group":1,"location":0,"cri":1,"value":6,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-04-01T21:29:13.331Z"}
+{"group":1,"location":0,"cri":0,"value":2,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-04-01T21:29:14.741Z"}
+{"group":1,"step":2,"level":"info","message":"change step","timestamp":"2016-04-01T21:29:16.530Z"}
+{"level":"info","message":"choose the group","timestamp":"2016-04-02T20:42:59.386Z"}
+{"group":1,"location":2,"cri":0,"value":3,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-04-02T20:45:26.253Z"}
+{"level":"info","message":"choose the group","timestamp":"2016-04-02T21:54:22.067Z"}
+{"level":"info","message":"choose the group","timestamp":"2016-04-02T21:56:51.526Z"}
+{"group":1,"location":3,"cri":0,"value":4,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-04-02T21:56:58.307Z"}
+{"group":1,"location":3,"cri":1,"value":5,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-04-02T21:56:59.097Z"}
+{"group":1,"location":2,"cri":1,"value":6,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-04-02T21:57:00.266Z"}
+{"group":1,"location":2,"cri":0,"value":5,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-04-02T21:57:01.200Z"}
+{"group":1,"location":1,"cri":1,"value":3,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-04-02T21:57:03.698Z"}
+{"group":1,"location":1,"cri":0,"value":5,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-04-02T21:57:04.600Z"}
+{"group":1,"location":0,"cri":0,"value":5,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-04-02T21:57:07.747Z"}
+{"group":1,"location":0,"cri":1,"value":6,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-04-02T21:57:08.724Z"}
+{"group":1,"step":2,"level":"info","message":"change step","timestamp":"2016-04-02T21:57:11.149Z"}
