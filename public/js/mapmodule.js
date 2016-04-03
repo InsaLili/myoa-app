@@ -460,9 +460,16 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         }
     }
     confirmChoice = function(){
-        $('.location').hide();
-        $('#location'+$scope.chosenNum).show();
         $('.chooseLocation').hide();
+        $('.location').hide();
+
+        if($scope.steps.s2.alter && $scope.steps.s2.alter=="one"){
+            $('#location'+$scope.chosenNum).show();
+        }else{
+            for(var i=0; i<$scope.chosenNum.length;i++){
+                $('#location'+$scope.chosenNum[i]).show();
+            }
+        }
     }
 
     getEvalAvg = function(){
@@ -538,6 +545,7 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
                     $(".chooseLocation").show();
                     break;
                 case 2:
+                    confirmChoice();
                     updateStep($event,index,step);
                     break;
                 case 3:
@@ -581,20 +589,25 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
     }    
     $scope.chooseLocation = function(event, marker,name){
     	console.log(marker,name);
+        var element = $(event.target);
         if($scope.seqtype == "restricted" && $scope.steps.s2.alter == "one"){
-            $('.choisirBtn').removeClass("btn-success");
-            $(event.target).addClass("btn-success");
+            $('.choisirBtn').removeClass("btn-warning");
+            $('.choisirBtn').text("Choisir");
+            element.addClass("btn-warning");
+            element.text("Choisi");
             $scope.chosenNum = marker;
             // $('#chooseDialog').dialog('open');
         }else{
-            if($(event.target).hasClass("btn-success")){
-                $(event.target).removeClass("btn-success");
-                $(event.target).addClass("btn-default");
+            if(element.hasClass("btn-warning")){
+                element.removeClass("btn-warning");
+                element.addClass("btn-default");
+                element.text("Choisir");
                 var num = $scope.chosenNum.indexOf(marker);
                 $scope.chosenNum.splice(num,1);
             }else{
-                $(event.target).removeClass("btn-default");
-                $(event.target).addClass("btn-success");
+                element.removeClass("btn-default");
+                element.addClass("btn-warning");
+                element.text("Choisi");
                 $scope.chosenNum.push(marker);
             }
         }
