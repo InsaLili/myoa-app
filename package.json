@@ -16,6 +16,8 @@
     "pouchdb": "*",
     "pouchdb-find": "*",
     "screenfull": "^2.0.0",
-    "winston":"*"
+    "winston":"*",
+    "ejs": "*", 
+    "socket.io":"*"
   }
 }
