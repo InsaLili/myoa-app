@@ -24,26 +24,26 @@
 						<div class="col-md-4">
 							<div class="row">
 								<div class="radio deviceType">
-									<label><input type="radio" name="sharetype" value="display" ng-model="share.type">Large display</label>
+									<label><input type="radio" name="sharetype" value="display" ng-model="mapstep4.share.type">Large display</label>
 								</div>
 								<div class="radio deviceType">
-									<label><input type="radio" name="sharetype" value="tablet" ng-model="share.type">Tablet</label>
+									<label><input type="radio" name="sharetype" value="tablet" ng-model="mapstep4.share.type">Tablet</label>
 								</div>
 								<div class="radio deviceType">
-									<label><input type="radio" name="sharetype" value="none" ng-model="share.type">Not use</label>
+									<label><input type="radio" name="sharetype" value="none" ng-model="mapstep4.share.type">Not use</label>
 								</div>
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="row">
 								<div class="radio deviceType">
-									<label><input type="radio" name="persontype" value="tablet" ng-model="person.type">Tablet</label>
+									<label><input type="radio" name="persontype" value="tablet" ng-model="mapstep4.person.type">Tablet</label>
 								</div>
 								<div class="radio deviceType">
-									<label><input type="radio" name="persontype" value="phone" ng-model="person.type">Smartphone</label>
+									<label><input type="radio" name="persontype" value="phone" ng-model="mapstep4.person.type">Smartphone</label>
 								</div>
 								<div class="radio deviceType">
-									<label><input type="radio" name="persontype" value="none" ng-model="person.type">Not use</label>
+									<label><input type="radio" name="persontype" value="none" ng-model="mapstep4.person.type">Not use</label>
 								</div>
 							</div>
 						</div>
@@ -55,10 +55,10 @@
 						<div class="col-md-7">
 							<div class="row">
 								<div class="col-md-offset-1 col-md-1">
-									<input type="checkbox" ng-model="share.browse">
+									<input type="checkbox" ng-model="mapstep4.share.browse">
 								</div>
 								<div class="col-md-offset-8">
-									<input type="checkbox" ng-model="person.browse">
+									<input type="checkbox" ng-model="mapstep4.person.browse">
 								</div>
 							</div>
 						</div>
@@ -71,10 +71,10 @@
 							<div class="row">
 								<!-- only when in Seq1, evaltype == individual, hide share.eval -->
 								<div class="col-md-offset-1 col-md-1">
-									<input type="checkbox" ng-model="share.eval" ng-show="evaltype == 'group'||seqtype == 'unrestricted'">
+									<input type="checkbox" ng-model="mapstep4.share.eval" ng-show="evaltype == 'group'||seqtype == 'unrestricted'">
 								</div>
 								<div class="col-md-offset-8">
-									<input type="checkbox" ng-model="person.eval">
+									<input type="checkbox" ng-model="mapstep4.person.eval">
 								</div>
 							</div>
 							<!-- <div class="row" ng-show="seqtype == 'unrestricted'">
@@ -94,10 +94,10 @@
 						<div class="col-md-7">
 							<div class="row">
 								<div class="col-md-offset-1 col-md-1">
-									<input type="radio" name="bookmark" value="true" ng-model="share.mark">
+									<input type="radio" name="bookmark" value="true" ng-model="mapstep4.share.mark">
 								</div>
 								<div class="col-md-offset-8">
-									<input type="radio" name="bookmark" value="true" ng-model="person.mark">
+									<input type="radio" name="bookmark" value="true" ng-model="mapstep4.person.mark">
 								</div>
 							</div>
 						</div>
@@ -109,10 +109,10 @@
 						<div class="col-md-7">
 							<div class="row">
 								<div class="col-md-offset-1 col-md-1">
-									<input type="checkbox" ng-model="share.progress">
+									<input type="checkbox" ng-model="mapstep4.share.progress">
 								</div>
 								<div class="col-md-offset-8">
-									<input type="checkbox" ng-model="person.progress">
+									<input type="checkbox" ng-model="mapstep4.person.progress">
 								</div>
 							</div>
 						</div>
@@ -124,10 +124,10 @@
 						<div class="col-md-7">
 							<div class="row">
 								<div class="col-md-offset-1 col-md-1">
-									<input type="checkbox" ng-model="share.timer">
+									<input type="checkbox" ng-model="mapstep4.share.timer">
 								</div>
 								<div class="col-md-offset-8">
-									<input type="checkbox" ng-model="person.timer">
+									<input type="checkbox" ng-model="mapstep4.person.timer">
 								</div>
 							</div>
 						</div>
@@ -139,7 +139,7 @@
 						<div class="col-md-7">
 							<div class="row">
 								<div class="col-md-offset-1 col-md-1">
-									<input type="checkbox" ng-model="share.commonspace">
+									<input type="checkbox" ng-model="mapstep4.share.commonspace">
 								</div>
 							</div>
 						</div>
@@ -153,7 +153,7 @@
 								<div class="col-md-offset-1 col-md-1">
 								</div>
 								<div class="col-md-offset-8">
-									<input type="checkbox" ng-model="person.comment">
+									<input type="checkbox" ng-model="mapstep4.person.comment">
 								</div>
 							</div>
 						</div>
@@ -167,13 +167,13 @@
 								<div class="col-md-offset-1 col-md-1">
 								</div>
 								<div class="col-md-offset-8">
-									<input type="checkbox" ng-model="person.argu">
+									<input type="checkbox" ng-model="mapstep4.person.argu">
 								</div>
 							</div>
 						</div>
 					</div>
 					<a class="btn btn-primary" class="formerStepBtn" ng-click="changeStep()" ui-sref="step3"> <span class="glyphicon glyphicon-chevron-left"></span> Back</a>
-					<a class="btn btn-primary pull-right" class="nextStepBtn" ng-click="submit()" ui-sref="group">Save <span class="glyphicon glyphicon-floppy-disk"></span></a>
+					<a class="btn btn-primary pull-right" class="nextStepBtn" ng-click="submit()" ui-sref="tool">Save <span class="glyphicon glyphicon-floppy-disk"></span></a>
 				</div>
 			</div>
 		</div>

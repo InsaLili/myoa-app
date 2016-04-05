@@ -18,23 +18,23 @@
 				<div class="col-md-offset-1 col-md-10">
 					<div class="row item">
 							<div class="radio col-md-4">
-								<h4><input type="radio" name="sequence" value="restricted" ng-model="seqtype">Seq1: Restricted sequence</h4>
+								<h4><input type="radio" name="sequence" value="restricted" ng-model="mapstep2.seqtype">Seq1: Restricted sequence</h4>
 								<div class="caption">
 									<p>(Students have to evaluate all the alternatives in T1 before they can move to T2 to choose the alternative.)</p>
 								</div>
 							</div>
-							<div class="col-md-8" ng-show="seqtype == 'restricted'">
+							<div class="col-md-8" ng-show="mapstep2.seqtype == 'restricted'">
 								<div class="panel-group">
 									<div class="panel panel-default">
 										<!-- optional step0 -->
 										<div class="panel-heading">
 											<h4 class="panel-title">
-											    <input type="checkbox" ng-model="enableS0">
-											    <a data-toggle="collapse" data-target="#s0t0" ng-class="{disabled: !enableS0}">Step0 (T0 optional)
+											    <input type="checkbox" ng-model="mapstep2.reseq.s0.exist">
+											    <a data-toggle="collapse" data-target="#s0t0" ng-class="{disabled: !mapstep2.reseq.s0.exist}">Step0 (T0 optional)
 											    </a>
 											</h4>
 										</div>
-										<div id="s0t0" class="panel-collapse collapse" ng-show="enableS0">
+										<div id="s0t0" class="panel-collapse collapse" ng-show="mapstep2.reseq.s0.exist">
 											<form class="form-horizontal markerArea" role="form">
 												<!-- cuostomized title -->
 												<div class="form-group">
@@ -42,7 +42,7 @@
 														Title
 													</label>
 													<div class="col-md-9">
-														<input type="text" class="form-control" ng-model="reseq.s0.title">
+														<input type="text" class="form-control" ng-model="mapstep2.reseq.s0.title">
 													</div>
 												</div>
 												<!-- pop-up dialogue -->
@@ -53,7 +53,7 @@
 														pop-up dialogue
 													</label>
 													<div class="col-md-9">
-														<textarea class="form-control" ng-model="reseq.s0.dlg" placeholder="Detailed description in the pop-up dialog" rows="4"></textarea>
+														<textarea class="form-control" ng-model="mapstep2.reseq.s0.dlg" placeholder="Detailed description in the pop-up dialog" rows="4"></textarea>
 													</div>
 												</div>					
 											</form>
@@ -73,7 +73,7 @@
 														Title
 													</label>
 													<div class="col-md-9">
-														<input type="text" class="form-control" ng-model="reseq.s1.title">
+														<input type="text" class="form-control" ng-model="mapstep2.reseq.s1.title">
 													</div>
 												</div>
 												<!-- pop-up dialogue -->
@@ -84,7 +84,7 @@
 														pop-up dialogue
 													</label>
 													<div class="col-md-9">
-														<textarea class="form-control" ng-model="reseq.s1.dlg" placeholder="Detailed description in the pop-up dialog" rows="4"></textarea>
+														<textarea class="form-control" ng-model="mapstep2.reseq.s1.dlg" placeholder="Detailed description in the pop-up dialog" rows="4"></textarea>
 													</div>
 												</div>		
 												<!-- choose evaluation condition -->
@@ -94,10 +94,10 @@
 													</h5>
 													<div class="col-md-12 btn-group">
 														<div class="radio col-md-12">
-															<label><input type="radio" name="t1eval" value="individual" ng-model="reseq.s1.eval">E1: Each student needs to evaluate all the alternatives</label>
+															<label><input type="radio" name="t1eval" value="individual" ng-model="mapstep2.reseq.s1.eval">E1: Each student needs to evaluate all the alternatives</label>
 														</div>
 														<div class="radio col-md-12">
-															<label><input type="radio" name="t1eval" value="group" ng-model="reseq.s1.eval">E2: A group needs to evaluate all the alternatives</label>
+															<label><input type="radio" name="t1eval" value="group" ng-model="mapstep2.reseq.s1.eval">E2: A group needs to evaluate all the alternatives</label>
 														</div>
 													</div>
 												</div>	
@@ -107,7 +107,7 @@
 														<h5>Indentify the evaluation scale (number of stars):</h5>
 													</div>
 													<div class="col-md-2">
-														<input type="number" step="any" class="form-control" ng-model="reseq.s1.scale">
+														<input type="number" step="any" class="form-control" ng-model="mapstep2.reseq.s1.scale">
 													</div>
 													<div class="col-md-2">
 														<h5>stars</h5>
@@ -131,7 +131,7 @@
 														Title
 													</label>
 													<div class="col-md-9">
-														<input type="text" class="form-control" ng-model="reseq.s2.title">
+														<input type="text" class="form-control" ng-model="mapstep2.reseq.s2.title">
 													</div>
 												</div>
 												<!-- pop-up dialogue -->
@@ -142,7 +142,7 @@
 														pop-up dialogue
 													</label>
 													<div class="col-md-9">
-														<textarea class="form-control" ng-model="reseq.s2.dlg" placeholder="Detailed description in the pop-up dialog" rows="4"></textarea>
+														<textarea class="form-control" ng-model="mapstep2.reseq.s2.dlg" placeholder="Detailed description in the pop-up dialog" rows="4"></textarea>
 													</div>
 												</div>	
 												<!-- number of final decision -->
@@ -152,10 +152,10 @@
 													</h5>
 													<div class="col-md-12 btn-group">
 														<div class="radio col-md-12">
-															<label><input type="radio" name="t2alt" value="one" ng-model="reseq.s2.alter">Choose only one alternative</label>
+															<label><input type="radio" name="t2alt" value="one" ng-model="mapstep2.reseq.s2.alter">Choose only one alternative</label>
 														</div>
 														<div class="radio col-md-12">
-															<label><input type="radio" name="t2alt" value="multiple" ng-model="reseq.s2.alter">Choose multiple dlternatives</label>
+															<label><input type="radio" name="t2alt" value="multiple" ng-model="mapstep2.reseq.s2.alter">Choose multiple dlternatives</label>
 														</div>
 													</div>
 												</div>	
@@ -166,12 +166,12 @@
 										<!-- optional step3 -->
 										<div class="panel-heading">
 											<h4 class="panel-title">
-											    <input type="checkbox" ng-model="enableS3">
-											    <a data-toggle="collapse" data-target="#s3t3" ng-class="{disabled: !enableS3}">Step3 (T3 optional)
+											    <input type="checkbox" ng-model="mapstep2.reseq.s3.exist">
+											    <a data-toggle="collapse" data-target="#s3t3" ng-class="{disabled: !mapstep2.reseq.s3.exist}">Step3 (T3 optional)
 											    </a>
 											</h4>
 										</div>
-										<div id="s3t3" class="panel-collapse collapse" ng-show="enableS3">
+										<div id="s3t3" class="panel-collapse collapse" ng-show="mapstep2.reseq.s3.exist">
 											<form class="form-horizontal markerArea" role="form">
 												<!-- cuostomized title -->
 												<div class="form-group">
@@ -179,7 +179,7 @@
 														Title
 													</label>
 													<div class="col-md-9">
-														<input type="text" class="form-control" ng-model="reseq.s3.title">
+														<input type="text" class="form-control" ng-model="mapstep2.reseq.s3.title">
 													</div>
 												</div>
 												<!-- pop-up dialogue -->
@@ -190,7 +190,7 @@
 														pop-up dialogue
 													</label>
 													<div class="col-md-9">
-														<textarea class="form-control" ng-model="reseq.s3.dlg" placeholder="Detailed description in the pop-up dialog" rows="4"></textarea>
+														<textarea class="form-control" ng-model="mapstep2.reseq.s3.dlg" placeholder="Detailed description in the pop-up dialog" rows="4"></textarea>
 													</div>
 												</div>					
 											</form>
@@ -201,23 +201,23 @@
 					</div>
 					<div class="row item">
 							<div class="radio col-md-4">
-								<h4><input type="radio" name="sequence" value="unrestricted" ng-model="seqtype">Seq2: Unestricted sequence</h4>				
+								<h4><input type="radio" name="sequence" value="unrestricted" ng-model="mapstep2.seqtype">Seq2: Unestricted sequence</h4>				
 								<div class="caption">
 									<p>(T1 and T2 are mixed, students can make the choice while they are checking and evaluating alternatives.)</p>
 								</div>
 							</div>
-							<div class="col-md-8" ng-show="seqtype == 'unrestricted'">
+							<div class="col-md-8" ng-show="mapstep2.seqtype == 'unrestricted'">
 								<div class="panel-group">
 									<div class="panel panel-default">
 										<!-- optional step0 -->
 										<div class="panel-heading">
 											<h4 class="panel-title">
-											    <input type="checkbox" ng-model="enableS0un">
-											    <a data-toggle="collapse" data-target="#s0t0un" ng-class="{disabled: !enableS0un}">Step0 (T0 optional)
+											    <input type="checkbox" ng-model="mapstep2.unseq.s0.exist">
+											    <a data-toggle="collapse" data-target="#s0t0un" ng-class="{disabled: !mapstep2.unseq.s0.exist}">Step0 (T0 optional)
 											    </a>
 											</h4>
 										</div>
-										<div id="s0t0un" class="panel-collapse collapse" ng-show="enableS0un">
+										<div id="s0t0un" class="panel-collapse collapse" ng-show="mapstep2.unseq.s0.exist">
 											<form class="form-horizontal markerArea" role="form">
 												<!-- cuostomized title -->
 												<div class="form-group">
@@ -225,7 +225,7 @@
 														Title
 													</label>
 													<div class="col-md-9">
-														<input type="text" class="form-control" ng-model="unseq.s0.title">
+														<input type="text" class="form-control" ng-model="mapstep2.unseq.s0.title">
 													</div>
 												</div>
 												<!-- pop-up dialogue -->
@@ -236,7 +236,7 @@
 														pop-up dialogue
 													</label>
 													<div class="col-md-9">
-														<textarea class="form-control" ng-model="unseq.s0.dlg" placeholder="Detailed description in the pop-up dialog" rows="4"></textarea>
+														<textarea class="form-control" ng-model="mapstep2.unseq.s0.dlg" placeholder="Detailed description in the pop-up dialog" rows="4"></textarea>
 													</div>
 												</div>					
 											</form>
@@ -257,7 +257,7 @@
 														Title
 													</label>
 													<div class="col-md-9">
-														<input type="text" class="form-control" ng-model="unseq.s1.title">
+														<input type="text" class="form-control" ng-model="mapstep2.unseq.s1.title">
 													</div>
 												</div>
 												<!-- pop-up dialogue -->
@@ -268,7 +268,7 @@
 														pop-up dialogue
 													</label>
 													<div class="col-md-9">
-														<textarea class="form-control" ng-model="unseq.s1.dlg" placeholder="Detailed description in the pop-up dialog" rows="4"></textarea>
+														<textarea class="form-control" ng-model="mapstep2.unseq.s1.dlg" placeholder="Detailed description in the pop-up dialog" rows="4"></textarea>
 													</div>
 												</div>
 												<!-- choose evaluation condition -->
@@ -278,17 +278,6 @@
 															<p>(In this sequence, each alternative only needs to be evaluated once.)</p>
 														</div>
 													</div>
-													<!-- <h5 class="col-md-12">
-														Choose which evaluation condition to use:
-													</h5>
-													<div class="col-md-12 btn-group">
-														<div class="radio col-md-12">
-															<label><input type="radio" name="s1eval" value="individual" ng-model="unseq.s1.eval">E1: An alternative will be evaluated by students separately, shared display will show the average of evaluation results of each alternative</label>
-														</div>
-														<div class="radio col-md-12">
-															<label><input type="radio" name="s1eval" value="group" ng-model="unseq.s1.eval">E2: An alternative will be evaluated once, by a group or by one student</label>
-														</div>
-													</div> -->
 												</div>
 												<!-- choose evaluation scale -->
 												<div class="form-group">
@@ -296,7 +285,7 @@
 														<h5>Indentify the evaluation scale (number of stars):</h5>
 													</div>
 													<div class="col-md-2">
-														<input type="number" step="any" class="form-control" ng-model="unseq.s1.scale">
+														<input type="number" step="any" class="form-control" ng-model="mapstep2.unseq.s1.scale">
 													</div>
 													<div class="col-md-2">
 														<h5>stars</h5>
@@ -309,12 +298,12 @@
 										<!-- step title -->
 										<div class="panel-heading">
 											<h4 class="panel-title">
-											    <input type="checkbox" ng-model="enableS2">
-											    <a data-toggle="collapse" data-target="#s2t3" ng-class="{disabled: !enableS2}">Step2 (T3 optional)
+											    <input type="checkbox" ng-model="mapstep2.unseq.s2.exist">
+											    <a data-toggle="collapse" data-target="#s2t3" ng-class="{disabled: !mapstep2.unseq.s2.exist}">Step2 (T3 optional)
 											    </a>
 											</h4>
 										</div>
-										<div id="s2t3" class="panel-collapse collapse" ng-show="enableS2">
+										<div id="s2t3" class="panel-collapse collapse" ng-show="mapstep2.unseq.s2.exist">
 											<form class="form-horizontal markerArea" role="form">
 												<!-- customized title -->
 												<div class="form-group">
@@ -322,7 +311,7 @@
 														Title
 													</label>
 													<div class="col-md-9">
-														<input type="text" class="form-control" ng-model="unseq.s2.title">
+														<input type="text" class="form-control" ng-model="mapstep2.unseq.s2.title">
 													</div>
 												</div>
 												<!-- pop-up dialogue -->
@@ -333,7 +322,7 @@
 														pop-up dialogue
 													</label>
 													<div class="col-md-9">
-														<textarea class="form-control" ng-model="unseq.s2.dlg" placeholder="Detailed description in the pop-up dialog" rows="4"></textarea>
+														<textarea class="form-control" ng-model="mapstep2.unseq.s2.dlg" placeholder="Detailed description in the pop-up dialog" rows="4"></textarea>
 													</div>
 												</div>					
 											</form>

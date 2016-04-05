@@ -19,19 +19,19 @@
 								<div class="form-group">
 									<label class="col-md-3 control-label">Longtitude</label>
 									<div class="col-md-6">
-										<input type="number" step="any" class="form-control" placeholder="ex: 12.3456" ng-model="map.lng">
+										<input type="number" step="any" class="form-control" placeholder="ex: 12.3456" ng-model="mapstep1.map.lng">
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-md-3 control-label">Laititude</label>
 									<div class="col-md-6">
-										<input type="number" step="any" class="form-control" placeholder="ex: 12.3456" ng-model="map.lat">
+										<input type="number" step="any" class="form-control" placeholder="ex: 12.3456" ng-model="mapstep1.map.lat">
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-md-3 control-label">Zoom</label>
 									<div class="col-md-6">
-										<input type="number" step="any" class="form-control" ng-model="map.zoom">
+										<input type="number" step="any" class="form-control" ng-model="mapstep1.map.zoom">
 									</div>
 								</div>
 							</div>
@@ -47,11 +47,11 @@
 						</div>
 						<div class="col-md-8">
 							<div class="panel-group" id="showMarkers">
-								<div class="panel panel-default" ng-repeat="marker in markers">
+								<div class="panel panel-default" ng-repeat="marker in mapstep1.markers">
 									<div class="panel-heading">
 										<h4 class="panel-title">
-											<a data-toggle="collapse"data-target="#marker-{{$index}}" ng-bind="marker.name"></a>
-											<button type="button" class="deleteMarkerBtn btn btn-default btn-xs pull-right" ng-click="deleteItem($event,marker,markers)"><span class="glyphicon glyphicon-trash"></span></button>
+											<a data-toggle="collapse"data-target="#marker-{{$index}}">Marker {{$index+1}}</a>
+											<button type="button" class="deleteMarkerBtn btn btn-default btn-xs pull-right" ng-click="deleteItem($event,marker,mapstep1.markers)"><span class="glyphicon glyphicon-trash"></span></button>
 										</h4>
 									</div>
 									<div id="marker-{{$index}}" class="panel-collapse collapse" >
@@ -82,7 +82,7 @@
 											</div>	
 											<div class="form-group">
 												<label class="control-label col-md-3">
-													Symbol num
+													Marker symbol
 												</label>
 												<div class="col-md-9">
 													<input type="text" class="form-control" placeholder="input a number (0-99), ex: '1'; or one lower case letter, ex: 'a'" ng-model="marker.icon.icon">
@@ -108,64 +108,7 @@
 									</div>
 								</div>
 							</div> 
-							<button class="btn btn-info" data-toggle="collapse" data-target="#newMarker"><span class="glyphicon glyphicon-plus"></span>  Add marker</button>
-							<div id="newMarker" class="panel-collapse collapse" >
-								<form class="form-horizontal markerArea" role="form" name="form">
-									<div class="form-group">
-										<label class="control-label col-md-3">
-											Name
-										</label>
-										<div class="col-md-9">
-											<input type="text" class="form-control" ng-model="newMarker.name">
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="control-label col-md-3">
-											Longtitude
-										</label>
-										<div class="col-md-9">
-											<input type="number" step="any" class="form-control" placeholder="ex: 12.3456" ng-model="newMarker.lng">
-										</div>
-									</div>					
-									<div class="form-group">
-										<label class="control-label col-md-3">
-											Laititude
-										</label>
-										<div class="col-md-9">
-											<input type="number" step="any" class="form-control" placeholder="ex: 12.3456" ng-model="newMarker.lat">
-										</div>
-									</div>	
-									<div class="form-group">
-										<label class="control-label col-md-3">
-											Symbol num
-										</label>
-										<div class="col-md-9">
-											<input type="text" class="form-control" placeholder="input a number (0-99), ex: '1'; or one lower case letter, ex: 'a'" ng-model="newMarker.icon.icon">
-										</div>
-									</div>	
-									<div class="form-group">
-										<label class="control-label col-md-3">
-											Add img (optional)
-										</label>
-										<div class="col-md-9">
-											<input type="file" class="form-control" accept="image/*" onchange="angular.element(this).scope().handleInfoFiles(this)">
-										</div>
-									</div>					
-									<div class="form-group">
-										<label class="control-label col-md-3">
-											Data
-										</label>
-										<div class="col-md-9">
-											<textarea class="form-control" ng-model="newMarker.data" rows="4"></textarea>
-										</div>
-									</div>
-									<div class="form-group saveBtn">
-										<div class="col-md-12">
-											<button class="btn btn-default pull-right" ng-click="addMarker()"><span class="glyphicon glyphicon-floppy-disk"></span>  Save</button>
-										</div>
-									</div>
-								</form>
-							</div>
+							<button class="btn btn-info" ng-click="addMarker()"><span class="glyphicon glyphicon-plus"></span>  Add marker</button>
 						</div>
 					</div>
 					<!-- evaluating criteria -->
@@ -184,11 +127,11 @@
 						</div>
 						<div class="col-md-8">
 							<div class="panel-group" id="showCris">
-								<div class="panel panel-default" ng-repeat="cri in cris.teacher">
+								<div class="panel panel-default" ng-repeat="cri in mapstep1.cris.teacher">
 									<div class="panel-heading">
 										<h4 class="panel-title">
 											{{cri.name}}
-											<button type="button" class="btn btn-default btn-xs pull-right" ng-click="deleteItem($event,cri,cris.teacher)"><span class="glyphicon glyphicon-trash"></span></button>
+											<button type="button" class="btn btn-default btn-xs pull-right" ng-click="deleteItem($event,cri,mapstep1.cris.teacher)"><span class="glyphicon glyphicon-trash"></span></button>
 										</h4>
 									</div>
 									<div id="cri-{{$index}}" class="panel-collapse collapse">
@@ -236,11 +179,11 @@
 						</div>
 						<div class="col-md-8">
 							<div class="panel-group" id="showInfo">
-								<div class="panel panel-default" ng-repeat="info in infos">
+								<div class="panel panel-default" ng-repeat="info in mapstep1.infos">
 									<div class="panel-heading">
 										<h4 class="panel-title">
 											<a data-toggle="collapse" data-target="#info-{{$index}}" placeholder="Information" ng-bind="info.name"></a>
-											<button type="button" class="btn btn-default btn-xs pull-right" ng-click="deleteItem($event,info,infos)"><span class="glyphicon glyphicon-trash"></span></button>
+											<button type="button" class="btn btn-default btn-xs pull-right" ng-click="deleteItem($event,info,mapstep1.infos)"><span class="glyphicon glyphicon-trash"></span></button>
 										</h4>
 									</div>
 									<div id="info-{{$index}}" class="panel-collapse collapse">
@@ -314,7 +257,7 @@
 				<div class="col-md-5">
 					<h4>Preview of the map</h4>
 					<div id="previewMap">
-						<leaflet width="100%" height="480px" lf-center="map" tiles="tiles" markers="markers"></leaflet>
+						<leaflet width="100%" height="480px" lf-center="mapstep1.map" tiles="tiles" markers="mapstep1.markers"></leaflet>
 					</div>
 					<br>
 					<div>

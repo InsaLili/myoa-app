@@ -1,49 +1,57 @@
 <div class="container" ng-controller="ToolSetCtrl">
     <div class="jumbotron row">
         <div class="col-md-offset-1 col-md-10">
-            <div class="item">
-                <h2>Choose an activity</h2>
+            <div class="">
+                <h3>Choose an activity</h3>
             </div>
             <div class="row item">
-                <div class="col-md-3">
-                    <h4>Choose an existing activitiy</h4>
-                </div>
-                <div class="col-md-8">
+                <div class="caption col-md-12"><p>Choose or edit existing activities</p></div>
+                <div class="col-md-12">
                     <div class="docList" ng-repeat="app in apps">
-                        <a class="btn btn-primary">{{app.id}}</a>
-                        <button class="btn btn-default" ng-click="deleteDoc(app,$index)"><span class="glyphicon glyphicon-trash"></span></button>
+                        <button class="btn btn-primary">{{app.id}}</button>
+                        <a class="btn btn-default" ng-click="editDoc(app,$index)" ui-sref="step1"><span class="glyphicon glyphicon-edit"></span></a>
+                        <a class="btn btn-default" ng-click="deleteDoc(app,$index)"><span class="glyphicon glyphicon-trash"></span></a>
                     </div>
                 </div>
-            </div>
-            <div class="row item">
-                <div class="col-md-3">
-                    <h4>Create a new activity</h4>
-                </div>
-                <div class="col-md-4">
-                    <div class="row col-md-12">
-                        <div class="caption"><p>Create based on existing activity</p></div>
-                        <div class="row col-md-12 form-group">
-                            <a class="btn btn-primary docList" ng-repeat="app in apps" ng-click="replicateDoc(app)">{{app.id}}</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="row col-md-12">
-                        <div class="caption"><p>Give a name of the activity</p></div>
-                        <input type="text" class="form-control" ng-model="docName" placeholder="name">
-                        <div class="caption">
-                            <p>Choose the activity style </p>
-                        </div>
-                        <a class="btn btn-primary" ng-click="createDoc()">Map</a>
-                         <!-- ui-sref="step1" -->
-                        <a class="btn btn-primary">Figure</a>
-                        <a class="btn btn-primary">Text</a>
+                <div class="col-md-12">
+                    <div class="caption"><p>Create a new activity</p></div>
+                    <button class="btn btn-primary" data-toggle="collapse" data-target="#createAct"><span class="glyphicon glyphicon-plus"></span>  Create</button>
+                    <div class="col-md-12 panel-collapse collapse createArea" id="createAct">
+                        <form class="form-horizontal " role="form" name="form">
+                            <div class="form-group">
+                                <label class="control-label col-md-1">
+                                    Name
+                                </label>
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control" ng-model="docName" placeholder="name">
+                                </div>
+                            </div> 
+                            <div class="form-group col-md-12">
+                                <label class="col-md-12"><input type="radio" name="template" value="true" ng-model="template"> Create based on existing activities</label>
+                                <div class="col-md-12" ng-show="template == 'true'">
+                                    <div class="caption"><p>Create an activity based on existing ones</p></div>
+                                    <a class="btn btn-primary docList" ng-repeat="app in apps" ng-click="replicateDoc(app)" ui-sref="step1">{{app.id}}</a>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="col-md-12"><input type="radio" name="template" value="false" ng-model="template"> Create a new one</label>
+                                <div class="col-md-12" ng-show="template == 'false'">
+                                    <div class="caption">
+                                        <p>Choose the activity style </p>
+                                    </div>
+                                    <a class="btn btn-primary" ng-click="createDoc()" ui-sref="step1">Map</a>
+                                     <!-- ui-sref="step1" -->
+                                    <a class="btn btn-primary">Figure</a>
+                                    <a class="btn btn-primary">Text</a>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
             <div class="row item">
                 <div class="col-md-12">
-                    <h2>Config groups</h2>
+                    <h3>Config groups</h3>
                 </div>
                 <div class="col-md-8">
                     <div class="panel-group" id="showGroups">
