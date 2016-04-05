@@ -1,0 +1,149 @@
+<div class="container" ng-controller="CtrlStep3">
+	<div class="col-md-12">
+		<h3>Step3/4: add indicators and gamification elements to the activity</h3>
+		<button class="btn btn-default" data-toggle="collapse" data-target="#instruction">? Instruction</button>
+		<div id="instruction" class="panel-collapse collapse">
+			<p>Instruction: in this step, you can add indicators and gamification elements to the application. For example: </p>
+			<ul>
+				<li>Indicators: indicators would be used to monitor students' action, meanwhile encourage students to regulate their behaviors. You can add two kinds of indicators: the group indicator or individual indicators. The group indicators would be the evaluation progress fo the group. The individual indicators would be the number of alternatives that have been checked by students.</li>
+				<li>Gaminifaction elements: gamification elements are used to motivate students and gain entertainment to the task. For example, a timer badge to encourage students to finish tasks within limited time; or a "comment badge" to stimulate students to submit more comments.</li>
+			</ul>
+		</div>
+		<!-- set the corrdination of the map -->
+		<div class="jumbotron" id="items">
+			<div class="row">
+				<div class="col-md-offset-1 col-md-10">
+					<div class="row item">
+						<div class="col-md-4">
+							<h4>Gamification:</h4>
+						</div>
+						<div class="col-md-8">
+							<form class="form-horizontal" role="form">
+								<div class="form-group checkbox marginBottom">
+									<div class="col-md-12">
+										<h5><input type="checkbox" ng-model="commentbadge">Add individual "comment badge"</h5>
+									</div>
+									<div ng-show="commentbadge">
+										<div class="col-md-offset-1 col-md-5">
+											<label>Student can earn a "comment badge" by submitting more than</label>
+										</div>
+										<div class="col-md-2">
+											<input type="number" step="any" class="form-control" ng-model="badge.comment">
+										</div>
+										<div class="col-md-2">
+											<label class="label-control">comment</label>
+										</div>
+									</div>
+								</div>
+								<div class="form-group checkbox">
+									<div class="col-md-12">
+										<h5><input type="checkbox" ng-model="badge.timer">Add group "timer badge"</h5>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="row item">
+						<div class="col-md-4">
+							<h4>Tips:</h4>
+						</div>
+						<div class="col-md-8">
+							<form class="form-horizontal" role="form">
+								<div class="form-group">
+									<div class="row">
+										<div class="col-md-4">
+											<h5>Add timer of steps:</h5>
+										</div>
+										<div class="col-md-8">
+
+											<div ng-repeat ="i in step track by $index">
+												<div class="form-group" ng-show="i">
+													<div class="checkboxMargin">
+														<div class="col-md-3">
+															<h5 class="label-control"><input type="checkbox" ng-model="tips.timers[$index]">Step{{$index}}</h5>
+														</div>
+														<div ng-show="tips.timers[$index]">
+															<div class="col-md-3">
+																<input type="text" placeholder="00:00" class="form-control" ng-model="tips.timerValue[$index]">
+															</div>
+															<div class="col-md-2">
+																<h5>mins</h5>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+
+											<!-- <div class="form-group">
+												<div class="checkboxMargin">
+													<div class="col-md-3">
+														<h5 class="label-control"><input type="checkbox" ng-model="timer1">Step1</h5>
+													</div>
+													<div ng-show="timer1">
+														<div class="col-md-3">
+															<input type="text" placeholder="00:00" class="form-control" ng-model="tips.timer1">
+														</div>
+														<div class="col-md-2">
+															<h5>mins</h5>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="form-group" ng-show="step.s2">
+												<div class="checkboxMargin">
+													<div class="col-md-3">
+														<h5 class="label-control"><input type="checkbox" ng-model="timer2">Step2</h5>
+													</div>
+													<div ng-show="timer2">
+														<div class="col-md-3">
+															<input type="text" placeholder="00:00" class="form-control" ng-model="tips.timer2">
+														</div>
+														<div class="col-md-2">
+															<h5>mins</h5>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="form-group" ng-show="step.s3">
+												<div class="checkboxMargin">
+													<div class="col-md-3">
+														<h5 class="label-control"><input type="checkbox" ng-model="timer3">Step3</h5>
+													</div>
+													<div ng-show="timer3">
+														<div class="col-md-3">
+															<input type="text" placeholder="00:00" class="form-control" ng-model="tips.timer3">
+														</div>
+														<div class="col-md-2">
+															<h5>mins</h5>
+														</div>
+													</div>
+												</div>
+											</div> -->
+										</div>
+									</div>
+								</div>
+								<div class="form-group checkbox" ng-show="probar == 'individual'">
+									<div class="col-md-12">
+										<h5><input type="checkbox" ng-model="tips.indiviPro">Add individual evaluating progress</h5>
+									</div>
+								</div>
+								<div class="form-group checkbox" ng-show="probar == 'group'">
+									<div class="col-md-12">
+										<h5><input type="checkbox" ng-model="tips.groupPro">Add group evaluating progress</h5>
+									</div>
+								</div>
+								<div class="form-group checkbox">
+									<div class="col-md-12">
+										<h5><input type="checkbox" ng-model="tips.browsed">Add number of the browsed alternatives of each student</h5>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				<a class="btn btn-primary" class="formerStepBtn" ng-click="changeStep()" ui-sref="step2"> <span class="glyphicon glyphicon-chevron-left"></span> Back</a>
+				<a class="btn btn-primary pull-right" class="nextStepBtn" ng-click="changeStep()" ui-sref="step4">Next <span class="glyphicon glyphicon-chevron-right"></span></a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

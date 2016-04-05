@@ -1,0 +1,97 @@
+<div class="container" ng-controller="ToolSetCtrl">
+    <div class="jumbotron row">
+        <div class="col-md-offset-1 col-md-10">
+            <div class="item">
+                <h2>Choose an activity</h2>
+            </div>
+            <div class="row item">
+                <div class="col-md-3">
+                    <h4>Choose an existing activitiy</h4>
+                </div>
+                <div class="col-md-8">
+                    <div class="docList" ng-repeat="app in apps">
+                        <a class="btn btn-primary">{{app.id}}</a>
+                        <button class="btn btn-default" ng-click="deleteDoc(app,$index)"><span class="glyphicon glyphicon-trash"></span></button>
+                    </div>
+                </div>
+            </div>
+            <div class="row item">
+                <div class="col-md-3">
+                    <h4>Create a new activity</h4>
+                </div>
+                <div class="col-md-4">
+                    <div class="row col-md-12">
+                        <div class="caption"><p>Create based on existing activity</p></div>
+                        <div class="row col-md-12 form-group">
+                            <a class="btn btn-primary docList" ng-repeat="app in apps" ng-click="replicateDoc(app)">{{app.id}}</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row col-md-12">
+                        <div class="caption"><p>Give a name of the activity</p></div>
+                        <input type="text" class="form-control" ng-model="docName" placeholder="name">
+                        <div class="caption">
+                            <p>Choose the activity style </p>
+                        </div>
+                        <a class="btn btn-primary" ng-click="createDoc()">Map</a>
+                         <!-- ui-sref="step1" -->
+                        <a class="btn btn-primary">Figure</a>
+                        <a class="btn btn-primary">Text</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row item">
+                <div class="col-md-12">
+                    <h2>Config groups</h2>
+                </div>
+                <div class="col-md-8">
+                    <div class="panel-group" id="showGroups">
+                        <div class="panel panel-default" ng-repeat="group in groups track by $index">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-target="#group-{{$index}}">Group {{$index+1}}</a>
+                                    <button type="button" class="deleteGroupBtn btn btn-default btn-xs pull-right" ng-click="deleteItem($event,group,groups)"><span class="glyphicon glyphicon-trash"></span></button>
+                                </h4>
+                            </div>
+                            <div id="group-{{$index}}" class="panel-collapse collapse">
+                                <form class="form-horizontal markerArea" role="form" name="form">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">
+                                            Name
+                                        </label>
+                                        <div class="col-md-7">
+                                            <input type="text" class="form-control" ng-model="group.name">
+                                        </div>
+                                    </div>          
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">
+                                            Amount of students
+                                        </label>
+                                        <div class="col-md-7">
+                                            <select class="form-control" ng-model="group.student">
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div> 
+
+                    <button class="btn btn-primary" id="addGroupBtn" ng-click="addItem(groups)"><span class="glyphicon glyphicon-plus"></span>  Add Group</button>
+
+                </div>
+            </div>
+        <!-- submit changes -->
+        <div id="submit">
+            <a class="btn btn-default pull-right stepBtn" ng-click="setMap()">Submit</a>
+            <a class="btn btn-default pull-right stepBtn" href="http://localhost:8000/#/index" target="_blank" ng-click="setMap()">Preview</a>
+        </div>
+    
+        </div>
+    </div>
+    
+</div>

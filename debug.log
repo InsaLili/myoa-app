@@ -1286,3 +1286,4 @@
 {"group":1,"location":0,"cri":1,"value":5,"level":"info","message":"evaluate the location on the shared display","timestamp":"2016-04-03T09:16:04.831Z"}
 {"group":1,"step":2,"level":"info","message":"change step","timestamp":"2016-04-03T09:16:05.934Z"}
 {"group":1,"step":3,"level":"info","message":"change step","timestamp":"2016-04-03T09:16:20.203Z"}
+{"level":"info","message":"choose the group","timestamp":"2016-04-04T13:11:56.125Z"}

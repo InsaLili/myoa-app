@@ -22,7 +22,8 @@ routerApp.run(function($rootScope, $state, $stateParams) {
  * @return {[type]}
  */
 routerApp.config(function($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.otherwise('/index');
+    // $urlRouterProvider.otherwise('/index');
+    // $urlRouterProvider.when('', '/index');
     $stateProvider
         .state('index', {
             url: '/index',

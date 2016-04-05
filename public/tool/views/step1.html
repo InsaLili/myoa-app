@@ -1,0 +1,327 @@
+<div class="container" ng-controller="CtrlStep1">
+	<div class="col-md-12">
+		<h3>Step1/4: indentify the decision to be made, identify alternatives</h3>
+		<button class="btn btn-default" data-toggle="collapse" data-target="#instruction">? Instruction</button>
+		<div id="instruction" class="panel-collapse collapse">
+			<p>Define clearly the nature of the decision that must be taken by students. Identify all the alternaives (for example, in a trip planning task, the alternatives could be a list hotels). Provide information of each alternatives (e.g. the price, location or room type of a hotel). These information will be accessible on appointed devices (on personal device, shared display or both). You can also add information that are relevant for students to make decision reasonable (for example, budges, avaliable days or other constrains for the trip plannning task).</p>
+		</div>
+		<!-- set the corrdination of the map -->
+		<div class="jumbotron" id="items">
+			<div class="row">
+				<div class="col-md-7">
+					<!-- set the map -->
+					<div class="row item">
+						<form class="form-horizontal" role="form" name="form">
+							<div class="col-md-4">
+								<h4>Set map coordinate:</h4>				
+							</div>
+							<div class="col-md-8">
+								<div class="form-group">
+									<label class="col-md-3 control-label">Longtitude</label>
+									<div class="col-md-6">
+										<input type="number" step="any" class="form-control" placeholder="ex: 12.3456" ng-model="map.lng">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-3 control-label">Laititude</label>
+									<div class="col-md-6">
+										<input type="number" step="any" class="form-control" placeholder="ex: 12.3456" ng-model="map.lat">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-3 control-label">Zoom</label>
+									<div class="col-md-6">
+										<input type="number" step="any" class="form-control" ng-model="map.zoom">
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+					<!-- add markers -->
+					<div class="row item">
+						<div class="col-md-4">
+							<h4>Add alternatives:</h4>
+							<div class="caption">
+								<p>(markers on the map)</p>
+							</div>
+						</div>
+						<div class="col-md-8">
+							<div class="panel-group" id="showMarkers">
+								<div class="panel panel-default" ng-repeat="marker in markers">
+									<div class="panel-heading">
+										<h4 class="panel-title">
+											<a data-toggle="collapse"data-target="#marker-{{$index}}" ng-bind="marker.name"></a>
+											<button type="button" class="deleteMarkerBtn btn btn-default btn-xs pull-right" ng-click="deleteItem($event,marker,markers)"><span class="glyphicon glyphicon-trash"></span></button>
+										</h4>
+									</div>
+									<div id="marker-{{$index}}" class="panel-collapse collapse" >
+										<form class="form-horizontal markerArea" role="form" name="form">
+											<div class="form-group">
+												<label class="control-label col-md-3">
+													Name
+												</label>
+												<div class="col-md-9">
+													<input type="text" class="form-control" ng-model="marker.name">
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="control-label col-md-3">
+													Longtitude
+												</label>
+												<div class="col-md-9">
+													<input type="number" step="any" class="form-control" placeholder="ex: 12.3456" ng-model="marker.lng">
+												</div>
+											</div>					
+											<div class="form-group">
+												<label class="control-label col-md-3">
+													Laititude
+												</label>
+												<div class="col-md-9">
+													<input type="number" step="any" class="form-control" placeholder="ex: 12.3456" ng-model="marker.lat">
+												</div>
+											</div>	
+											<div class="form-group">
+												<label class="control-label col-md-3">
+													Symbol num
+												</label>
+												<div class="col-md-9">
+													<input type="text" class="form-control" placeholder="input a number (0-99), ex: '1'; or one lower case letter, ex: 'a'" ng-model="marker.icon.icon">
+												</div>
+											</div>	
+											<div class="form-group">
+												<label class="control-label col-md-3">
+													Add img (optional)
+												</label>
+												<div class="col-md-9">
+													<input type="file" class="form-control" accept="image/*" onchange="angular.element(this).scope().handleMarkerFiles(this)">
+												</div>
+											</div>					
+											<div class="form-group">
+												<label class="control-label col-md-3">
+													Data
+												</label>
+												<div class="col-md-9">
+													<textarea class="form-control" ng-model="marker.data" rows="4"></textarea>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div> 
+							<button class="btn btn-info" data-toggle="collapse" data-target="#newMarker"><span class="glyphicon glyphicon-plus"></span>  Add marker</button>
+							<div id="newMarker" class="panel-collapse collapse" >
+								<form class="form-horizontal markerArea" role="form" name="form">
+									<div class="form-group">
+										<label class="control-label col-md-3">
+											Name
+										</label>
+										<div class="col-md-9">
+											<input type="text" class="form-control" ng-model="newMarker.name">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="control-label col-md-3">
+											Longtitude
+										</label>
+										<div class="col-md-9">
+											<input type="number" step="any" class="form-control" placeholder="ex: 12.3456" ng-model="newMarker.lng">
+										</div>
+									</div>					
+									<div class="form-group">
+										<label class="control-label col-md-3">
+											Laititude
+										</label>
+										<div class="col-md-9">
+											<input type="number" step="any" class="form-control" placeholder="ex: 12.3456" ng-model="newMarker.lat">
+										</div>
+									</div>	
+									<div class="form-group">
+										<label class="control-label col-md-3">
+											Symbol num
+										</label>
+										<div class="col-md-9">
+											<input type="text" class="form-control" placeholder="input a number (0-99), ex: '1'; or one lower case letter, ex: 'a'" ng-model="newMarker.icon.icon">
+										</div>
+									</div>	
+									<div class="form-group">
+										<label class="control-label col-md-3">
+											Add img (optional)
+										</label>
+										<div class="col-md-9">
+											<input type="file" class="form-control" accept="image/*" onchange="angular.element(this).scope().handleInfoFiles(this)">
+										</div>
+									</div>					
+									<div class="form-group">
+										<label class="control-label col-md-3">
+											Data
+										</label>
+										<div class="col-md-9">
+											<textarea class="form-control" ng-model="newMarker.data" rows="4"></textarea>
+										</div>
+									</div>
+									<div class="form-group saveBtn">
+										<div class="col-md-12">
+											<button class="btn btn-default pull-right" ng-click="addMarker()"><span class="glyphicon glyphicon-floppy-disk"></span>  Save</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+					<!-- evaluating criteria -->
+					<div class="row item">
+						<div class="col-md-4">
+							<h4>Add criteria for evaluating alternatives:</h4>
+							<div class="caption">
+								<p>(optional)</p>
+							</div>
+							<div class="caption">
+						    <p>
+						     	<!-- <input type="checkbox" ng-model="cris.student"> -->
+						     	You can let students to add more criteria by themselves in the next step.
+						    </p>
+							</div>
+						</div>
+						<div class="col-md-8">
+							<div class="panel-group" id="showCris">
+								<div class="panel panel-default" ng-repeat="cri in cris.teacher">
+									<div class="panel-heading">
+										<h4 class="panel-title">
+											{{cri.name}}
+											<button type="button" class="btn btn-default btn-xs pull-right" ng-click="deleteItem($event,cri,cris.teacher)"><span class="glyphicon glyphicon-trash"></span></button>
+										</h4>
+									</div>
+									<div id="cri-{{$index}}" class="panel-collapse collapse">
+										<form class="form-horizontal infoArea" role="form" name="form">
+											<div class="form-group">
+												<label class="control-label col-md-3">
+													Name
+												</label>
+												<div class="col-md-9">
+													<input type="text" class="form-control" ng-model="cri.name">
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+							<button class="btn btn-info"  data-toggle="collapse" data-target="#newCri"><span class="glyphicon glyphicon-plus"></span>  Add criteria</button>
+							<div id="newCri" class="panel-collapse collapse" >
+								<form class="form-horizontal markerArea" role="form" name="form">
+									<div class="form-group">
+										<label class="control-label col-md-3">
+											Name
+										</label>
+										<div class="col-md-9">
+											<input type="text" class="form-control" ng-model="newCri.name">
+										</div>
+									</div>
+									<div class="form-group saveBtn">
+										<div class="col-md-12">
+											<button class="btn btn-default pull-right" ng-click="addCri()"><span class="glyphicon glyphicon-floppy-disk"></span>  Save</button>
+										</div>
+									</div>
+								</form>
+							</div>
+							
+						</div>
+					</div>
+					<!-- add relevant information -->
+					<div class="row item">
+						<div class="col-md-4">
+							<h4>Additional relevant information:</h4>
+							<div class="caption">
+								<p>(optional, these information would be accessable on the top-left corner of the page)</p>
+							</div>
+						</div>
+						<div class="col-md-8">
+							<div class="panel-group" id="showInfo">
+								<div class="panel panel-default" ng-repeat="info in infos">
+									<div class="panel-heading">
+										<h4 class="panel-title">
+											<a data-toggle="collapse" data-target="#info-{{$index}}" placeholder="Information" ng-bind="info.name"></a>
+											<button type="button" class="btn btn-default btn-xs pull-right" ng-click="deleteItem($event,info,infos)"><span class="glyphicon glyphicon-trash"></span></button>
+										</h4>
+									</div>
+									<div id="info-{{$index}}" class="panel-collapse collapse">
+										<form class="form-horizontal infoArea" role="form" name="form">
+											<div class="form-group">
+												<label class="control-label col-md-3">
+													Name
+												</label>
+												<div class="col-md-9">
+													<input type="text" class="form-control" ng-model="info.name">
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="control-label col-md-3">
+													Add img (optional)
+												</label>
+												<div class="col-md-9">
+													<input type="file" class="form-control" accept="image/*" onchange="angular.element(this).scope().handleFiles(this)">
+												</div>
+											</div>					
+											<div class="form-group">
+												<label class="control-label col-md-3">
+													Data
+												</label>
+												<div class="col-md-9">
+													<textarea class="form-control" ng-model="info.data" rows="4"></textarea>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+							<button class="btn btn-info" data-toggle="collapse" data-target="#newInfo"><span class="glyphicon glyphicon-plus"></span>  Add information</button>
+							<div id="newInfo" class="panel-collapse collapse" >
+								<form class="form-horizontal markerArea" role="form" name="form">
+									<div class="form-group">
+										<label class="control-label col-md-3">
+											Name
+										</label>
+										<div class="col-md-9">
+											<input type="text" class="form-control" ng-model="newInfo.name">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="control-label col-md-3">
+											Add img (optional)
+										</label>
+										<div class="col-md-9">
+											<input type="file" class="form-control" accept="image/*" onchange="angular.element(this).scope().handleFiles(this, info)">
+										</div>
+									</div>					
+									<div class="form-group">
+										<label class="control-label col-md-3">
+											Data
+										</label>
+										<div class="col-md-9">
+											<textarea class="form-control" ng-model="newInfo.data" rows="4"></textarea>
+										</div>
+									</div>
+									<div class="form-group saveBtn">
+										<div class="col-md-12">
+											<button class="btn btn-default pull-right" ng-click="addInfo()"><span class="glyphicon glyphicon-floppy-disk"></span>  Save</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+					<a class="btn btn-primary pull-right" class="nextStepBtn" ng-click="toStep2()" ui-sref="step2">Next <span class="glyphicon glyphicon-chevron-right"></span></a>
+				</div>
+				<div class="col-md-5">
+					<h4>Preview of the map</h4>
+					<div id="previewMap">
+						<leaflet width="100%" height="480px" lf-center="map" tiles="tiles" markers="markers"></leaflet>
+					</div>
+					<br>
+					<div>
+						You can adjust the map in preview, e.g. dragging the map to change the center coordinate, changing the zoom level, and dragging the markers to change their position
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
