@@ -2,68 +2,60 @@
 var mapSetModule = angular.module("ToolSetModule", ["leaflet-directive"]);
 
 mapSetModule.service('DataService', function(){
-    // var db = new PouchDB('http://localhost:5984/framework');
-    // var self = this;
-    // self.groupnum = 0;
-    // // ！！！！todo，用nodejs先在server side获取数据库数据
-    // db.get("mapstep1").then(function(doc) {
-    //     self.mapstep1 = doc;
-    // },self).catch(function(err){
-    //     console.log(err);
-    // });
-    // db.get("mapstep2").then(function(doc) {
-    //     self.mapstep2 = doc;
-    // },self).catch(function(err){
-    //     console.log(err);
-    // });
-    // db.get("mapstep3").then(function(doc) {
-    //     self.mapstep3 = doc;
-    // },self).catch(function(err){
-    //     console.log(err);
-    // });
-    // db.get("mapstep4").then(function(doc) {
-    //     self.mapstep4 = doc;
-    // },self).catch(function(err){
-    //     console.log(err);
-    // });
+    DataService = {};
 });
 
-mapSetModule.controller('ToolSetCtrl', function($scope, DataService) {
+mapSetModule.controller('ToolSetCtrl', [ "$scope", "DataService", function($scope, DataService) {
     var db = new PouchDB('http://localhost:5984/myoa');
-    db.allDocs({
-        include_docs: true,
-        attachements: true
-    }).then(function (docs) {
-        // handle result
-        
-        $scope.apps = docs.rows;
-        $scope.$apply();
-        DataService.docs = $scope.apps;
-    }).catch(function (err) {
-      console.log(err);
-    });    
+    if(DataService.docs == undefined){
+        db.allDocs({
+            include_docs: true,
+            attachements: true
+        }).then(function (docs) {
+            // handle result
+            $scope.apps=[];
+            for(var i=0;i<docs.rows.length;i++){
+                $scope.apps.push(docs.rows[i].doc);
+            }
+            $scope.$apply();
+            DataService.docs = $scope.apps;
+        }).catch(function (err) {
+          console.log(err);
+        }); 
+    }else{
+        $scope.apps = DataService.docs;
+    }
+       
     $scope.groups=[];
+
     $scope.addItem = function(items){
         items.push({});
     }
-    $scope.replicateDoc = function (app){
-        app.doc._id = $scope.docName;
-        // db.put(app.doc);
-        DataService.doc = app.doc;
-        DataService.docType = "new";
-    }
+    
     $scope.deleteDoc = function (app,index){
-        var txt = 'Do you want to delete the "'+ app.id + '" activity?';
+        var txt = 'Do you want to delete the "'+ app._id + '" activity?';
         if (confirm(txt) == false) return;
-
-        var id = app.id;
-        var rev = app.value.rev;
-        db.remove(id, rev);
         $scope.apps.splice(index,1);
+        var id = app._id;
+        var rev = app._rev;
+        db.remove(id, rev);
     }
-    $scope.editDoc = function (app){
-        DataService.doc = app.doc;
+    $scope.editDoc = function (index){
+        // DataService.doc = app;
+        DataService._index = index; 
         DataService.docType = "old";
+    }
+    $scope.replicateDoc = function (index){
+        // app._id = $scope.docName;
+        // db.put(app.doc);
+        // DataService.doc = app;
+        // DataService._index = index; 
+        // var cloneDoc = DataService.docs[index];
+        var cloneDoc = jQuery.extend({}, DataService.docs[index]);
+        cloneDoc._id = $scope.docName;
+        DataService._index = DataService.docs.length;
+        DataService.docs.push(cloneDoc);
+        DataService.docType = "new";
     }
     $scope.createDoc = function (){
         var newDoc = {
@@ -150,16 +142,16 @@ mapSetModule.controller('ToolSetCtrl', function($scope, DataService) {
                 }
             }
         };
-        DataService.doc = newDoc;
+        DataService._index = DataService.docs.length;
+        DataService.docs.push(newDoc);
         DataService.docType = "new";
-
-        // db.put(newDoc);
     }
     // console.log(DataService);
-});
+}]);
 
 mapSetModule.controller('CtrlStep1', [ "$scope", "DataService",function($scope, DataService) {
-    $scope.mapstep1 = DataService.doc.mapstep1;
+    var _index = DataService._index;
+    $scope.mapstep1 = DataService.docs[_index].mapstep1;
     // $scope.map = DataService.doc.mapstep1.map;
     // $scope.markers = DataService.doc.mapstep1.markers;
     // $scope.infos = DataService.doc.mapstep1.infos;
@@ -257,55 +249,41 @@ mapSetModule.controller('CtrlStep1', [ "$scope", "DataService",function($scope, 
     }
 
     $scope.toStep2 = function(){
-
-        DataService.doc.mapstep1 = $scope.mapstep1;
-
-        // DataService.doc.mapstep1.map = $scope.map;
-        // DataService.doc.mapstep1.markers = $scope.markers;
-        // DataService.doc.mapstep1.infos = $scope.infos;
-        // DataService.doc.mapstep1.cris = $scope.cris;
-
-    //     var db = new PouchDB('http://localhost:5984/framework');
-
+        DataService.docs[_index].mapstep1 = $scope.mapstep1;
     }
 }]);
 
 mapSetModule.controller('CtrlStep2', [ "$scope", "DataService",function($scope, DataService) {
-    $scope.mapstep2 = DataService.doc.mapstep2;
+    var _index = DataService._index;
+    $scope.mapstep2 = DataService.docs[_index].mapstep2;
 
     $scope.changeStep = function(){
-        DataService.doc.mapstep2 = $scope.mapstep2;
+        DataService.docs[_index].mapstep2 = $scope.mapstep2;
     }
 }]);
+
 mapSetModule.controller('CtrlStep3', [ "$scope", "DataService",function($scope, DataService) {
-    $scope.mapstep3 = DataService.doc.mapstep3;
-
-    // $scope.step = DataService.mapstep3.step;
-    // $scope.tips = DataService.mapstep3.tips;
-    // $scope.badge = DataService.mapstep3.badge;
-    // $scope.timer = [];
-
-    // set the timer check marker of each timer
-    // for(var i=0; i<4;i++){
-        // ($scope.tips.timers[i])?($scope.timer[i] = true):($scope.timer[i] = false);
-    // }
+    var _index = DataService._index;
+    $scope.mapstep3 = DataService.docs[_index].mapstep3;
 
     // set the comment badge check marker
     ($scope.mapstep3.badge.comment)?($scope.commentbadge = true):($scope.commentbadge = false);
 
     // check the sequence and which steps we have
-    if(DataService.doc.mapstep2.seqtype == "restricted"){
-        $scope.steps = DataService.doc.mapstep2.reseq;
+    if(DataService.docs[_index].mapstep2.seqtype == "restricted"){
+        $scope.steps = DataService.docs[_index].mapstep2.reseq;
         $scope.probar = $scope.steps.s1.eval;
+        ($scope.steps.s0.exist)?($scope.mapstep3.step[0] = true):($scope.mapstep3.step[0] = false);
+        $scope.mapstep3.step[1] = true;
+        $scope.mapstep3.step[2] = true;
+        ($scope.steps.s3.exist)?($scope.mapstep3.step[3] = true):($scope.mapstep3.step[3] = false);
     }else{
-        $scope.steps = DataService.doc.mapstep2.unseq;
+        $scope.steps = DataService.docs[_index].mapstep2.unseq;
+        ($scope.steps.s0.exist)?($scope.mapstep3.step[0] = true):($scope.mapstep3.step[0] = false);
+        $scope.mapstep3.step[1] = true;
+        ($scope.steps.s2.exist)?($scope.mapstep3.step[2] = true):($scope.mapstep3.step[2] = false);
+        $scope.mapstep3.step[3] = false;
     }
-
-    // store the exsitance of steps in step[]
-    ($scope.steps.s0.title)?($scope.mapstep3.step[0] = true):($scope.mapstep3.step[0] = false);
-    ($scope.steps.s1.title)?($scope.mapstep3.step[1] = true):($scope.mapstep3.step[1] = false);
-    ($scope.steps.s2.title)?($scope.mapstep3.step[2] = true):($scope.mapstep3.step[2] = false);
-    (($scope.steps.s3)&&($scope.steps.s3.title))?($scope.mapstep3.step[3] = true):($scope.mapstep3.step[3] = false);
 
     $scope.range = function(n) {
         return new Array(n);   
@@ -314,45 +292,41 @@ mapSetModule.controller('CtrlStep3', [ "$scope", "DataService",function($scope, 
         for(var i=0;i<$scope.mapstep3.step.length;i++){
             $scope.mapstep3.tips.timers[i] = $scope.mapstep3.step[i] && $scope.mapstep3.tips.timers[i];
         }
-        // ($scope.timer1)?$scope.tips.timer1:($scope.tips.timer1 = undefined);
-        // ($scope.timer2)?$scope.tips.timer2:($scope.tips.timer2 = undefined);
-        // ($scope.timer3)?$scope.tips.timer3:($scope.tips.timer3 = undefined);
         ($scope.commentbadge)?$scope.mapstep3.badge.comment:($scope.mapstep3.badge.comment = undefined);
 
-        DataService.doc.mapstep3 = $scope.mapstep3;
-
-        // DataService.mapstep3.step = $scope.step;
-        // DataService.mapstep3.tips = $scope.tips;
-        // DataService.mapstep3.badge = $scope.badge;
+        DataService.docs[_index].mapstep3 = $scope.mapstep3;
     }
 }]);
+
 mapSetModule.controller('CtrlStep4', [ "$scope", "DataService",function($scope, DataService) {
-    $scope.mapstep4 = DataService.doc.mapstep4;
+    var _index = DataService._index;
+    $scope.mapstep4 = DataService.docs[_index].mapstep4;
     // $scope.share = DataService.mapstep4.share;
     // $scope.person = DataService.mapstep4.person;
-    $scope.seqtype = DataService.doc.mapstep2.seqtype;
-    ($scope.seqtype == "restricted")?($scope.evaltype = DataService.doc.mapstep2.reseq.s1.eval):($scope.evaltype = undefined);
+    $scope.seqtype = DataService.docs[_index].mapstep2.seqtype;
+    ($scope.seqtype == "restricted")?($scope.evaltype = DataService.docs[_index].mapstep2.reseq.s1.eval):($scope.evaltype = undefined);
 
     $scope.changeStep = function(){
-        DataService.doc.mapstep4 = $scope.mapstep4;
+        DataService.docs[_index].mapstep4 = $scope.mapstep4;
     }
 
     $scope.submit = function(){
         $scope.changeStep();
 
         var db = new PouchDB('http://localhost:5984/myoa');
-        var id = DataService.doc._id;
-        
+        var id = DataService.docs[_index]._id;
+
         if(DataService.docType == "new"){
-            db.put(DataService.doc);
+            db.put(DataService.docs[_index]);
+            // DataService.docs.push(DataService.doc);
         }else{
             db.get(id).then(function(doc) {
                 console.log(doc._rev);
               return db.put({
-                mapstep1: DataService.doc.mapstep1,
-                mapstep2: DataService.doc.mapstep2,
-                mapstep3: DataService.doc.mapstep3,
-                mapstep4: DataService.doc.mapstep4
+                mapstep1: DataService.docs[_index].mapstep1,
+                mapstep2: DataService.docs[_index].mapstep2,
+                mapstep3: DataService.docs[_index].mapstep3,
+                mapstep4: DataService.docs[_index].mapstep4
               }, id, doc._rev);
             }).then(function(response) {
               // handle response
@@ -360,67 +334,6 @@ mapSetModule.controller('CtrlStep4', [ "$scope", "DataService",function($scope, 
               console.log(err);
             });
         }
-
-        // db.get(id).then(function(doc) {
-        //     var rev = doc._rev;
-        //   return db.put({
-        //     _id: id,
-        //     _rev: doc._rev,
-        //     mapstep1: DataService.doc.mapstep1,
-        //     mapstep2: DataService.doc.mapstep2,
-        //     mapstep3: DataService.doc.mapstep3,
-        //     mapstep4: DataService.doc.mapstep4
-        //     // infos: DataService.mapstep1.infos,
-        //     // map: DataService.mapstep1.map,
-        //     // markers: DataService.mapstep1.markers,
-        //     // cris: DataService.mapstep1.cris
-        //   });
-        // }).then(function(response) {
-        //   // handle response
-        // }).catch(function (err) {
-        //   console.log(err);
-        // });
-
-        // db.get('mapstep2').then(function(doc) {
-        //   return db.put({
-        //     _id: 'mapstep2',
-        //     _rev: doc._rev,
-        //     seqtype: DataService.mapstep2.seqtype,
-        //     reseq: DataService.mapstep2.reseq,
-        //     unseq: DataService.mapstep2.unseq
-        //   });
-        // }).then(function(response) {
-        //   // handle response
-        // }).catch(function (err) {
-        //   console.log(err);
-        // });
-
-        // db.get('mapstep3').then(function (doc) {
-        //   return db.put({
-        //     _id: 'mapstep3',
-        //     _rev: doc._rev,
-        //     step: DataService.mapstep3.step,
-        //     tips: DataService.mapstep3.tips,
-        //     badge: DataService.mapstep3.badge
-        //   });
-        // }).then(function(response) {
-        //   // handle response
-        // }).catch(function (err) {
-        //   console.log(err);
-        // });        
-
-        // db.get('mapstep4').then(function (doc) {
-        //   return db.put({
-        //     _id: 'mapstep4',
-        //     _rev: doc._rev,
-        //     person: $scope.person,
-        //     share: $scope.share,
-        //   });
-        // }).then(function (response) {
-        //   // handle response
-        // }).catch(function (err) {
-        //   console.log(err);
-        // });
     }
 }]);
 

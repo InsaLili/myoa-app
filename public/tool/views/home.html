@@ -7,9 +7,9 @@
             <div class="row item">
                 <div class="caption col-md-12"><p>Choose or edit existing activities</p></div>
                 <div class="col-md-12">
-                    <div class="docList" ng-repeat="app in apps">
-                        <button class="btn btn-primary">{{app.id}}</button>
-                        <a class="btn btn-default" ng-click="editDoc(app,$index)" ui-sref="step1"><span class="glyphicon glyphicon-edit"></span></a>
+                    <div class="docList" ng-repeat="app in apps track by $index">
+                        <button class="btn btn-primary">{{app._id}}</button>
+                        <a class="btn btn-default" ng-click="editDoc($index)" ui-sref="step1"><span class="glyphicon glyphicon-edit"></span></a>
                         <a class="btn btn-default" ng-click="deleteDoc(app,$index)"><span class="glyphicon glyphicon-trash"></span></a>
                     </div>
                 </div>
@@ -30,7 +30,7 @@
                                 <label class="col-md-12"><input type="radio" name="template" value="true" ng-model="template"> Create based on existing activities</label>
                                 <div class="col-md-12" ng-show="template == 'true'">
                                     <div class="caption"><p>Create an activity based on existing ones</p></div>
-                                    <a class="btn btn-primary docList" ng-repeat="app in apps" ng-click="replicateDoc(app)" ui-sref="step1">{{app.id}}</a>
+                                    <a class="btn btn-primary docList" ng-repeat="app in apps track by $index" ng-click="replicateDoc($index)" ui-sref="step1">{{app._id}}</a>
                                 </div>
                             </div>
                             <div class="form-group col-md-12">
