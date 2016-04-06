@@ -1,4 +1,4 @@
-var routerApp = angular.module('routerApp', ['ui.router', 'uiRouterStyles','AppSetModule', 'GroupModule','MapModule','PlayerModule']);
+var routerApp = angular.module('routerApp', ['ui.router', 'uiRouterStyles','AppSetModule', 'MapModule','PlayerModule']);
 
 /**
  * 由于整个应用都会和路由打交道，所以这里把$state和$stateParams这两个对象放到$rootScope上，方便其它地方引用和注入。
@@ -27,13 +27,16 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
         .state('index', {
             url: '/index',
-            templateUrl: 'views/home.html'
-        })
-        .state('group', {
-            url: '/group',
-            templateUrl: 'views/group.html',
+            templateUrl: 'views/home.html',
             data: {
-              css: 'css/map.css'
+              css: 'css/app.css'
+            }
+        })
+        .state('device', {
+            url: '/device',
+            templateUrl: 'views/device.html',
+            data: {
+              css: 'css/player.css'
             }
         })
         .state('map', {
@@ -43,13 +46,13 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
               css: 'css/map.css'
             }
         })
-        .state('role', {
-            url: '/role',
-            templateUrl: 'views/role.html',
-            data: {
-              css: 'css/player.css'
-            }
-        })
+        // .state('role', {
+        //     url: '/role',
+        //     templateUrl: 'views/role.html',
+        //     data: {
+        //       css: 'css/player.css'
+        //     }
+        // })
         .state('player', {
             url: '/player',
             templateUrl: 'views/player.html',

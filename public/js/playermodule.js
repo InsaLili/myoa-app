@@ -1,22 +1,5 @@
 var playerModule = angular.module("PlayerModule", []);
 
-playerModule.controller('RoleCtrl', function($scope, DataService){
-	// $scope.groupNum = 1;
-	// DataService.groupNum=1;
-    $scope.groups = DataService.mapsetting.groups;
-    $scope.range = function(n) {
-        return new Array(n);   
-    }
-    $scope.chooseGroup = function(group){
-        DataService.groupNum=group;
-        $scope.studentAmount = parseInt($scope.groups[group-1].student);
-        DataService.studentAmount = $scope.studentAmount;
-    }
-	$scope.chooseStudentNum = function($event,value){
-        DataService.studentNum = value+1;
-    }
-});
-
 playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
 	var socket = io.connect('http://localhost:8000');
 
@@ -26,31 +9,33 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
     // get data from DataService 
     getData = function(){
         // get player number
-        $scope.player = DataService.studentNum;
+        $scope.player = DataService._indexPlayer;
         // get group number
-        $scope.groupNum = DataService.groupNum;
+        $scope.groupNum = DataService._indexGroup;
         // get student amount
-        $scope.studentAmount = DataService.studentAmount;
+        $scope.studentAmount = parseInt(DataService.groups[$scope.groupNum].student);
         // get sequence type and steps
-        $scope.seqtype = DataService.mapstep2.seqtype;
-        ($scope.seqtype == "restricted")?($scope.steps = DataService.mapstep2.reseq):($scope.steps = DataService.mapstep2.unseq);
+        var doc = DataService.docs[DataService._indexApp];
+        $scope.seqtype = doc.mapstep2.seqtype;
+        ($scope.seqtype == "restricted")?($scope.steps = doc.mapstep2.reseq):($scope.steps = doc.mapstep2.unseq);
         // get current step, check whether there is s0 or not
         ($scope.steps.s0.title)?($scope.currentStep = 0):($scope.currentStep = 1);
         // get the evaluation type
         ($scope.steps.s1.eval)?($scope.evaltype = $scope.steps.s1.eval):($scope.evaltype = "group");
 
-        $scope.crisTea = DataService.mapstep1.cris.teacher;
-        $scope.crisStu = DataService.mapstep1.cris.student;
+        $scope.crisTea = doc.mapstep1.cris.teacher;
+        $scope.crisStu = doc.mapstep1.cris.student;
         $scope.cris = $scope.crisTea.concat($scope.crisStu);
-
-        $scope.notes = DataService.notes.rows[DataService.groupNum-1].doc.notes;
-        $scope.commonNotes = DataService.notes.rows[DataService.groupNum-1].doc.common;
+        $scope.notes=[];
+        $scope.commonNotes=[];
+        // $scope.notes = DataService.notes.rows[DataService.groupNum-1].doc.notes;
+        // $scope.commonNotes = DataService.notes.rows[DataService.groupNum-1].doc.common;
         // $scope.voteValue = DataService.votes.rows[DataService.groupNum-1].doc.votes;
         $scope.evalVal = [];
-        $scope.markers = DataService.mapstep1.markers;
+        $scope.markers = doc.mapstep1.markers;
         $scope.locationInfo = "hello lili";
-        $scope.add = DataService.mapsetting.additional;
-        $scope.like = false;
+        // $scope.add = DataService.mapsetting.additional;
+        // $scope.like = false;
     } 
     // communication between devices
 	serviceInit = function(){

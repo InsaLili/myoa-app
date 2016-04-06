@@ -2,12 +2,13 @@
 var mapSetModule = angular.module("ToolSetModule", ["leaflet-directive"]);
 
 mapSetModule.service('DataService', function(){
-    DataService = {};
+    DataService={};
 });
 
-mapSetModule.controller('ToolSetCtrl', [ "$scope", "DataService", function($scope, DataService) {
-    var db = new PouchDB('http://localhost:5984/myoa');
+mapSetModule.controller('ToolCtrl', [ "$scope", "DataService", function($scope, DataService) {
+    // if it's the first time to visit the page, get docs from db
     if(DataService.docs == undefined){
+        var db = new PouchDB('http://localhost:5984/myoa');
         db.allDocs({
             include_docs: true,
             attachements: true
@@ -22,42 +23,46 @@ mapSetModule.controller('ToolSetCtrl', [ "$scope", "DataService", function($scop
         }).catch(function (err) {
           console.log(err);
         }); 
+    // if not, get docs from DataService
     }else{
         $scope.apps = DataService.docs;
     }
-       
-    $scope.groups=[];
-
-    $scope.addItem = function(items){
-        items.push({});
-    }
-    
     $scope.deleteDoc = function (app,index){
+        // confirm dialog to delete a doc
         var txt = 'Do you want to delete the "'+ app._id + '" activity?';
         if (confirm(txt) == false) return;
+        // delete doc both from docs and apps
         $scope.apps.splice(index,1);
+        // get id of the doc, the delete it
+        var db = new PouchDB('http://localhost:5984/myoa');
         var id = app._id;
-        var rev = app._rev;
-        db.remove(id, rev);
+        db.get(id).then(function(doc) {
+          return db.remove(doc);
+        });
     }
+    // edit an existing doc
     $scope.editDoc = function (index){
-        // DataService.doc = app;
+        // get index of the doc
         DataService._index = index; 
+        // say it's an old doc; in order to get and put into db
         DataService.docType = "old";
     }
+    // create a new doc based on existing docs
     $scope.replicateDoc = function (index){
-        // app._id = $scope.docName;
-        // db.put(app.doc);
-        // DataService.doc = app;
-        // DataService._index = index; 
-        // var cloneDoc = DataService.docs[index];
+        // clone the template doc to a new doc
         var cloneDoc = jQuery.extend({}, DataService.docs[index]);
+        // get the name of the new doc
         cloneDoc._id = $scope.docName;
+        // get the index of the new doc
         DataService._index = DataService.docs.length;
+        // push the new doc to the docs array
         DataService.docs.push(cloneDoc);
+        // say it's a new doc; in order to put doc into database
         DataService.docType = "new";
     }
+    // create a totally new doc
     $scope.createDoc = function (){
+        // the template of a new doc
         var newDoc = {
             _id: $scope.docName,
             mapstep1:{
@@ -142,21 +147,42 @@ mapSetModule.controller('ToolSetCtrl', [ "$scope", "DataService", function($scop
                 }
             }
         };
+        // index of new doc
         DataService._index = DataService.docs.length;
+        // push doc into docs
         DataService.docs.push(newDoc);
+        // say it's a new doc; in order to put doc into database
         DataService.docType = "new";
     }
-    // console.log(DataService);
+
+}]);
+
+mapSetModule.controller('GroupCtrl', [ "$scope", "DataService",function($scope, DataService) {
+    $scope.groups=[];
+
+    $scope.addItem = function(items){
+        items.push({});
+    }
+    $scope.deleteItem = function(item,items){
+        var index = items.indexOf(item);
+        items.splice(index,1);
+        console.log("delete");
+    }    // delete a doc
+
+    $scope.submit = function (){
+        var db = new PouchDB('http://localhost:5984/user');
+        var groups = $scope.groups;
+        db.get('groups').then(function(doc){
+            return db.put({
+                groups: groups,
+            }, 'groups', doc._rev);
+        })
+    }
 }]);
 
 mapSetModule.controller('CtrlStep1', [ "$scope", "DataService",function($scope, DataService) {
     var _index = DataService._index;
     $scope.mapstep1 = DataService.docs[_index].mapstep1;
-    // $scope.map = DataService.doc.mapstep1.map;
-    // $scope.markers = DataService.doc.mapstep1.markers;
-    // $scope.infos = DataService.doc.mapstep1.infos;
-    // $scope.cris = DataService.doc.mapstep1.cris;
-
     angular.extend($scope,{
         tiles: {
             name: 'Map',
@@ -301,8 +327,6 @@ mapSetModule.controller('CtrlStep3', [ "$scope", "DataService",function($scope, 
 mapSetModule.controller('CtrlStep4', [ "$scope", "DataService",function($scope, DataService) {
     var _index = DataService._index;
     $scope.mapstep4 = DataService.docs[_index].mapstep4;
-    // $scope.share = DataService.mapstep4.share;
-    // $scope.person = DataService.mapstep4.person;
     $scope.seqtype = DataService.docs[_index].mapstep2.seqtype;
     ($scope.seqtype == "restricted")?($scope.evaltype = DataService.docs[_index].mapstep2.reseq.s1.eval):($scope.evaltype = undefined);
 
@@ -337,91 +361,3 @@ mapSetModule.controller('CtrlStep4', [ "$scope", "DataService",function($scope, 
     }
 }]);
 
-mapSetModule.controller('GroupCtrl', [ "$scope", "DataService",function($scope, DataService) {
-    $scope.groups = [];
-
-    $scope.deleteItem = function($event,item,items){
-        var index = items.indexOf(item);
-        items.splice(index,1);
-        console.log("delete");
-    }
-    $scope.addItem = function(items){
-        items.push({});
-    }
-
-    $scope.submit = function (){
-        var db = new PouchDB('http://localhost:5984/framework');
-        for(var i=1; i<=$scope.groups.length; i++){
-            var id = "vote_"+i;
-            db.putIfNotExists(id, {votes: []}).then(function (res) {
-              // success, res is {rev: '1-xxx', updated: true}
-            }).catch(function (err) {
-              // error
-            });
-        }
-    }
-}]);
-
-mapSetModule.controller('MapSetCtrl', function($scope, DataService) {
-    var db = new PouchDB('http://localhost:5984/framework');
-    
-    $scope.longtitude = DataService.mapsetting.longtitude;
-    $scope.laititude = DataService.mapsetting.laititude;
-    $scope.markers = DataService.mapsetting.markers;
-    $scope.steps = DataService.mapsetting.steps;
-    $scope.groups = DataService.mapsetting.groups;
-    $scope.add = DataService.mapsetting.additional;
-
-    $scope.deleteItem = function($event,item,items){
-        var index = items.indexOf(item);
-        items.splice(index,1);
-        console.log("delete");
-    }
-    $scope.addItem = function(items){
-        items.push({});
-    }
-    // store marker picture to database
-    $scope.handleFiles = function(element){
-        var file = element.files[0];
-        var index = angular.element(element).scope().$index;
-        // if no file is chosen, set photo value to undefined
-        if(file == undefined){
-            $scope.markers[index].photo = undefined;
-            return;
-        }
-        var reader = new FileReader();
-        // Closure to capture the file information.
-        reader.onload = (function(theFile) {
-            return function(e) {
-                $scope.markers[index].photo = e.target.result;
-            };
-        })(file);
-        reader.readAsDataURL(file);
-    }
-    $scope.setMap = function(){
-        // mapsetting.longtitude = $scope.longtitude;
-        // mapsetting.laititude = $scope.laititude;
-        // mapsetting.eval = $scope.eval;
-        // mapsetting.markers = $scope.markers;
-        // mapsetting.studentnum = $scope.studentnum;
-        // mapsetting.groupamount = $scope.groupamount;
-        console.log($scope);
-
-        db.get('mapsetting').then(function(doc) {
-          return db.put({
-            _id: 'mapsetting',
-            _rev: doc._rev,
-            laititude: $scope.laititude,
-            longtitude: $scope.longtitude,
-            markers: $scope.markers,
-            steps: $scope.steps,
-            groups: $scope.groups,
-            additional: $scope.add
-          });
-        }).then(function(response) {
-          // handle response
-        }).catch(function (err) {
-          console.log(err);
-        });
-    }
-});

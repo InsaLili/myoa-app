@@ -1,15 +1,27 @@
-<div class="row" ng-controller="StyleCtrl">
-	<div class="col-md-offset-2 col-md-4">
-		<h1>Choose the space style</h1>
+<div class="row" ng-controller="AppCtrl">
+	
+	<div class="col-md-offset-2 col-md-10">
 		<div class="row">
-			<div class="col-md-offset-3 col-md-9">
-				<a class="btn btn-default btn-lg" ui-sref="group">On a shared display</a>
-			</div>		
-			<div class="col-md-offset-3 col-md-9">
-				<a class="btn btn-default btn-lg" ui-sref="role">On the personal devices</a>
-			</div>
+			<h2>Choose an activity</h2>
+			<div class="docList" ng-repeat="app in apps track by $index">
+          <button class="btn btn-default appBtn" ng-click="chooseDoc($event, $index)">{{app._id}}</button>
+      </div>
 		</div>
 
+		<div class="row">
+			<h2>Sélectionnez votre groupe :</h2>
+			<div class="docList" ng-repeat="group in groups track by $index">
+          <button class="btn btn-default groupBtn" ng-click="chooseGroup($event, $index)">{{group.name}}</button>
+      </div>
+		</div>
+		<br>
+		<br>
+		<br>
+		<br>
+		<div class="row">
+			<a class="btn btn-success" ui-sref="device">Let's go! <span class="glyphicon glyphicon-chevron-right"></span></a>
+		</div>
 	</div>
-
 </div>
+
+

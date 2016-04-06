@@ -1,11 +1,11 @@
-<div class="container" ng-controller="ToolSetCtrl">
+<div class="container">
     <div class="jumbotron row">
-        <div class="col-md-offset-1 col-md-10">
+        <div class="col-md-offset-2 col-md-8">
             <div class="">
-                <h3>Choose an activity</h3>
+                <h3>Manage activity</h3>
             </div>
-            <div class="row item">
-                <div class="caption col-md-12"><p>Choose or edit existing activities</p></div>
+            <div class="row item" ng-controller="ToolCtrl">
+                <div class="caption col-md-12"><p>Edit existing activities</p></div>
                 <div class="col-md-12">
                     <div class="docList" ng-repeat="app in apps track by $index">
                         <button class="btn btn-primary">{{app._id}}</button>
@@ -19,87 +19,92 @@
                     <div class="col-md-12 panel-collapse collapse createArea" id="createAct">
                         <form class="form-horizontal " role="form" name="form">
                             <div class="form-group">
-                                <label class="control-label col-md-1">
-                                    Name
-                                </label>
+                                <div class="col-md-4">
+                                    <label class="control-label col-md-12 pull-right">
+                                        Name of your new activity
+                                    </label>
+                                    <div class="caption col-md-12"><p class="pull-right">(cannot be changed once created)</p></div>
+                                </div>
                                 <div class="col-md-4">
                                     <input type="text" class="form-control" ng-model="docName" placeholder="name">
                                 </div>
                             </div> 
-                            <div class="form-group col-md-12">
-                                <label class="col-md-12"><input type="radio" name="template" value="true" ng-model="template"> Create based on existing activities</label>
-                                <div class="col-md-12" ng-show="template == 'true'">
-                                    <div class="caption"><p>Create an activity based on existing ones</p></div>
-                                    <a class="btn btn-primary docList" ng-repeat="app in apps track by $index" ng-click="replicateDoc($index)" ui-sref="step1">{{app._id}}</a>
+                            <div class="form-group">
+                                <div class="col-md-4">
+                                    <label class="control-label col-md-12 pull-right">
+                                        Choose the creation style
+                                    </label>
                                 </div>
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label class="col-md-12"><input type="radio" name="template" value="false" ng-model="template"> Create a new one</label>
-                                <div class="col-md-12" ng-show="template == 'false'">
-                                    <div class="caption">
-                                        <p>Choose the activity style </p>
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label class="col-md-12"><input type="radio" name="template" value="true" ng-model="template"> Create an activity based on existing one</label>
+                                        <div class="col-md-12" ng-show="template == 'true'">
+                                            <a class="btn btn-primary docList" ng-repeat="app in apps track by $index" ng-click="replicateDoc($index)" ui-sref="step1">{{app._id}}</a>
+                                        </div>
                                     </div>
-                                    <a class="btn btn-primary" ng-click="createDoc()" ui-sref="step1">Map</a>
-                                     <!-- ui-sref="step1" -->
-                                    <a class="btn btn-primary">Figure</a>
-                                    <a class="btn btn-primary">Text</a>
+                                    <div class="form-group">
+                                        <label class="col-md-12"><input type="radio" name="template" value="false" ng-model="template"> Create a new one (choose your application style)</label>
+                                        <div class="col-md-12" ng-show="template == 'false'">
+                                            <a class="btn btn-primary docList" ng-click="createDoc()" ui-sref="step1">Map</a>
+                                            <a class="btn btn-primary docList">Figure</a>
+                                            <a class="btn btn-primary docList">Text</a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-            <div class="row item">
-                <div class="col-md-12">
-                    <h3>Config groups</h3>
+            <div  ng-controller="GroupCtrl">
+                <div class="row item">
+                    <div class="col-md-12">
+                        <h3>Config groups</h3>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="panel-group" id="showGroups">
+                            <div class="panel panel-default" ng-repeat="group in groups track by $index">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-target="#group-{{$index}}">Group {{$index+1}}</a>
+                                        <button type="button" class="deleteGroupBtn btn btn-default btn-xs pull-right" ng-click="deleteItem(group,groups)"><span class="glyphicon glyphicon-trash"></span></button>
+                                    </h4>
+                                </div>
+                                <div id="group-{{$index}}" class="panel-collapse collapse">
+                                    <form class="form-horizontal markerArea" role="form" name="form">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4">
+                                                Name
+                                            </label>
+                                            <div class="col-md-7">
+                                                <input type="text" class="form-control" ng-model="group.name">
+                                            </div>
+                                        </div>          
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4">
+                                                Amount of students
+                                            </label>
+                                            <div class="col-md-7">
+                                                <select class="form-control" ng-model="group.student">
+                                                    <option>2</option>
+                                                    <option>3</option>
+                                                    <option>4</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div> 
+                        <button class="btn btn-primary" id="addGroupBtn" ng-click="addItem(groups)"><span class="glyphicon glyphicon-plus"></span>  Add Group</button>
+                    </div>
                 </div>
-                <div class="col-md-8">
-                    <div class="panel-group" id="showGroups">
-                        <div class="panel panel-default" ng-repeat="group in groups track by $index">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a data-toggle="collapse" data-target="#group-{{$index}}">Group {{$index+1}}</a>
-                                    <button type="button" class="deleteGroupBtn btn btn-default btn-xs pull-right" ng-click="deleteItem($event,group,groups)"><span class="glyphicon glyphicon-trash"></span></button>
-                                </h4>
-                            </div>
-                            <div id="group-{{$index}}" class="panel-collapse collapse">
-                                <form class="form-horizontal markerArea" role="form" name="form">
-                                    <div class="form-group">
-                                        <label class="control-label col-md-4">
-                                            Name
-                                        </label>
-                                        <div class="col-md-7">
-                                            <input type="text" class="form-control" ng-model="group.name">
-                                        </div>
-                                    </div>          
-                                    <div class="form-group">
-                                        <label class="control-label col-md-4">
-                                            Amount of students
-                                        </label>
-                                        <div class="col-md-7">
-                                            <select class="form-control" ng-model="group.student">
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div> 
-
-                    <button class="btn btn-primary" id="addGroupBtn" ng-click="addItem(groups)"><span class="glyphicon glyphicon-plus"></span>  Add Group</button>
-
+                <!-- submit changes -->
+                <div id="submit">
+                    <a class="btn btn-default pull-right stepBtn" ng-click="submit()">Submit</a>
+                    <a class="btn btn-default pull-right stepBtn" href="http://localhost:8000/#/index" target="_blank" ng-click="submit()">Preview</a>
                 </div>
             </div>
-        <!-- submit changes -->
-        <div id="submit">
-            <a class="btn btn-default pull-right stepBtn" ng-click="setMap()">Submit</a>
-            <a class="btn btn-default pull-right stepBtn" href="http://localhost:8000/#/index" target="_blank" ng-click="setMap()">Preview</a>
-        </div>
-    
         </div>
     </div>
-    
 </div>
