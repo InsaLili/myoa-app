@@ -10,6 +10,9 @@ body{
 h4,h5{
 	margin-top: 0;
 }
+.form-horizontal .checkbox{
+	margin-bottom: 10px;
+}
 .docList{
 	float: left;
 	margin-right: 20px;
@@ -31,6 +34,7 @@ h4,h5{
 }
 .caption p{
 	font-size: 14px;
+	margin-bottom: 10px;
 }
 .createArea{
 	background-color: #fff; 

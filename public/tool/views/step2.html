@@ -20,6 +20,12 @@
 							<div class="radio col-md-4">
 								<h4><input type="radio" name="sequence" value="restricted" ng-model="mapstep2.seqtype">Seq1: Restricted sequence</h4>
 								<div class="caption">
+									<ul>
+										<li>T0 (optional): define criteria for evaluating alternatives;</li>
+										<li>T1: analyze and evaluate each alternative;</li>
+										<li>T2: compare alternatives and make decision;</li>
+										<li>T3: evaluate results.</li>
+									</ul>
 									<p>(Students have to evaluate all the alternatives in T1 before they can move to T2 to choose the alternative.)</p>
 								</div>
 							</div>
@@ -30,7 +36,7 @@
 										<div class="panel-heading">
 											<h4 class="panel-title">
 											    <input type="checkbox" ng-model="mapstep2.reseq.s0.exist">
-											    <a data-toggle="collapse" data-target="#s0t0" ng-class="{disabled: !mapstep2.reseq.s0.exist}">Step0 (T0 optional)
+											    <a data-toggle="collapse" data-target="#s0t0" ng-class="{disabled: !mapstep2.reseq.s0.exist}">Step0 (T0, optional)
 											    </a>
 											</h4>
 										</div>
@@ -167,7 +173,7 @@
 										<div class="panel-heading">
 											<h4 class="panel-title">
 											    <input type="checkbox" ng-model="mapstep2.reseq.s3.exist">
-											    <a data-toggle="collapse" data-target="#s3t3" ng-class="{disabled: !mapstep2.reseq.s3.exist}">Step3 (T3 optional)
+											    <a data-toggle="collapse" data-target="#s3t3" ng-class="{disabled: !mapstep2.reseq.s3.exist}">Step3 (T3) (optional)
 											    </a>
 											</h4>
 										</div>
@@ -203,6 +209,11 @@
 							<div class="radio col-md-4">
 								<h4><input type="radio" name="sequence" value="unrestricted" ng-model="mapstep2.seqtype">Seq2: Unestricted sequence</h4>				
 								<div class="caption">
+									<ul>
+										<li>T0 (optional): define criteria for evaluating alternatives;</li>
+										<li>T1 & T2: analyze, evaluate alternatives and make decision;</li>
+										<li>T2: evaluate results.</li>
+									</ul>
 									<p>(T1 and T2 are mixed, students can make the choice while they are checking and evaluating alternatives.)</p>
 								</div>
 							</div>
@@ -213,7 +224,7 @@
 										<div class="panel-heading">
 											<h4 class="panel-title">
 											    <input type="checkbox" ng-model="mapstep2.unseq.s0.exist">
-											    <a data-toggle="collapse" data-target="#s0t0un" ng-class="{disabled: !mapstep2.unseq.s0.exist}">Step0 (T0 optional)
+											    <a data-toggle="collapse" data-target="#s0t0un" ng-class="{disabled: !mapstep2.unseq.s0.exist}">Step0 (T0, optional)
 											    </a>
 											</h4>
 										</div>
@@ -299,7 +310,7 @@
 										<div class="panel-heading">
 											<h4 class="panel-title">
 											    <input type="checkbox" ng-model="mapstep2.unseq.s2.exist">
-											    <a data-toggle="collapse" data-target="#s2t3" ng-class="{disabled: !mapstep2.unseq.s2.exist}">Step2 (T3 optional)
+											    <a data-toggle="collapse" data-target="#s2t3" ng-class="{disabled: !mapstep2.unseq.s2.exist}">Step3 (T3, optional)
 											    </a>
 											</h4>
 										</div>

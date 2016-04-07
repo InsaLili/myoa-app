@@ -182,7 +182,6 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
         }
         var newVote;
         if($scope.evalVal[index] == undefined){
-            $scope.evalVal[index] = value;
             // clone the evalVal array
             var newarray = $scope.evalVal.slice(0);
             // 

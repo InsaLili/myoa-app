@@ -125,12 +125,21 @@ mapSetModule.controller('ToolCtrl', [ "$scope", "DataService", function($scope, 
                 }
             },
             mapstep3:{
-            "badge": {
-                "timer": null,
-                "comment": null
-            },
-            "step": [],
-            "tips": {}
+                "indiStu": {
+                    "timers": [],
+                    "timerValue": [],
+                    "comment": null,
+                    "badge":{
+                        "timer":null,
+                        "comment":null
+                    }
+                },
+                "indiTea": {
+                    "browsed":null,
+                    "progre":null,
+                    "comment":null
+                },
+                "step": []
             },
             mapstep4:{
                 "person":{
@@ -313,7 +322,7 @@ mapSetModule.controller('CtrlStep3', [ "$scope", "DataService",function($scope, 
     $scope.mapstep3 = DataService.docs[_index].mapstep3;
 
     // set the comment badge check marker
-    ($scope.mapstep3.badge.comment)?($scope.commentbadge = true):($scope.commentbadge = false);
+    ($scope.mapstep3.indiStu.badge.comment)?($scope.commentbadge = true):($scope.commentbadge = false);
 
     // check the sequence and which steps we have
     if(DataService.docs[_index].mapstep2.seqtype == "restricted"){
@@ -336,9 +345,9 @@ mapSetModule.controller('CtrlStep3', [ "$scope", "DataService",function($scope, 
     }
     $scope.changeStep = function(){
         for(var i=0;i<$scope.mapstep3.step.length;i++){
-            $scope.mapstep3.tips.timers[i] = $scope.mapstep3.step[i] && $scope.mapstep3.tips.timers[i];
+            $scope.mapstep3.indiStu.timers[i] = $scope.mapstep3.step[i] && $scope.mapstep3.indiStu.timers[i];
         }
-        ($scope.commentbadge)?$scope.mapstep3.badge.comment:($scope.mapstep3.badge.comment = undefined);
+        ($scope.commentbadge)?$scope.mapstep3.indiStu.badge.comment:($scope.mapstep3.indiStu.badge.comment = undefined);
 
         DataService.docs[_index].mapstep3 = $scope.mapstep3;
     }

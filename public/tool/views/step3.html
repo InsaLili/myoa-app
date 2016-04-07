@@ -1,12 +1,12 @@
 <div class="container" ng-controller="CtrlStep3">
 	<div class="col-md-12">
-		<h3>Step3/4: add indicators and gamification elements to the activity</h3>
+		<h3>Step3/4: add indicators to the activity</h3>
 		<button class="btn btn-default" data-toggle="collapse" data-target="#instruction">? Instruction</button>
 		<div id="instruction" class="panel-collapse collapse">
-			<p>Instruction: in this step, you can add indicators and gamification elements to the application. For example: </p>
+			<p>Instruction: in this step, you can add indicators to the application. The indicators would be provided for students and teachers.</p>
 			<ul>
-				<li>Indicators: indicators would be used to monitor students' action, meanwhile encourage students to regulate their behaviors. You can add two kinds of indicators: the group indicator or individual indicators. The group indicators would be the evaluation progress fo the group. The individual indicators would be the number of alternatives that have been checked by students.</li>
-				<li>Gaminifaction elements: gamification elements are used to motivate students and gain entertainment to the task. For example, a timer badge to encourage students to finish tasks within limited time; or a "comment badge" to stimulate students to submit more comments.</li>
+				<li>Indicators for students: you can choose the indicators to help students' regulate their action and raise their awareness of the on-going activity. For example, in the restricted sequence, you can add the progress bar to help students better be aware of the progress. You can also add gamification elements to motivate students and gain entertainment to the activity. For example, a timer badge to encourage students to finish tasks within the limited time; or a "comment badge" to encourage students to submit more comments.</li>
+				<li>Indicators for teachers: in the activity, you will have a page to monitor your students behaviors. You can choose which indicators you want to monitor students behaviors. For example, to see the number of checking locations of each students, and the comments their add.</li>
 			</ul>
 		</div>
 		<!-- set the corrdination of the map -->
@@ -15,10 +15,20 @@
 				<div class="col-md-offset-1 col-md-10">
 					<div class="row item">
 						<div class="col-md-4">
-							<h4>Gamification:</h4>
+							<h4>Indicators for students:</h4>
 						</div>
 						<div class="col-md-8">
 							<form class="form-horizontal" role="form">
+								<div class="form-group checkbox" ng-if="probar == 'individual'">
+									<div class="col-md-12">
+										<h5><input type="checkbox" ng-model="mapstep3.indiStu.indiviPro">Add individual evaluating progress</h5>
+									</div>
+								</div>
+								<div class="form-group checkbox" ng-if="probar == 'group'">
+									<div class="col-md-12">
+										<h5><input type="checkbox" ng-model="mapstep3.indiStu.groupPro">Add group evaluating progress</h5>
+									</div>
+								</div>
 								<div class="form-group checkbox marginBottom">
 									<div class="col-md-12">
 										<h5><input type="checkbox" ng-model="commentbadge">Add individual "comment badge"</h5>
@@ -28,7 +38,7 @@
 											<label>Student can earn a "comment badge" by submitting more than</label>
 										</div>
 										<div class="col-md-2">
-											<input type="number" step="any" class="form-control" ng-model="mapstep3.badge.comment">
+											<input type="number" step="any" class="form-control" ng-model="mapstep3.indiStu.badge.comment">
 										</div>
 										<div class="col-md-2">
 											<label class="label-control">comment</label>
@@ -36,8 +46,27 @@
 									</div>
 								</div>
 								<div class="form-group checkbox">
-									<div class="col-md-12">
-										<h5><input type="checkbox" ng-model="mapstep3.badge.timer">Add group "timer badge"</h5>
+									<div class="col-md-4">
+										<h5><input type="checkbox" ng-model="mapstep3.indiStu.badge.timer">Add group "timer badge"</h5>
+									</div>
+									<div class="col-md-8" ng-show="mapstep3.indiStu.badge.timer==true">
+										<div ng-repeat ="i in mapstep3.step track by $index">
+											<div class="form-group" ng-show="i">
+												<div class="checkboxMargin">
+													<div class="col-md-3">
+														<h5 class="label-control"><input type="checkbox" ng-model="mapstep3.indiStu.timers[$index]">Step{{$index}}</h5>
+													</div>
+													<div ng-show="mapstep3.indiStu.timers[$index]">
+														<div class="col-md-3">
+															<input type="text" placeholder="00:00" class="form-control" ng-model="mapstep3.indiStu.timerValue[$index]">
+														</div>
+														<div class="col-md-2">
+															<h5>mins</h5>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
 							</form>
@@ -45,100 +74,28 @@
 					</div>
 					<div class="row item">
 						<div class="col-md-4">
-							<h4>Tips:</h4>
+							<h4>Indicators for teachers:</h4>
 						</div>
 						<div class="col-md-8">
 							<form class="form-horizontal" role="form">
-								<div class="form-group">
-									<div class="row">
-										<div class="col-md-4">
-											<h5>Add timer of steps:</h5>
-										</div>
-										<div class="col-md-8">
-
-											<div ng-repeat ="i in mapstep3.step track by $index">
-												<div class="form-group" ng-show="i">
-													<div class="checkboxMargin">
-														<div class="col-md-3">
-															<h5 class="label-control"><input type="checkbox" ng-model="mapstep3.tips.timers[$index]">Step{{$index}}</h5>
-														</div>
-														<div ng-show="mapstep3.tips.timers[$index]">
-															<div class="col-md-3">
-																<input type="text" placeholder="00:00" class="form-control" ng-model="mapstep3.tips.timerValue[$index]">
-															</div>
-															<div class="col-md-2">
-																<h5>mins</h5>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-
-											<!-- <div class="form-group">
-												<div class="checkboxMargin">
-													<div class="col-md-3">
-														<h5 class="label-control"><input type="checkbox" ng-model="timer1">Step1</h5>
-													</div>
-													<div ng-show="timer1">
-														<div class="col-md-3">
-															<input type="text" placeholder="00:00" class="form-control" ng-model="tips.timer1">
-														</div>
-														<div class="col-md-2">
-															<h5>mins</h5>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="form-group" ng-show="step.s2">
-												<div class="checkboxMargin">
-													<div class="col-md-3">
-														<h5 class="label-control"><input type="checkbox" ng-model="timer2">Step2</h5>
-													</div>
-													<div ng-show="timer2">
-														<div class="col-md-3">
-															<input type="text" placeholder="00:00" class="form-control" ng-model="tips.timer2">
-														</div>
-														<div class="col-md-2">
-															<h5>mins</h5>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="form-group" ng-show="step.s3">
-												<div class="checkboxMargin">
-													<div class="col-md-3">
-														<h5 class="label-control"><input type="checkbox" ng-model="timer3">Step3</h5>
-													</div>
-													<div ng-show="timer3">
-														<div class="col-md-3">
-															<input type="text" placeholder="00:00" class="form-control" ng-model="tips.timer3">
-														</div>
-														<div class="col-md-2">
-															<h5>mins</h5>
-														</div>
-													</div>
-												</div>
-											</div> -->
-										</div>
-									</div>
-								</div>
-								<div class="form-group checkbox" ng-if="probar == 'individual'">
+								<div class="form-group checkbox marginBottom">
 									<div class="col-md-12">
-										<h5><input type="checkbox" ng-model="mapstep3.tips.indiviPro">Add individual evaluating progress</h5>
-									</div>
-								</div>
-								<div class="form-group checkbox" ng-if="probar == 'group'">
-									<div class="col-md-12">
-										<h5><input type="checkbox" ng-model="mapstep3.tips.groupPro">Add group evaluating progress</h5>
+										<h5><input type="checkbox" ng-model="mapstep3.indiTea.browsed">Add number of the browsed alternatives of each student</h5>
 									</div>
 								</div>
 								<div class="form-group checkbox">
 									<div class="col-md-12">
-										<h5><input type="checkbox" ng-model="mapstep3.tips.browsed">Add number of the browsed alternatives of each student</h5>
+										<h5><input type="checkbox" ng-model="mapstep3.indiTea.progre">Add evaluating progress</h5>
+									</div>
+								</div>
+								<div class="form-group checkbox">
+									<div class="col-md-12">
+										<h5><input type="checkbox" ng-model="mapstep3.indiTea.comment">Add groups' comments</h5>
 									</div>
 								</div>
 							</form>
 						</div>
+							
 					</div>
 				<a class="btn btn-primary" class="formerStepBtn" ng-click="changeStep()" ui-sref="step2"> <span class="glyphicon glyphicon-chevron-left"></span> Back</a>
 				<a class="btn btn-primary pull-right" class="nextStepBtn" ng-click="changeStep()" ui-sref="step4">Next <span class="glyphicon glyphicon-chevron-right"></span></a>

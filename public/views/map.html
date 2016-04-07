@@ -22,12 +22,12 @@
                         <div class="avatars">
                             <img src="img/player{{$index+1}}.png">
                         </div>
-                        <div ng-if="badge.comment !== undefined" id="badgeSpace">
+                        <div ng-if="indiStu.badge.comment !== undefined" id="badgeSpace">
                             <p>Comment badge</p>
-                            <div class="noteBadge" ng-if="studentNotes[$index]>=badge.comment">
+                            <div class="noteBadge" ng-if="studentNotes[$index]>=indiStu.badge.comment">
                                 <img src="img/badgeNote-show.png">
                             </div>
-                            <div class="noteBadge" ng-if="studentNotes[$index]<badge.comment">
+                            <div class="noteBadge" ng-if="studentNotes[$index]<indiStu.badge.comment">
                                 <img src="img/badgeNote-hide.png">
                             </div>
                         </div>
@@ -42,9 +42,9 @@
                         <p class="col-md-3" id="groupProgTxt">0/{{locationAmount}} Emplacements</p>
                     </div>
                 </div>
-                <div class="badges col-md-2" ng-if="badge.timer">
+                <div class="badges col-md-2" ng-if="indiStu.badge.timer">
                     <p>Timer badge</p>
-                    <div ng-repeat="timer in tips.timers track by $index">
+                    <div ng-repeat="timer in indiStu.timers track by $index">
                         <div class="col-md-{{badgeWidth}} timerBadge" ng-if="timer">
                             <img src="img/badgeTimer-show.png" ng-show="timerWin[$index]">
                             <img src="img/badgeTimer-hide.png" ng-show="!timerWin[$index]">
@@ -68,7 +68,7 @@
         <!--timer-->
         <div id="counter" class="kit  col-md-1">
             <h3>Chrono</h3>
-            <div ng-repeat="i in tips.timers track by $index" ng-if="i==true">
+            <div ng-repeat="i in indiStu.timers track by $index" ng-if="i==true">
                 <div class="timer" id="timer{{$index}}"></div>
             </div>
         </div>
@@ -101,11 +101,11 @@
                 <div class="vote" id="vote{{$index+1}}">
                     <h4>Évaluation for criteria:</h4>
                     <!-- when doing evaluation on personal device, shared display only show the eval results -->
-                    <div ng-if="crisTea == 0 && steps.s0 == undefined">
+                    <div ng-if="crisTea == 0 && steps.s0.exist == false">
                         <span class="glyphicon glyphicon-star grey" ng-repeat="i in range(steps.s1.scale) track by $index" ng-class="{true: 'star', false: 'grey'}[evalVal[$parent.$parent.$index]>$index]" ng-click="!clickStar||changeEval($parent.$parent.$parent.$index,$parent.$parent.$index,$index+1)"></span><span class="label label-default caption" ng-hide="evaltype == 'individual' && currentStep == 1">{{evalVal[$parent.$index]}}</span>
                     </div>
                     <div class="row">
-                        <div ng-show="crisTea !== 0" class="cris">
+                        <div ng-show="crisTea !== 0" class="cris col-md-12">
                             <div class="col-md-12">
                                 Predefined criteria
                             </div>
@@ -119,7 +119,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div ng-show="steps.s0 !== undefined" class="cris">
+                        <div ng-show="steps.s0 !== undefined" class="cris col-md-12">
                             <div class="col-md-12">
                                 Your criteria
                             </div>
@@ -170,7 +170,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3 pull-right" id="commonSpace" ng-if="add.commonspace == true">
+        <div class="col-md-3 pull-right" id="commonSpace" ng-if="shareDis.commonspace == true">
             <div id="commonTitle">
                     <h3>Shared comments space</h3>
             </div>
@@ -193,11 +193,11 @@
                 <h4>
                     {{step.dlg}}
                 </h4>
-                <h4 ng-if="tips.timers[currentStep]">
-                    Vous avez {{tips.timerValue[currentStep]}} mins pour cette étape.
+                <h4 ng-if="indiStu.timers[currentStep]">
+                    Vous avez {{indiStu.timerValue[currentStep]}} mins pour cette étape.
                 </h4>
-                <h4 ng-if="tips.timers[currentStep] && badge.timer">
-                    Gagnez le badge Timer si vous finissez toutes les évaluation individuelle dans les {{tips.timerValue[currentStep]}} mins.
+                <h4 ng-if="indiStu.timers[currentStep] && indiStu.badge.timer">
+                    Gagnez le badge Timer si vous finissez toutes les évaluation individuelle dans les {{indiStu.timerValue[currentStep]}} mins.
                 </h4>
             </div>
         </div>
@@ -216,5 +216,5 @@
     </div>
 </div>
 <div ng-controller="MapCtrl">
-    <leaflet lf-center="map" tiles="tiles" geojson="geojson" markers="markers" height="600px" ng-class="{true: 'col-md-9', false: 'col-md-12'}[commonSpace==true]" ></leaflet>
+    <leaflet lf-center="map" tiles="tiles" geojson="geojson" markers="markers" height="600px" ng-class="{true: 'col-md-9', false: 'col-md-12'}[commonspace==true]" ></leaflet>
 </div>

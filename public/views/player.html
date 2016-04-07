@@ -57,7 +57,7 @@
                     <div class="row">
                         <span class="label criName col-sm-3">{{cri.name}}</span>
                         <div class="col-sm-8">
-                            <span class="glyphicon glyphicon-star grey" ng-repeat="i in range(steps.s1.scale) track by $index" ng-class="{true: 'star', false: 'grey'}[evalVal[$parent.$index+crisTea.length]>$index]" ng-click="changeEval($parent.$index+crisTea.length,$index+1)"></span><span class="label label-default caption">{{evalVal[$index]}}</span>
+                            <span class="glyphicon glyphicon-star grey" ng-repeat="i in range(steps.s1.scale) track by $index" ng-class="{true: 'star', false: 'grey'}[evalVal[$parent.$index+crisTea.length]>$index]" ng-click="changeEval($parent.$index+crisTea.length,$index+1)"></span><span class="label label-default caption">{{evalVal[$index+crisTea.length]}}</span>
                         </div>
                     </div>
                 </div>
