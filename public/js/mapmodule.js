@@ -8,14 +8,19 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
     }
     //!!!!todo,delete some var
     getAppData = function(){
+        var doc = DataService.docs[DataService._indexApp];
         // get location amount
-        $scope.locationAmount = DataService.mapstep1.markers.length;
-        $scope.studentAmount = parseInt(DataService.studentAmount);
-        $scope.groupNum = DataService.groupNum;
+        $scope.locationAmount = doc.mapstep1.markers.length;
+        // get group number
+        $scope.groupNum = DataService._indexGroup+1;
+        // get current group names
+        $scope.groupName = DataService.groups[DataService._indexGroup].name;
+        // get student amount
+        $scope.studentAmount = parseInt(DataService.groups[DataService._indexGroup].student);
         // caculate avatar width based on student amount
         $scope.avatarWidth = Math.round(12/$scope.studentAmount);
         // get markers
-        $scope.markers = DataService.mapstep1.markers;
+        $scope.markers = doc.mapstep1.markers;
         // get symbol of each location, and change lower case to upper case
         for(var i=0; i<$scope.locationAmount;i++){
             $scope.markers[i].symbol = $scope.markers[i].icon.icon;
@@ -24,13 +29,13 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
             }
         }
         // get tips
-        $scope.tips = DataService.mapstep3.tips;
+        $scope.tips = doc.mapstep3.tips;
 
         // get the type of sequence, and set steps based on the sequence type
-        $scope.seqtype = DataService.mapstep2.seqtype;
+        $scope.seqtype = doc.mapstep2.seqtype;
         if($scope.seqtype == "restricted"){
             // rebuild steps
-            $scope.steps = DataService.mapstep2.reseq;
+            $scope.steps = doc.mapstep2.reseq;
             if($scope.steps.s3.title == undefined){
                 delete $scope.steps.s3;
                 // delete $scope.tips.timer[3];
@@ -51,7 +56,7 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
             ($scope.steps.s1.alter !== "one")?($scope.chosenNum = []):null;
 
         }else{
-            $scope.steps = DataService.mapstep2.unseq;
+            $scope.steps = doc.mapstep2.unseq;
             delete $scope.tips.timerValue[3];
             if($scope.steps.s2.title == undefined){
                 delete $scope.steps.s2;
@@ -66,7 +71,7 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
             $scope.chosenNum = []
         }
         // get criterias
-        $scope.cris = DataService.mapstep1.cris;
+        $scope.cris = doc.mapstep1.cris;
         $scope.crisTea = $scope.cris.teacher.length;
         $scope.cris.num = 0;
         // get steps and evalate on which device
@@ -80,9 +85,9 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
             $scope.currentEval = 0;
         }else{
             // evalVal are configed when each alternative would be evaluated once
-            if(DataService.mapstep4.share.eval & DataService.mapstep4.person.eval){
+            if(doc.mapstep4.share.eval & doc.mapstep4.person.eval){
                 $scope.evalDevice = "both";
-            }else if(DataService.mapstep4.share.eval == true){
+            }else if(doc.mapstep4.share.eval == true){
                 $scope.evalDevice = "share";
             }else{
                 $scope.evalDevice = "person";
@@ -125,7 +130,8 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         ($scope.evalDevice !== "person" && $scope.currentStep==1)?($scope.clickStar = true):($scope.clickStar=false);
 
         // get votes
-        $scope.votes = DataService.votes.rows[$scope.groupNum-1].doc.votes;
+        $scope.votes = [];
+        // $scope.votes = DataService.votes.rows[$scope.groupNum-1].doc.votes;
         // when the votes is empty, rebuild it
         // actually, we always need to rebuild the array as the cris might be changed which would influence the dimention of votes
 
@@ -133,29 +139,29 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         $scope.evalAmount=[];
 
         // get notes
-        $scope.notes = DataService.notes.rows[$scope.groupNum-1].doc.notes;
+        // $scope.notes = DataService.notes.rows[$scope.groupNum-1].doc.notes;
         // get common notes
-        $scope.commonNotes = DataService.notes.rows[$scope.groupNum-1].doc.common;
-        
+        // $scope.commonNotes = DataService.notes.rows[$scope.groupNum-1].doc.common;
+        $scope.notes = [];
+        $scope.commonNotes = [];
         // badge的配置
-        $scope.badge = DataService.mapstep3.badge;
+        $scope.badge = doc.mapstep3.badge;
         ($scope.badge.timer)?($scope.timerWin = []):null;
         // get tips
-        $scope.tips = DataService.mapstep3.tips;
+        $scope.tips = doc.mapstep3.tips;
 
         // additional functionalities  to be changed
-        $scope.add = DataService.mapsetting.additional;
+        // $scope.add = DataService.mapsetting.additional;
 
-        // get current group names
-        $scope.groupName = DataService.mapsetting.groups[$scope.groupNum-1].name;
+        
         // get relevant information
-        $scope.infos = DataService.mapstep1.infos;
+        $scope.infos = doc.mapstep1.infos;
 
         
         // get timer badge number
         var timerBadgeNum = function(){
             var time=0;
-            for(var k=0; k<$scope.tips.timers.length;k++){
+            for(var k=0; k<4;k++){
                 if($scope.tips.timers[k] == true)
                     time++;
             }
@@ -660,33 +666,28 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
 });
 
 mapModule.controller("MapCtrl", [ "$scope", "$http", "DataService",function($scope, $http, DataService) {
-    var mapsetting = DataService.mapsetting;
     var socket = io.connect('http://localhost:8000');
 
-    $scope.map = DataService.mapstep1.map;
-    $scope.markers = DataService.mapstep1.markers;
-    $scope.commonSpace = mapsetting.additional.commonspace;
-    angular.extend($scope, {
-        tiles: {
-            name: 'MYOA',
-            url: 'http://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
-            type: 'xyz',
-            options: {
-                apikey: 'pk.eyJ1IjoiaW5zYWxpbGkiLCJhIjoickF1VzlYVSJ9.JH9ZrV76fbU5Ub9ZgBhNCw',
-                mapid: 'insalili.meikk0a8'
-            }
-        },
-        // geojson: {},
-    });
-
-    // $http.get("data/map.geo.json").success(function(data){
-    //     $scope.geojson.data = data;
-    // });
-
-    $scope.addMarkerMsg = function(){
+    getAppData = function(){
+        var doc = DataService.docs[DataService._indexApp];
+        $scope.map = doc.mapstep1.map;
+        $scope.markers = doc.mapstep1.markers;
+        var studentAmount = parseInt(DataService.groups[DataService._indexGroup].student);
         var locationAmount = $scope.markers.length;
-        var studentAmount = parseInt(DataService.studentAmount);
-        var browse = DataService.mapstep4.share.browse;
+        var browse = doc.mapstep4.share.browse;
+
+        // $scope.commonSpace = mapsetting.additional.commonspace;
+        angular.extend($scope, {
+            tiles: {
+                name: 'MYOA',
+                url: 'http://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
+                type: 'xyz',
+                options: {
+                    apikey: 'pk.eyJ1IjoiaW5zYWxpbGkiLCJhIjoickF1VzlYVSJ9.JH9ZrV76fbU5Ub9ZgBhNCw',
+                    mapid: 'insalili.meikk0a8'
+                }
+            }
+        });
         for(var i=0; i<locationAmount;i++){
             var num = i+1;
             var message = '<div id="marker'+num+'" class="mapMarker"><h3>'+$scope.markers[i].name+'</h3>';
@@ -721,5 +722,6 @@ mapModule.controller("MapCtrl", [ "$scope", "$http", "DataService",function($sco
         $(element).css({'background-color': '#f0ad4e', 'border-color': '#eea236'});
         $($(elements)[marker-1]).css({'background-color': '#f0ad4e', 'border-color': '#eea236'});
     }
-    $scope.addMarkerMsg();
+    getAppData();
+    // addMarkerMsg();
 }]);

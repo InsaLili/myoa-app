@@ -40,12 +40,25 @@
         <span class="glyphicon glyphicon-heart" ng-if="add.eval == 'heart'" ng-class="{true: 'heart', false: 'grey'}[voteVal>0]" ng-click="updateHeart()"></span>
 
         <div class="rating">
-            <div class="col-sm-6" ng-repeat="cri in cris">
-                <!-- <label>{{cri.name}}</label> -->
-                <div class="row">
-                    <span class="label criName col-sm-3">{{cri.name}}</span>
-                    <div class="col-sm-8">
-                        <span class="glyphicon glyphicon-star grey" ng-repeat="i in range(steps.s1.scale) track by $index" ng-class="{true: 'star', false: 'grey'}[evalVal[$parent.$index]>$index]" ng-click="changeEval($parent.$index,$index+1)"></span><span class="label label-default caption">{{evalVal[$index]}}</span>
+            <div class="col-sm-6">
+                <p>Predefined criteria</p>
+                <div ng-repeat="cri in crisTea">
+                    <div class="row">
+                        <span class="label criName col-sm-3">{{cri.name}}</span>
+                        <div class="col-sm-8">
+                            <span class="glyphicon glyphicon-star grey" ng-repeat="i in range(steps.s1.scale) track by $index" ng-class="{true: 'star', false: 'grey'}[evalVal[$parent.$index]>$index]" ng-click="changeEval($parent.$index,$index+1)"></span><span class="label label-default caption">{{evalVal[$index]}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <p>Your criteria</p>
+                <div ng-repeat="cri in crisStu">
+                    <div class="row">
+                        <span class="label criName col-sm-3">{{cri.name}}</span>
+                        <div class="col-sm-8">
+                            <span class="glyphicon glyphicon-star grey" ng-repeat="i in range(steps.s1.scale) track by $index" ng-class="{true: 'star', false: 'grey'}[evalVal[$parent.$index+crisTea.length]>$index]" ng-click="changeEval($parent.$index+crisTea.length,$index+1)"></span><span class="label label-default caption">{{evalVal[$index]}}</span>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -9,11 +9,11 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
     // get data from DataService 
     getData = function(){
         // get player number
-        $scope.player = DataService._indexPlayer;
+        $scope.player = DataService._indexPlayer+1;
         // get group number
-        $scope.groupNum = DataService._indexGroup;
+        $scope.groupNum = DataService._indexGroup+1;
         // get student amount
-        $scope.studentAmount = parseInt(DataService.groups[$scope.groupNum].student);
+        $scope.studentAmount = parseInt(DataService.groups[DataService._indexGroup].student);
         // get sequence type and steps
         var doc = DataService.docs[DataService._indexApp];
         $scope.seqtype = doc.mapstep2.seqtype;
@@ -182,7 +182,10 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
         }
         var newVote;
         if($scope.evalVal[index] == undefined){
+            $scope.evalVal[index] = value;
+            // clone the evalVal array
             var newarray = $scope.evalVal.slice(0);
+            // 
             newarray.splice(index,1);
             var nullExist = newarray.reduce(function(a,b){return a&&b;});
             (nullExist == null)?(newVote = false):(newVote = true);

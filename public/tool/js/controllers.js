@@ -6,27 +6,30 @@ mapSetModule.service('DataService', function(){
 });
 
 mapSetModule.controller('ToolCtrl', [ "$scope", "DataService", function($scope, DataService) {
-    // if it's the first time to visit the page, get docs from db
-    if(DataService.docs == undefined){
-        var db = new PouchDB('http://localhost:5984/myoa');
-        db.allDocs({
-            include_docs: true,
-            attachements: true
-        }).then(function (docs) {
-            // handle result
-            $scope.apps=[];
-            for(var i=0;i<docs.rows.length;i++){
-                $scope.apps.push(docs.rows[i].doc);
-            }
-            $scope.$apply();
-            DataService.docs = $scope.apps;
-        }).catch(function (err) {
-          console.log(err);
-        }); 
-    // if not, get docs from DataService
-    }else{
-        $scope.apps = DataService.docs;
+    getDoc = function(){
+        // if it's the first time to visit the page, get docs from db
+        if(DataService.docs == undefined){
+            var db = new PouchDB('http://localhost:5984/myoa');
+            db.allDocs({
+                include_docs: true,
+                attachements: true
+            }).then(function (docs) {
+                // handle result
+                $scope.apps=[];
+                for(var i=0;i<docs.rows.length;i++){
+                    $scope.apps.push(docs.rows[i].doc);
+                }
+                $scope.$apply();
+                DataService.docs = $scope.apps;
+            }).catch(function (err) {
+              console.log(err);
+            }); 
+        // if not, get docs from DataService
+        }else{
+            $scope.apps = DataService.docs;
+        }
     }
+
     $scope.deleteDoc = function (app,index){
         // confirm dialog to delete a doc
         var txt = 'Do you want to delete the "'+ app._id + '" activity?';
@@ -49,19 +52,23 @@ mapSetModule.controller('ToolCtrl', [ "$scope", "DataService", function($scope, 
     }
     // create a new doc based on existing docs
     $scope.replicateDoc = function (index){
+        var db = new PouchDB('http://localhost:5984/myoa');
         // clone the template doc to a new doc
         var cloneDoc = jQuery.extend({}, DataService.docs[index]);
         // get the name of the new doc
         cloneDoc._id = $scope.docName;
+        // get rid of the former _rev; in order to store a new doc into db
+        delete cloneDoc._rev;
         // get the index of the new doc
         DataService._index = DataService.docs.length;
         // push the new doc to the docs array
         DataService.docs.push(cloneDoc);
-        // say it's a new doc; in order to put doc into database
-        DataService.docType = "new";
+        // store into db
+        db.put(cloneDoc);
     }
     // create a totally new doc
     $scope.createDoc = function (){
+        var db = new PouchDB('http://localhost:5984/myoa');
         // the template of a new doc
         var newDoc = {
             _id: $scope.docName,
@@ -151,14 +158,26 @@ mapSetModule.controller('ToolCtrl', [ "$scope", "DataService", function($scope, 
         DataService._index = DataService.docs.length;
         // push doc into docs
         DataService.docs.push(newDoc);
-        // say it's a new doc; in order to put doc into database
-        DataService.docType = "new";
+        // store into db
+        db.put(newDoc);
     }
-
+    getDoc();
 }]);
 
 mapSetModule.controller('GroupCtrl', [ "$scope", "DataService",function($scope, DataService) {
-    $scope.groups=[];
+    getGroup = function(){
+        if(DataService.groups == undefined){
+            var db = new PouchDB('http://localhost:5984/user');
+            db.get('groups').then(function(doc){
+                $scope.groups=[];
+                $scope.groups = doc.groups;
+                $scope.$apply();
+                DataService.groups = doc.groups;
+            });
+        }else{
+            $scope.groups = DataService.groups;
+        }
+    }
 
     $scope.addItem = function(items){
         items.push({});
@@ -178,6 +197,7 @@ mapSetModule.controller('GroupCtrl', [ "$scope", "DataService",function($scope, 
             }, 'groups', doc._rev);
         })
     }
+    getGroup();
 }]);
 
 mapSetModule.controller('CtrlStep1', [ "$scope", "DataService",function($scope, DataService) {
@@ -340,24 +360,24 @@ mapSetModule.controller('CtrlStep4', [ "$scope", "DataService",function($scope, 
         var db = new PouchDB('http://localhost:5984/myoa');
         var id = DataService.docs[_index]._id;
 
-        if(DataService.docType == "new"){
-            db.put(DataService.docs[_index]);
+        // if(DataService.docType == "new"){
+            // db.put(DataService.docs[_index]);
             // DataService.docs.push(DataService.doc);
-        }else{
-            db.get(id).then(function(doc) {
-                console.log(doc._rev);
-              return db.put({
-                mapstep1: DataService.docs[_index].mapstep1,
-                mapstep2: DataService.docs[_index].mapstep2,
-                mapstep3: DataService.docs[_index].mapstep3,
-                mapstep4: DataService.docs[_index].mapstep4
-              }, id, doc._rev);
-            }).then(function(response) {
-              // handle response
-            }).catch(function (err) {
-              console.log(err);
-            });
-        }
+        // }else{
+        db.get(id).then(function(doc) {
+            console.log(doc._rev);
+          return db.put({
+            mapstep1: DataService.docs[_index].mapstep1,
+            mapstep2: DataService.docs[_index].mapstep2,
+            mapstep3: DataService.docs[_index].mapstep3,
+            mapstep4: DataService.docs[_index].mapstep4
+          }, id, doc._rev);
+        }).then(function(response) {
+          // handle response
+        }).catch(function (err) {
+          console.log(err);
+        });
+        // }
     }
 }]);
 

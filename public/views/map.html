@@ -98,7 +98,7 @@
                     </div>
                 </div> 
                 <!-- config evaluation type -->
-                <div class="vote" id="vote{{$index+1}}" ng-show="add.eval == 'star'">
+                <div class="vote" id="vote{{$index+1}}">
                     <h4>Évaluation for criteria:</h4>
                     <!-- when doing evaluation on personal device, shared display only show the eval results -->
                     <div ng-if="crisTea == 0 && steps.s0 == undefined">
@@ -158,7 +158,8 @@
 
                 <div class="note" id="note{{$index+1}}" ng-hide="currentStep == 0">
                     <h4>Comments :</h4>
-                    <div ng-class="{true: 'shortNote', false: 'longNote'}[add.eval=='star']">
+                    <div class="shortNote">
+                    <!-- <div ng-class="{true: 'shortNote', false: 'longNote'}[add.eval=='star']"> -->
                         <span id="note{{$index+1}}">
                             <!-- <div ng-repeat="note in notes"> -->
                                 <p ng-repeat="note in notes track by $index" ng-if="note.location == $parent.$index+1" class="notePlayer{{note.player}}">{{note.content}}</p>
