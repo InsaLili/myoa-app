@@ -1,7 +1,8 @@
 var mapModule = angular.module("MapModule", ["leaflet-directive"]);
 
 mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
-    var socket = io.connect('http://localhost:8000');
+    // var socket = io.connect('http://localhost:8000');
+    var socket = io.connect('https://myoa.herokuapp.com');
 
     $scope.range = function(n) {
         return new Array(n);   
@@ -569,7 +570,8 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         socket.emit('evalOnShare', {group: $scope.groupNum, location: locationNum, cri: criNum, value: value});
     }
     $scope.checkLocation = function($event,marker,player){
-        var socket = io.connect('http://localhost:8000');
+        var socket = io.connect('https://myoa.herokuapp.com');
+        // var socket = io.connect('http://localhost:8000');
     	console.log(marker,player);
         // in s0, cris.num always equal to 0, so vote=[]
         var vote = [];
@@ -662,7 +664,9 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
 });
 
 mapModule.controller("MapCtrl", [ "$scope", "$http", "DataService",function($scope, $http, DataService) {
-    var socket = io.connect('https://localhost:8000');
+    // var socket = io.connect('https://localhost:8000');
+    var socket = io.connect('https://myoa.herokuapp.com');
+
 
     getAppData = function(){
         var doc = DataService.docs[DataService._indexApp];
