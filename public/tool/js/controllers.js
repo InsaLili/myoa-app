@@ -215,7 +215,7 @@ mapSetModule.controller('CtrlStep1', [ "$scope", "DataService",function($scope, 
     angular.extend($scope,{
         tiles: {
             name: 'Map',
-            url: 'http://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
+            url: 'https://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
             type: 'xyz',
             options: {
                 apikey: 'pk.eyJ1IjoiaW5zYWxpbGkiLCJhIjoickF1VzlYVSJ9.JH9ZrV76fbU5Ub9ZgBhNCw',

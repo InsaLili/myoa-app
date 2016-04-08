@@ -662,7 +662,7 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
 });
 
 mapModule.controller("MapCtrl", [ "$scope", "$http", "DataService",function($scope, $http, DataService) {
-    var socket = io.connect('http://localhost:8000');
+    var socket = io.connect('https://localhost:8000');
 
     getAppData = function(){
         var doc = DataService.docs[DataService._indexApp];

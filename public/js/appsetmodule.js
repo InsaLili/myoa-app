@@ -7,7 +7,7 @@ appSetModule.service('DataService', function(){
 
 appSetModule.controller('AppCtrl', function($scope, DataService) {
     getAppSet = function(){
-        var db = new PouchDB('http://myoa.smileupps.com/myoa');
+        var db = new PouchDB('https://myoa.smileupps.com/myoa');
         db.allDocs({
             include_docs: true,
             attachements: true
@@ -24,7 +24,7 @@ appSetModule.controller('AppCtrl', function($scope, DataService) {
         }); 
     }
     getGroupSet = function(){
-        var db = new PouchDB('http://myoa.smileupps.com/user');
+        var db = new PouchDB('https://myoa.smileupps.com/user');
         db.get('groups').then(function(doc){
             $scope.groups = doc.groups;
             $scope.$apply();
