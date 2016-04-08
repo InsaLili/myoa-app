@@ -9,7 +9,7 @@ mapSetModule.controller('ToolCtrl', [ "$scope", "DataService", function($scope, 
     getDoc = function(){
         // if it's the first time to visit the page, get docs from db
         if(DataService.docs == undefined){
-            var db = new PouchDB('http://myoa.smileupps.com/myoa');
+            var db = new PouchDB('http://myoadb.smileupps.com/myoa');
             db.allDocs({
                 include_docs: true,
                 attachements: true
@@ -37,7 +37,7 @@ mapSetModule.controller('ToolCtrl', [ "$scope", "DataService", function($scope, 
         // delete doc both from docs and apps
         $scope.apps.splice(index,1);
         // get id of the doc, the delete it
-        var db = new PouchDB('http://myoa.smileupps.com/myoa');
+        var db = new PouchDB('http://myoadb.smileupps.com/myoa');
         var id = app._id;
         db.get(id).then(function(doc) {
           return db.remove(doc);
@@ -52,7 +52,7 @@ mapSetModule.controller('ToolCtrl', [ "$scope", "DataService", function($scope, 
     }
     // create a new doc based on existing docs
     $scope.replicateDoc = function (index){
-        var db = new PouchDB('http://myoa.smileupps.com/myoa');
+        var db = new PouchDB('http://myoadb.smileupps.com/myoa');
         // clone the template doc to a new doc
         var cloneDoc = jQuery.extend({}, DataService.docs[index]);
         // get the name of the new doc
@@ -68,7 +68,7 @@ mapSetModule.controller('ToolCtrl', [ "$scope", "DataService", function($scope, 
     }
     // create a totally new doc
     $scope.createDoc = function (){
-        var db = new PouchDB('http://myoa.smileupps.com/myoa');
+        var db = new PouchDB('http://myoadb.smileupps.com/myoa');
         // the template of a new doc
         var newDoc = {
             _id: $scope.docName,
@@ -176,7 +176,7 @@ mapSetModule.controller('ToolCtrl', [ "$scope", "DataService", function($scope, 
 mapSetModule.controller('GroupCtrl', [ "$scope", "DataService",function($scope, DataService) {
     getGroup = function(){
         if(DataService.groups == undefined){
-            var db = new PouchDB('http://myoa.smileupps.com/user');
+            var db = new PouchDB('http://myoadb.smileupps.com/user');
             db.get('groups').then(function(doc){
                 $scope.groups=[];
                 $scope.groups = doc.groups;
@@ -198,7 +198,7 @@ mapSetModule.controller('GroupCtrl', [ "$scope", "DataService",function($scope, 
     }    // delete a doc
 
     $scope.submit = function (){
-        var db = new PouchDB('http://myoa.smileupps.com/user');
+        var db = new PouchDB('http://myoadb.smileupps.com/user');
         var groups = $scope.groups;
         db.get('groups').then(function(doc){
             return db.put({
@@ -366,7 +366,7 @@ mapSetModule.controller('CtrlStep4', [ "$scope", "DataService",function($scope, 
     $scope.submit = function(){
         $scope.changeStep();
 
-        var db = new PouchDB('http://myoa.smileupps.com/myoa');
+        var db = new PouchDB('http://myoadb.smileupps.com/myoa');
         var id = DataService.docs[_index]._id;
 
         // if(DataService.docType == "new"){
