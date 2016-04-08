@@ -165,7 +165,6 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
     }
 
     serviceInit = function(){
-        var db = new PouchDB('http://localhost:5984/insect');
         //------following parts realize the communication between pages
 
         // add criteria
