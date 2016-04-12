@@ -72,8 +72,8 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
     }
     // update note to the database
     updateNote = function(){
-        var socket = io.connect('https://myoa.herokuapp.com');
-        // var db = new PouchDB('http://localhost:5984/framework');
+        var db = new PouchDB('https://myoa.smileupps.com/user');
+        
         db.get('note_'+$scope.groupNum).then(function(doc){
             return db.put({
                 notes:$scope.notes,
@@ -83,8 +83,7 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
     }
     // update vote to the database
     updateVote = function(){
-        // var db = new PouchDB('http://localhost:5984/framework');
-        var socket = io.connect('https://myoa.herokuapp.com');
+        var db = new PouchDB('https://myoa.smileupps.com/user');
 
         db.get('vote_'+$scope.groupNum).then(function(doc){
             return db.put({

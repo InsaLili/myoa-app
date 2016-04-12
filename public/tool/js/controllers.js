@@ -6,9 +6,9 @@ mapSetModule.service('DataService', function(){
 });
 
 mapSetModule.controller('ToolCtrl', [ "$scope", "DataService", function($scope, DataService) {
-    getDoc = function(){
+    getApps = function(){
         // if it's the first time to visit the page, get docs from db
-        if(DataService.docs == undefined){
+        if(DataService.apps == undefined){
             var db = new PouchDB('https://myoa.smileupps.com/myoa');
             db.allDocs({
                 include_docs: true,
@@ -20,17 +20,17 @@ mapSetModule.controller('ToolCtrl', [ "$scope", "DataService", function($scope, 
                     $scope.apps.push(docs.rows[i].doc);
                 }
                 $scope.$apply();
-                DataService.docs = $scope.apps;
+                DataService.apps = $scope.apps;
             }).catch(function (err) {
               console.log(err);
             }); 
         // if not, get docs from DataService
         }else{
-            $scope.apps = DataService.docs;
+            $scope.apps = DataService.apps;
         }
     }
 
-    $scope.deleteDoc = function (app,index){
+    $scope.deleteApp = function (app,index){
         // confirm dialog to delete a doc
         var txt = 'Do you want to delete the "'+ app._id + '" activity?';
         if (confirm(txt) == false) return;
@@ -44,34 +44,34 @@ mapSetModule.controller('ToolCtrl', [ "$scope", "DataService", function($scope, 
         });
     }
     // edit an existing doc
-    $scope.editDoc = function (index){
+    $scope.editApp = function (index){
         // get index of the doc
         DataService._index = index; 
         // say it's an old doc; in order to get and put into db
         DataService.docType = "old";
     }
     // create a new doc based on existing docs
-    $scope.replicateDoc = function (index){
+    $scope.replicateApp = function (index){
         var db = new PouchDB('https://myoa.smileupps.com/myoa');
         // clone the template doc to a new doc
-        var cloneDoc = jQuery.extend({}, DataService.docs[index]);
+        var cloneApp = jQuery.extend({}, DataService.apps[index]);
         // get the name of the new doc
-        cloneDoc._id = $scope.docName;
+        cloneApp._id = $scope.appName;
         // get rid of the former _rev; in order to store a new doc into db
-        delete cloneDoc._rev;
+        delete cloneApp._rev;
         // get the index of the new doc
-        DataService._index = DataService.docs.length;
+        DataService._index = DataService.apps.length;
         // push the new doc to the docs array
-        DataService.docs.push(cloneDoc);
+        DataService.apps.push(cloneApp);
         // store into db
-        db.put(cloneDoc);
+        db.put(cloneApp);
     }
     // create a totally new doc
     $scope.createDoc = function (){
         var db = new PouchDB('https://myoa.smileupps.com/myoa');
         // the template of a new doc
-        var newDoc = {
-            _id: $scope.docName,
+        var newApp = {
+            _id: $scope.appName,
             mapstep1:{
                 "cris":{
                         "student":[],
@@ -164,54 +164,87 @@ mapSetModule.controller('ToolCtrl', [ "$scope", "DataService", function($scope, 
             }
         };
         // index of new doc
-        DataService._index = DataService.docs.length;
+        DataService._index = DataService.apps.length;
         // push doc into docs
-        DataService.docs.push(newDoc);
+        DataService.apps.push(newApp);
         // store into db
-        db.put(newDoc);
+        db.put(newApp);
     }
-    getDoc();
+    $scope.chooseApp = function(event, index){
+        DataService.chosenApp = index;
+        $('.chooseApp').removeClass('btn-warning');
+        $(event.target).addClass('btn-warning');
+    }
+    getApps();
 }]);
 
 mapSetModule.controller('GroupCtrl', [ "$scope", "DataService",function($scope, DataService) {
-    getGroup = function(){
-        if(DataService.groups == undefined){
+    getClassSet = function(){
+        if(DataService.classroom == undefined){
             var db = new PouchDB('https://myoa.smileupps.com/user');
-            db.get('groups').then(function(doc){
-                $scope.groups=[];
-                $scope.groups = doc.groups;
+            db.get('setting').then(function(doc){
+                $scope.classroom=[];
+                $scope.classroom = doc.classroom;
+                $scope.deploy = doc.deploy;
                 $scope.$apply();
-                DataService.groups = doc.groups;
+                DataService.classroom = doc.classroom;
+                DataService.deploy = doc.deploy;
             });
         }else{
-            $scope.groups = DataService.groups;
+            $scope.classroom = DataService.classroom;
+            $scope.deploy = DataService.deploy;
         }
+        // $scope.newStudent="";
+        $scope.newGroup = {name:undefined, students:[]};
     }
 
-    $scope.addItem = function(items){
-        items.push({});
+    $scope.addStudent = function(group){
+        if(group.students == undefined) group.students = [];
+        group.students.push(group.newStudent);
+        group.newStudent = undefined;
     }
+
+    $scope.addGroup = function(classroom){
+        var newgroup = jQuery.extend({}, classroom.newGroup);
+        classroom.groups.push(newgroup);
+        classroom.newGroup = {name:undefined, students:[]};
+    }
+
     $scope.deleteItem = function(item,items){
         var index = items.indexOf(item);
         items.splice(index,1);
         console.log("delete");
-    }    // delete a doc
-
-    $scope.submit = function (){
-        var db = new PouchDB('https://myoa.smileupps.com/user');
-        var groups = $scope.groups;
-        db.get('groups').then(function(doc){
-            return db.put({
-                groups: groups,
-            }, 'groups', doc._rev);
-        })
     }
-    getGroup();
+    $scope.chooseClass = function(event,index){
+        DataService.chosenClass = index;
+        $('.chooseClass').removeClass('btn-warning');
+        $(event.target).addClass('btn-warning');
+    }
+    $scope.submit = function (){
+        if(DataService.chosenApp == undefined){
+            alert("Please choose an activity.");
+            return
+        }
+        if(DataService.chosenClass == undefined){
+            alert("Please choose a class.");
+            return;
+        }
+        var deploy={app:DataService.chosenApp, classroom:DataService.chosenClass};
+        var db = new PouchDB('https://myoa.smileupps.com/user');
+        db.get('setting').then(function(doc){
+            return db.put({
+                classroom: $scope.classroom,
+                deploy: deploy
+            }, 'setting', doc._rev);
+        });
+        alert("You successfully deployed your activity!")
+    }
+    getClassSet();
 }]);
 
 mapSetModule.controller('CtrlStep1', [ "$scope", "DataService",function($scope, DataService) {
     var _index = DataService._index;
-    $scope.mapstep1 = DataService.docs[_index].mapstep1;
+    $scope.mapstep1 = DataService.apps[_index].mapstep1;
     angular.extend($scope,{
         tiles: {
             name: 'Map',
@@ -304,36 +337,36 @@ mapSetModule.controller('CtrlStep1', [ "$scope", "DataService",function($scope, 
     }
 
     $scope.toStep2 = function(){
-        DataService.docs[_index].mapstep1 = $scope.mapstep1;
+        DataService.apps[_index].mapstep1 = $scope.mapstep1;
     }
 }]);
 
 mapSetModule.controller('CtrlStep2', [ "$scope", "DataService",function($scope, DataService) {
     var _index = DataService._index;
-    $scope.mapstep2 = DataService.docs[_index].mapstep2;
+    $scope.mapstep2 = DataService.apps[_index].mapstep2;
 
     $scope.changeStep = function(){
-        DataService.docs[_index].mapstep2 = $scope.mapstep2;
+        DataService.apps[_index].mapstep2 = $scope.mapstep2;
     }
 }]);
 
 mapSetModule.controller('CtrlStep3', [ "$scope", "DataService",function($scope, DataService) {
     var _index = DataService._index;
-    $scope.mapstep3 = DataService.docs[_index].mapstep3;
+    $scope.mapstep3 = DataService.apps[_index].mapstep3;
 
     // set the comment badge check marker
     ($scope.mapstep3.indiStu.badge.comment)?($scope.commentbadge = true):($scope.commentbadge = false);
 
     // check the sequence and which steps we have
-    if(DataService.docs[_index].mapstep2.seqtype == "restricted"){
-        $scope.steps = DataService.docs[_index].mapstep2.reseq;
+    if(DataService.apps[_index].mapstep2.seqtype == "restricted"){
+        $scope.steps = DataService.apps[_index].mapstep2.reseq;
         $scope.probar = $scope.steps.s1.eval;
         ($scope.steps.s0.exist)?($scope.mapstep3.step[0] = true):($scope.mapstep3.step[0] = false);
         $scope.mapstep3.step[1] = true;
         $scope.mapstep3.step[2] = true;
         ($scope.steps.s3.exist)?($scope.mapstep3.step[3] = true):($scope.mapstep3.step[3] = false);
     }else{
-        $scope.steps = DataService.docs[_index].mapstep2.unseq;
+        $scope.steps = DataService.apps[_index].mapstep2.unseq;
         ($scope.steps.s0.exist)?($scope.mapstep3.step[0] = true):($scope.mapstep3.step[0] = false);
         $scope.mapstep3.step[1] = true;
         ($scope.steps.s2.exist)?($scope.mapstep3.step[2] = true):($scope.mapstep3.step[2] = false);
@@ -349,37 +382,33 @@ mapSetModule.controller('CtrlStep3', [ "$scope", "DataService",function($scope, 
         }
         ($scope.commentbadge)?$scope.mapstep3.indiStu.badge.comment:($scope.mapstep3.indiStu.badge.comment = undefined);
 
-        DataService.docs[_index].mapstep3 = $scope.mapstep3;
+        DataService.apps[_index].mapstep3 = $scope.mapstep3;
     }
 }]);
 
 mapSetModule.controller('CtrlStep4', [ "$scope", "DataService",function($scope, DataService) {
     var _index = DataService._index;
-    $scope.mapstep4 = DataService.docs[_index].mapstep4;
-    $scope.seqtype = DataService.docs[_index].mapstep2.seqtype;
-    ($scope.seqtype == "restricted")?($scope.evaltype = DataService.docs[_index].mapstep2.reseq.s1.eval):($scope.evaltype = undefined);
+    $scope.mapstep4 = DataService.apps[_index].mapstep4;
+    $scope.seqtype = DataService.apps[_index].mapstep2.seqtype;
+    ($scope.seqtype == "restricted")?($scope.evaltype = DataService.apps[_index].mapstep2.reseq.s1.eval):($scope.evaltype = undefined);
 
     $scope.changeStep = function(){
-        DataService.docs[_index].mapstep4 = $scope.mapstep4;
+        DataService.apps[_index].mapstep4 = $scope.mapstep4;
     }
 
     $scope.submit = function(){
         $scope.changeStep();
 
         var db = new PouchDB('https://myoa.smileupps.com/myoa');
-        var id = DataService.docs[_index]._id;
+        var id = DataService.apps[_index]._id;
 
-        // if(DataService.docType == "new"){
-            // db.put(DataService.docs[_index]);
-            // DataService.docs.push(DataService.doc);
-        // }else{
         db.get(id).then(function(doc) {
             console.log(doc._rev);
           return db.put({
-            mapstep1: DataService.docs[_index].mapstep1,
-            mapstep2: DataService.docs[_index].mapstep2,
-            mapstep3: DataService.docs[_index].mapstep3,
-            mapstep4: DataService.docs[_index].mapstep4
+            mapstep1: DataService.apps[_index].mapstep1,
+            mapstep2: DataService.apps[_index].mapstep2,
+            mapstep3: DataService.apps[_index].mapstep3,
+            mapstep4: DataService.apps[_index].mapstep4
           }, id, doc._rev);
         }).then(function(response) {
           // handle response
