@@ -22,8 +22,7 @@ routerApp.run(function($rootScope, $state, $stateParams) {
  * @return {[type]}
  */
 routerApp.config(function($stateProvider, $urlRouterProvider) {
-    // $urlRouterProvider.otherwise('/index');
-    // $urlRouterProvider.when('', '/index');
+    $urlRouterProvider.otherwise('/index');
     $stateProvider
         .state('index', {
             url: '/index',
@@ -46,13 +45,6 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
               css: 'css/map.css'
             }
         })
-        // .state('role', {
-        //     url: '/role',
-        //     templateUrl: 'views/role.html',
-        //     data: {
-        //       css: 'css/player.css'
-        //     }
-        // })
         .state('player', {
             url: '/player',
             templateUrl: 'views/player.html',
