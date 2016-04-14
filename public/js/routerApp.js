@@ -25,17 +25,17 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/index');
     $stateProvider
         .state('index', {
-            url: '/index',
-            templateUrl: 'views/home.html',
+            url: '',
+            templateUrl: 'views/share.html',
             data: {
-              css: 'css/app.css'
+              css: 'css/device.css'
             }
         })
-        .state('device', {
-            url: '/device',
-            templateUrl: 'views/device.html',
+        .state('individual', {
+            url: '/individual',
+            templateUrl: 'views/individual.html',
             data: {
-              css: 'css/player.css'
+              css: 'css/device.css'
             }
         })
         .state('map', {

@@ -5,66 +5,73 @@ appSetModule.service('DataService', function(){
     DataService = {};
 });
 
-appSetModule.controller('AppCtrl', function($scope, DataService) {
-    getAppSet = function(){
-        var db = new PouchDB('https://myoa.smileupps.com/myoa');
-        db.allDocs({
-            include_docs: true,
-            attachements: true
-        }).then(function (docs) {
+appSetModule.controller('ShareCtrl', function($scope, DataService) {
+    getDeploy = function(){
+        var db = new PouchDB('https://myoa.smileupps.com/user');
+        db.get('setting').then(function (docs) {
             // handle result
-            $scope.apps=[];
-            for(var i=0;i<docs.rows.length;i++){
-                $scope.apps.push(docs.rows[i].doc);
-            }
+            // store deployment
+            $scope.deploy = docs.deploy;
+            $scope.currentClass = docs.classroom[docs.deploy.classroom];
             $scope.$apply();
-            DataService.docs = $scope.apps;
+            // get app based on the deploy
+            var apps = new PouchDB('https://myoa.smileupps.com/myoa');
+            apps.get($scope.deploy.app).then(function(doc){
+                DataService.app = doc;
+            }).catch(function (err) {
+                console.log(err);
+            });
         }).catch(function (err) {
             console.log(err);
         }); 
-    }
-    getGroupSet = function(){
-        var db = new PouchDB('https://myoa.smileupps.com/user');
-        db.get('groups').then(function(doc){
-            $scope.groups = doc.groups;
-            $scope.$apply();
-            DataService.groups = doc.groups;
-        });
-    }
-    $scope.chooseDoc = function (event,index){
-        $('.appBtn').removeClass('active');
-        $(event.target).addClass('active');
-        DataService._indexApp = index;
     }
     $scope.chooseGroup = function (event,index){
         $('.groupBtn').removeClass('active');
         $(event.target).addClass('active');
         DataService._indexGroup = index;
+        DataService.group = $scope.currentClass.groups[index];
     }
 
-    getAppSet();
-    getGroupSet();
+    getDeploy();
 });
 
-appSetModule.controller('DeviceCtrl', function($scope, DataService){
-    getGroup = function(){
-        $scope.group = DataService.groups[DataService._indexGroup];
-        $scope.group.student = parseInt($scope.group.student);
+appSetModule.controller('IndividualCtrl', function($scope, DataService) {
+    getDeploy = function(){
+        var db = new PouchDB('https://myoa.smileupps.com/user');
+        db.get('setting').then(function (docs) {
+            // handle result
+            // store deployment
+            $scope.deploy = docs.deploy;
+            $scope.currentClass = docs.classroom[docs.deploy.classroom];
+            $scope.$apply();
+            // get app based on the deploy
+            var apps = new PouchDB('https://myoa.smileupps.com/myoa');
+            apps.get($scope.deploy.app).then(function(doc){
+                DataService.app = doc;
+            }).catch(function (err) {
+                console.log(err);
+            });
+        }).catch(function (err) {
+            console.log(err);
+        }); 
     }
     $scope.range = function(n) {
-        return new Array(n);   
+        var num = parseInt(n);
+        return new Array(num);   
     }
-    $scope.chooseDevice = function(event){
+    $scope.chooseGroup = function (event,index){
+        $('.groupBtn').removeClass('active');
         $(event.target).addClass('active');
-        $scope.personal = true;
+        $scope.currentGroup = $scope.currentClass.groups[index];
+        DataService.group = $scope.currentGroup;
+        DataService._indexGroup = index;
+        $scope.showStudents = true;
     }
     $scope.choosePlayer = function(index){
         DataService._indexPlayer = index;
     }
-    getGroup();
+    getDeploy();
 });
-
-
 
 
 

@@ -1,0 +1,47 @@
+body{
+	background-color: #fafafa;
+}
+.nav, .pagination, .carousel, .panel-title a, li p {
+    cursor: pointer;
+}
+h1,h3{
+    text-align: center;
+    color: #fff;
+}
+.appName{
+	margin-top:100px;
+}
+.chooseTitle{
+	margin-top: 50px;
+	margin-bottom: 30px;
+}
+.docList{
+	float: left;
+	margin-right: 20px;
+	margin-bottom: 10px;
+}
+#maskLayer{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(#0D47A1, #BBDEFB);
+}
+#maskLayer button{
+    float: left;
+    margin-right: 10px;
+}
+.choosePlayer{
+	float: left;
+	margin-right: 20px;
+}
+#choosePlayer a{
+    width: 120px;
+    height: 110px;
+}
+
+#maskLayer a img{
+    width: 100%;
+    height: 100%;
+}

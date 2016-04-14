@@ -9,15 +9,15 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
     }
     //!!!!todo,delete some var
     getAppData = function(){
-        var doc = DataService.docs[DataService._indexApp];
+        var doc = DataService.app;
         // get location amount
         $scope.locationAmount = doc.mapstep1.markers.length;
         // get group number
         $scope.groupNum = DataService._indexGroup+1;
         // get current group names
-        $scope.groupName = DataService.groups[DataService._indexGroup].name;
+        $scope.groupName = DataService.group.name;
         // get student amount
-        $scope.studentAmount = parseInt(DataService.groups[DataService._indexGroup].student);
+        $scope.studentAmount = parseInt(DataService.group.studentamount);
         // caculate avatar width based on student amount
         $scope.avatarWidth = Math.round(12/$scope.studentAmount);
         // get markers
@@ -669,11 +669,11 @@ mapModule.controller("MapCtrl", [ "$scope", "$http", "DataService",function($sco
 
 
     getAppData = function(){
-        var doc = DataService.docs[DataService._indexApp];
+        var doc = DataService.app;
         $scope.map = doc.mapstep1.map;
         $scope.markers = doc.mapstep1.markers;
         $scope.commonspace = doc.mapstep4.share.commonspace;
-        var studentAmount = parseInt(DataService.groups[DataService._indexGroup].student);
+        var studentAmount = parseInt(DataService.group.studentamount);
         var locationAmount = $scope.markers.length;
         var browse = doc.mapstep4.share.browse;
 

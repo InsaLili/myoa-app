@@ -13,10 +13,8 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
         $scope.player = DataService._indexPlayer+1;
         // get group number
         $scope.groupNum = DataService._indexGroup+1;
-        // get student amount
-        $scope.studentAmount = parseInt(DataService.groups[DataService._indexGroup].student);
         // get sequence type and steps
-        var doc = DataService.docs[DataService._indexApp];
+        var doc = DataService.app;
         $scope.seqtype = doc.mapstep2.seqtype;
         ($scope.seqtype == "restricted")?($scope.steps = doc.mapstep2.reseq):($scope.steps = doc.mapstep2.unseq);
         // get current step, check whether there is s0 or not
