@@ -1,6 +1,29 @@
 <div id="appLayer" class="row" ng-controller="PlayerCtrl">
-    <div class="item col-sm-12" id="avatarImg">
-        <img src="img/player{{player}}.png" id="avatar">
+    <div class="item col-sm-12" id="personalMenu">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="col-sm-5">
+                    <div class="identity">
+                        <div id="avatar">
+                            <img src="img/player{{player}}.png">
+                        </div>
+                        <p ng-bind="playerName"></p>
+                    </div>
+                </div>
+                <div class="col-sm-7">
+                    <div class="row" ng-if="person.progress==true">
+                        <div class="col-md-4">Progress</div>
+                        <div class="col-md-8 progressbar"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <h1>Étape {{shownStep}}</h1>
+            </div>
+            <div class="col-sm-4">
+                timer
+            </div>
+        </div>
     </div>
     <div class="item col-sm-12">
         <div class="row">

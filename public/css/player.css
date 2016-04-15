@@ -17,7 +17,10 @@ body{
     height: 100%;
     margin-top:20px;
 }
-
+h1{
+    text-align: center;
+    margin-top: 35px;
+}
 p, table{
     font-size: 13px;
     /*text-align: center;*/
@@ -32,15 +35,23 @@ p, table{
     background-color: #FAFAFA;
     box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.3);
 }
-#avatarImg{
-    height: 100px;
+#personalMenu{
+    height: 120px;
+}
+.identity{
+    width: 100%;
+}
+.identity p{
+    margin-top: 10px;
+    text-align: center;
+    font: bold 16px courier;
 }
 #avatar{
     width:70px;
     height:70px;
-    float: left;
-    margin-left: 10px;
-    margin-top: 15px;
+    /*float: left;*/
+    margin: auto;
+    margin-top: 10px;
 }
 .item{
     border-bottom: 1px solid #009688;

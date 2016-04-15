@@ -11,6 +11,7 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
     getData = function(){
         // get player number
         $scope.player = DataService._indexPlayer+1;
+        $scope.playerName = DataService.group.students[DataService._indexPlayer];
         // get group number
         $scope.groupNum = DataService._indexGroup+1;
         // get sequence type and steps
@@ -18,7 +19,8 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
         $scope.seqtype = doc.mapstep2.seqtype;
         ($scope.seqtype == "restricted")?($scope.steps = doc.mapstep2.reseq):($scope.steps = doc.mapstep2.unseq);
         // get current step, check whether there is s0 or not
-        ($scope.steps.s0.title)?($scope.currentStep = 0):($scope.currentStep = 1);
+        ($scope.steps.s0.exist == false)?($scope.currentStep = 1):($scope.currentStep = 0);
+        $scope.shownStep = 1;
         // get the evaluation type
         ($scope.steps.s1.eval)?($scope.evaltype = $scope.steps.s1.eval):($scope.evaltype = "group");
 
@@ -33,7 +35,7 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
         $scope.evalVal = [];
         $scope.markers = doc.mapstep1.markers;
         $scope.locationInfo = "hello lili";
-        // $scope.add = DataService.mapsetting.additional;
+        $scope.person = doc.mapstep4.person;
         // $scope.like = false;
     } 
     // communication between devices
@@ -45,6 +47,7 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
         socket.on('changestep', function (data){
             if(data.group !== $scope.groupNum) return;
             $scope.currentStep = data.step;
+            $scope.shownStep++;
             if($scope.currentStep == 1){
                 $scope.cris = $scope.crisTea.concat($scope.crisStu);
             }

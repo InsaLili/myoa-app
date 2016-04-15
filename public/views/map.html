@@ -92,9 +92,6 @@
                         <div ng-show="evaltype == 'individual'">
                             <span class="checkMarker glyphicon glyphicon-ok-circle grey"></span>
                         </div>
-                        <!-- <div ng-show="add.eval == 'heart'">
-                            <span class="checkMarker glyphicon glyphicon-heart" ng-class="{1: 'heart', 0: 'grey'}[evalVal[$parent.$index][$index]]"></span>
-                        </div> -->
                     </div>
                 </div> 
                 <!-- config evaluation type -->
@@ -134,26 +131,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- let student do evaluation on shared display -->
-                    <!-- <div ng-if="evalDevice !== 'person'">
-                        <div ng-if="cris.num == 0 && steps.s0 == undefined">
-                            <span class="glyphicon glyphicon-star grey" ng-repeat="i in range(steps.s1.scale) track by $index" ng-class="{true: 'star', false: 'grey'}[evalVal[$parent.$parent.$parent.$index]>$index]" ng-click="changeEval($parent.$parent.$parent.$index,$parent.$parent.$index,$index+1)"></span><span class="label label-default caption">{{evalVal[$parent.$index]}}</span>
-                        </div>
-                        <div class="row">
-                            <div ng-show="cris.num !== 0">
-                                <div class="col-md-12">
-                                    Predefined criteria
-                                </div>
-                            <div class="col-md-12" ng-if="cris.num > 0" ng-repeat="cri in cris.teacher track by $index">
-                                <div class="row">
-                                    <span class="label criName col-md-3">{{cri.name}}</span>
-                                    <div class="col-md-8">
-                                        <span class="glyphicon glyphicon-star grey" ng-repeat="i in range(steps.s1.scale) track by $index" ng-class="{true: 'star', false: 'grey'}[evalVal[$parent.$parent.$parent.$index][$parent.$parent.$index]>$index]" ng-click="changeEval($parent.$parent.$parent.$index,$parent.$parent.$index,$index+1)"></span><span class="label label-default caption">{{evalVal[$parent.$parent.$index][$parent.$index]}}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
                 </div>
 
                 <div class="note" id="note{{$index+1}}" ng-hide="currentStep == 0">
@@ -170,7 +147,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3 pull-right" id="commonSpace" ng-if="shareDis.commonspace == true">
+        <div id="commonSpace" ng-if="shareDis.commonspace == true">
             <div id="commonTitle">
                     <h3>Shared comments space</h3>
             </div>
@@ -216,5 +193,5 @@
     </div>
 </div>
 <div ng-controller="MapCtrl">
-    <leaflet lf-center="map" tiles="tiles" geojson="geojson" markers="markers" height="870px" ng-class="{true: 'col-md-9', false: 'col-md-12'}[commonspace==true]" ></leaflet>
+    <leaflet lf-center="map" tiles="tiles" geojson="geojson" markers="markers" height="870px" ng-class="col-md-12" ></leaflet>
 </div>
