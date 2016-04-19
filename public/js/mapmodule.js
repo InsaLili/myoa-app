@@ -507,7 +507,7 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
     $scope.nextStep = function($event, index){
         // skip step 0 when there is no s0
         var step;
-        ($scope.steps.s0.exist==false)?(step = index+1):(step = index);
+        ($scope.steps.s0==undefined)?(step = index+1):(step = index);
 
         if(step == $scope.currentStep){
             switch (step){

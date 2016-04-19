@@ -18,7 +18,7 @@ var logger = new (winston.Logger)({
 
 var app = express();
 var routes = require('./routes/index');
-
+var 
 //set express environment
 app.engine('.html', require('ejs').__express);
 app.set('port', process.env.PORT || 8000);
@@ -66,7 +66,7 @@ httpserver.listen(app.get('port'), function () {
 //socket
 var io = require('socket.io')(httpserver);
 io.on('connection', function (socket) {
-    socket.emit('news', {hello: 'world'});
+    console.log('a user connected');
 
     socket.on('choosegroup', function(data){
         logger.info('choose the group',data);
@@ -127,5 +127,4 @@ io.on('connection', function (socket) {
         io.emit('evalOnShare', data);
     });
 });
-
 

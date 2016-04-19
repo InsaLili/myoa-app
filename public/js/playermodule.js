@@ -60,6 +60,9 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
             $scope.evalVal[data.cri]=data.value;
             $scope.$apply();
         });
+        socket.on('agreeCri', function(){
+            $scope.crisStu.push($scope.newCri);
+        });
     };
     // load data, vote and note of a location
     checklocation = function(data){
@@ -98,11 +101,10 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
             return;
         }
         var id = "cri"+$scope.player+'/'+Math.random();
-        var newCri = {
+        $scope.newCri = {
             name: $scope.currentCri,
             id:id
         };
-        $scope.crisStu.push(newCri);
         socket.emit('addcri',{group: $scope.groupNum, cri: newCri});
         $scope.currentCri = '';
     }
