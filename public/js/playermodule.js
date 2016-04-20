@@ -1,8 +1,8 @@
 var playerModule = angular.module("PlayerModule", []);
 
 playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
-	// var socket = io.connect('http://localhost:8000');
-    var socket = io.connect('https://myoa.herokuapp.com');
+	var socket = io.connect('http://localhost:8000');
+    // var socket = io.connect('https://myoa.herokuapp.com');
 
     $scope.range = function(n) {
         return new Array(n);   
@@ -56,17 +56,21 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
         socket.on('evalonshare', function (data) {
             // {group: $scope.groupNum, location: locationNum, cri: criNum, value: value}
             var location = data.location+1;
-            if($scope.groupNum !== data.group && $scope.currentLocation !== location) return;
+            if($scope.groupNum !== data.group || $scope.currentLocation !== location) return;
             $scope.evalVal[data.cri]=data.value;
             $scope.$apply();
         });
         socket.on('agreecri', function(data){
-            if(data.group !== $scope.groupNum && data.player == $scope.player) return;
+            if(data.group !== $scope.groupNum || data.player == $scope.player) return;
             $scope.newCri = data.cri;
-            socket.emit('confirmcri', {group: $scope.groupNum, playeramount: DataService.group.studentamount});
+            $scope.$apply();
+            $('#agreeCri').dialog('open');
+
         });
         socket.on('successcri', function(){
             $scope.crisStu.push($scope.newCri);
+            $scope.$apply();
+            
         })
     };
     // load data, vote and note of a location
@@ -110,7 +114,7 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
             name: $scope.currentCri,
             id:id
         };
-        socket.emit('addcri',{group: $scope.groupNum, cri: $scope.newCri, agree:1, player: $scope.player});
+        socket.emit('addcri',{group: $scope.groupNum, cri: $scope.newCri, player: $scope.player});
         $scope.currentCri = '';
     }
     // delete note on the common space
@@ -259,6 +263,20 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
             modal: true,
             buttons:{
                 "OK": function(){
+                    $(this).dialog("close");
+                }
+            }
+        });
+        $( '#agreeCri' ).dialog({
+            autoOpen: false,
+            height:200,
+            modal: true,
+            buttons:{
+                "Yes": function(){
+                    $(this).dialog("close");
+                    socket.emit('confirmcri', {group: $scope.groupNum, playeramount: DataService.group.studentamount});
+                },
+                "No": function(){
                     $(this).dialog("close");
                 }
             }

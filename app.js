@@ -58,73 +58,78 @@ httpserver.listen(app.get('port'), function () {
 });
 
 //socket
+var agree = [];
 var io = require('socket.io')(httpserver);
 io.on('connection', function (socket) {
     console.log("a new device is connected");
-    var agree = [];
     socket.on('choosegroup', function(data){
-        // logger.info('choose the group',data);
         logger.info('choose the group',data);
         groupNum = data.group;
     });
     socket.on('addcri', function(data){
-        console.log('add a criteria',data);
+        logger.info('add a criteria',data);
         io.emit('agreecri', data);
     });
     socket.on('confirmcri', function(data){
-        console.log('agree with criteria', agree);
+
+        logger.info('agree with criteria', data);
+        console.log(agree);
         (agree[data.group] == undefined)?(agree[data.group]=1):(agree[data.group]++);
-        if(agree[data.group] == data.playeramount){
+        console.log(agree);
+        var playernum = data.playeramount-1;
+
+        if(agree[data.group] == playernum){
+            console.log("success");
             io.emit('successcri');
             agree[data.group]=0;
         }
     })
     socket.on('deletecri', function(data){
-        console.log('delete a criteria',data);
+        logger.info('delete a criteria',data);
         // logger.log('info',data);
         io.emit('deletecri', data);
     });
     socket.on('changestep', function(data){
-        console.log('change step',data);
+        logger.info('change step',data);
         // logger.log('info',data);
         io.emit('changestep', data);
     })
     // Start listening for mouse events
     socket.on('checklocation', function (data) {
-        console.log('check the location',data);
+        logger.info('check the location',data);
 //        io.emit send message to all clients，socket.emit send message to particular client
         var numLocation = data.location-1;
         io.emit('checklocation', data);
     });
 
     socket.on('confirmlocation', function(data){
-        console.log('confirm the location',data);
+        logger.info('confirm the location',data);
         io.emit('confirmlocation',data);
     });
     socket.on('addlocalnote', function(data){
-        console.log('add local note',data);
+        logger.info('add local note',data);
         io.emit('addlocalnote', data);
     });
     socket.on('addcommonnote', function(data){
-        console.log('add common note',data);
+        logger.info('add common note',data);
         io.emit('addcommonnote', data);
     });
     socket.on('deletelocalnote', function(data){
-        console.log('delete local note',data);
+        logger.info('delete local note',data);
         io.emit('deletelocalnote', data);
     });
     socket.on('deletecommonnote', function(data){
-        console.log("delete common note",data);
+        logger.info("delete common note",data);
         io.emit('deletecommonnote', data);
     });
 
     socket.on('evaluate', function(data){
-        console.log('evaluate the location',data);
+        logger.info('evaluate the location',data);
         io.emit('evaluate', data);
     }); 
 
     socket.on('evalonshare', function(data){
-        console.log('evaluate the location on the shared display',data);
+        logger.info('evaluate the location on the shared display',data);
         io.emit('evalonshare', data);
     });
 });
