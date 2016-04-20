@@ -53,16 +53,21 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
             }
             $scope.$apply();
         })
-        socket.on('evalOnShare', function (data) {
+        socket.on('evalonshare', function (data) {
             // {group: $scope.groupNum, location: locationNum, cri: criNum, value: value}
             var location = data.location+1;
-            if($scope.groupNum !== data.group || $scope.currentLocation !== location) return;
+            if($scope.groupNum !== data.group && $scope.currentLocation !== location) return;
             $scope.evalVal[data.cri]=data.value;
             $scope.$apply();
         });
-        socket.on('agreeCri', function(){
-            $scope.crisStu.push($scope.newCri);
+        socket.on('agreecri', function(data){
+            if(data.group !== $scope.groupNum && data.player == $scope.player) return;
+            $scope.newCri = data.cri;
+            socket.emit('confirmcri', {group: $scope.groupNum, playeramount: DataService.group.studentamount});
         });
+        socket.on('successcri', function(){
+            $scope.crisStu.push($scope.newCri);
+        })
     };
     // load data, vote and note of a location
     checklocation = function(data){
@@ -105,7 +110,7 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
             name: $scope.currentCri,
             id:id
         };
-        socket.emit('addcri',{group: $scope.groupNum, cri: newCri});
+        socket.emit('addcri',{group: $scope.groupNum, cri: $scope.newCri, agree:1, player: $scope.player});
         $scope.currentCri = '';
     }
     // delete note on the common space
@@ -234,7 +239,7 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
         }
         // store new vote to db
         updateVote();
-        socket.emit('vote', {location: $scope.currentLocation, group: $scope.chosenNumber, player: $scope.player, id: id, votes: $scope.votes, value: $scope.voteVal});
+        socket.emit('vote', {location: $scope.currentLocation, group: $scope.groupNum, player: $scope.player, id: id, votes: $scope.votes, value: $scope.voteVal});
     }
     // init dialog when dom is ready
 	$timeout(function(){
