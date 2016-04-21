@@ -59,6 +59,7 @@ httpserver.listen(app.get('port'), function () {
 
 //socket
 var agree = [];
+var criid;
 var io = require('socket.io')(httpserver);
 io.on('connection', function (socket) {
     console.log("a new device is connected");
@@ -68,20 +69,19 @@ io.on('connection', function (socket) {
     });
     socket.on('addcri', function(data){
         logger.info('add a criteria',data);
+        agree[data.group]=0;
         io.emit('agreecri', data);
     });
     socket.on('confirmcri', function(data){
 
         logger.info('agree with criteria', data);
-        console.log(agree);
-        (agree[data.group] == undefined)?(agree[data.group]=1):(agree[data.group]++);
+        agree[data.group]++;
         console.log(agree);
         var playernum = data.playeramount-1;
 
         if(agree[data.group] == playernum){
             console.log("success");
             io.emit('successcri');
-            agree[data.group]=0;
         }
     })
     socket.on('deletecri', function(data){

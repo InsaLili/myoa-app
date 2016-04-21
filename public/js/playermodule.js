@@ -70,8 +70,15 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
         socket.on('successcri', function(){
             $scope.crisStu.push($scope.newCri);
             $scope.$apply();
-            
-        })
+
+        });
+        socket.on('deletecri', function (data){
+           if(data.group !== $scope.groupNum || data.player == $scope.player) return;
+           $scope.crisStu = $.grep($scope.crisStu, function(value) {
+                return value.id != data.id;
+            });
+           $scope.$apply();
+        });
     };
     // load data, vote and note of a location
     checklocation = function(data){
@@ -125,7 +132,7 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
         $scope.crisStu = $.grep($scope.crisStu, function(value) {
             return value.id != id;
         });
-        socket.emit('deletecri', {group: $scope.groupNum, id: id});
+        socket.emit('deletecri', {group: $scope.groupNum, id: id, player:$scope.player});
     }  
     // add note on the common space
     $scope.addCommonNote = function($event){
