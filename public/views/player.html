@@ -12,10 +12,11 @@
                 </div>
                 <div class="col-sm-7">
                     <!-- prpgress -->
-                    <!-- <div class="row" ng-if="person.progress==true">
-                        <div class="col-md-4">Progress</div>
+                    <div class="row" ng-show="device == 'person'">
+                        <div class="col-md-12"><h4>Badge</h4></div>
+                        <div class="col-md-12"><h4>Progress</h4></div>
                         <div class="col-md-8 progressbar"></div>
-                    </div> -->
+                    </div>
                 </div>
             </div>
             <div class="col-sm-4">
@@ -23,6 +24,10 @@
             </div>
             <div class="col-sm-4">
                 <!-- timer -->
+                <div class="row" ng-show="device == 'person'">
+                    <div class="col-md-4">Timer</div>
+                    <div class="col-md-8 progressbar"></div>
+                </div>
             </div>
         </div>
     </div>

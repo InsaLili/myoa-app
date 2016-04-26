@@ -1,8 +1,8 @@
 var playerModule = angular.module("PlayerModule", []);
 
 playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
-	var socket = io.connect('http://localhost:8000');
-    // var socket = io.connect('https://myoa.herokuapp.com');
+	// var socket = io.connect('http://localhost:8000');
+    var socket = io.connect('https://myoa.herokuapp.com');
 
     $scope.range = function(n) {
         return new Array(n);   
@@ -35,7 +35,7 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
         $scope.evalVal = [];
         $scope.markers = doc.mapstep1.markers;
         $scope.locationInfo = "hello lili";
-        $scope.person = doc.mapstep4.person;
+        $scope.device = doc.mapstep4.device;
         // $scope.like = false;
     } 
     // communication between devices
