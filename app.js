@@ -76,12 +76,11 @@ io.on('connection', function (socket) {
 
         logger.info('agree with criteria', data);
         agree[data.group]++;
-        console.log(agree);
         var playernum = data.playeramount-1;
 
         if(agree[data.group] == playernum){
             console.log("success");
-            io.emit('successcri');
+            io.emit('successcri',data);
         }
     })
     socket.on('deletecri', function(data){

@@ -51,5 +51,12 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
             data: {
               css: 'css/player.css'
             }
+        })
+        .state('teacher', {
+            url: '/teacher',
+            templateUrl: 'views/teacher.html',
+            data: {
+              css: 'css/player.css'
+            }
         })        
 });

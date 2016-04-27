@@ -59,3 +59,17 @@
 {"group":1,"id":"cri3/0.3948314400632513","player":1,"level":"info","message":"delete a criteria","timestamp":"2016-04-21T08:46:40.051Z"}
 {"group":1,"id":"cri1/0.23093597066824878","player":3,"level":"info","message":"delete a criteria","timestamp":"2016-04-21T09:52:07.787Z"}
 {"group":1,"id":"cri1/0.06651418142025145","player":1,"level":"info","message":"delete a criteria","timestamp":"2016-04-21T10:03:56.912Z"}
+{"group":3,"cri":{"name":"e","id":"cri1/0.08734034094530019"},"player":1,"level":"info","message":"add a criteria","timestamp":"2016-04-27T14:06:30.612Z"}
+{"group":3,"playeramount":"2","level":"info","message":"agree with criteria","timestamp":"2016-04-27T14:06:37.910Z"}
+{"group":3,"cri":{"name":"test","id":"cri2/0.37826447771516025"},"player":2,"level":"info","message":"add a criteria","timestamp":"2016-04-27T14:11:28.700Z"}
+{"group":3,"playeramount":"2","cri":{"name":"test","id":"cri2/0.37826447771516025"},"level":"info","message":"agree with criteria","timestamp":"2016-04-27T14:11:31.423Z"}
+{"group":3,"cri":{"name":"e","id":"cri1/0.6895974106132414"},"player":1,"level":"info","message":"add a criteria","timestamp":"2016-04-27T14:13:20.647Z"}
+{"group":3,"playeramount":"2","cri":{"name":"e","id":"cri1/0.6895974106132414"},"level":"info","message":"agree with criteria","timestamp":"2016-04-27T14:13:22.663Z"}
+{"group":3,"id":"cri1/0.6895974106132414","player":1,"level":"info","message":"delete a criteria","timestamp":"2016-04-27T14:13:43.543Z"}
+{"group":3,"id":"cri2/0.37826447771516025","player":1,"level":"info","message":"delete a criteria","timestamp":"2016-04-27T14:14:11.909Z"}
+{"group":3,"cri":{"name":"add","id":"cri2/0.34102836141873394"},"player":2,"level":"info","message":"add a criteria","timestamp":"2016-04-27T14:14:50.316Z"}
+{"group":3,"playeramount":"2","cri":{"name":"add","id":"cri2/0.34102836141873394"},"level":"info","message":"agree with criteria","timestamp":"2016-04-27T14:14:52.596Z"}
+{"group":3,"id":"cri2/0.34102836141873394","player":2,"level":"info","message":"delete a criteria","timestamp":"2016-04-27T14:15:33.058Z"}
+{"group":3,"cri":{"name":"sunlight","id":"cri1/0.43277177189359506"},"player":1,"level":"info","message":"add a criteria","timestamp":"2016-04-27T14:15:41.870Z"}
+{"group":3,"cri":{"name":"sunlight","id":"cri2/0.41996967250434514"},"player":2,"level":"info","message":"add a criteria","timestamp":"2016-04-27T14:15:52.960Z"}
+{"group":3,"playeramount":"2","cri":{"name":"sunlight","id":"cri2/0.41996967250434514"},"level":"info","message":"agree with criteria","timestamp":"2016-04-27T14:15:56.485Z"}

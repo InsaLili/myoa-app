@@ -1,8 +1,8 @@
 var playerModule = angular.module("PlayerModule", []);
 
 playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
-	// var socket = io.connect('http://localhost:8000');
-    var socket = io.connect('https://myoa.herokuapp.com');
+	var socket = io.connect('http://localhost:8000');
+    // var socket = io.connect('https://myoa.herokuapp.com');
 
     $scope.range = function(n) {
         return new Array(n);   
@@ -67,8 +67,8 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
             $('#agreeCri').dialog('open');
 
         });
-        socket.on('successcri', function(){
-            $scope.crisStu.push($scope.newCri);
+        socket.on('successcri', function(data){
+            $scope.crisStu.push(data.cri);
             $scope.$apply();
 
         });
@@ -281,7 +281,7 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
             buttons:{
                 "Yes": function(){
                     $(this).dialog("close");
-                    socket.emit('confirmcri', {group: $scope.groupNum, playeramount: DataService.group.studentamount});
+                    socket.emit('confirmcri', {group: $scope.groupNum, playeramount: DataService.group.studentamount, cri: $scope.newCri});
                 },
                 "No": function(){
                     $(this).dialog("close");

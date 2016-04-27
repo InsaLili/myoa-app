@@ -1,8 +1,8 @@
 var mapModule = angular.module("MapModule", ["leaflet-directive"]);
 
 mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
-    // var socket = io.connect('http://localhost:8000');
-    var socket = io.connect('https://myoa.herokuapp.com');
+    var socket = io.connect('http://localhost:8000');
+    // var socket = io.connect('https://myoa.herokuapp.com');
 
     $scope.range = function(n) {
         return new Array(n);   
@@ -169,7 +169,7 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         //------following parts realize the communication between pages
 
         // add criteria
-        socket.on('addcri', function (data){
+        socket.on('successcri', function (data){
            if(data.group !== $scope.groupNum) return;
            $scope.cris.student.push(data.cri);
            $scope.$apply();
