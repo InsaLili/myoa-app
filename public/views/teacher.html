@@ -1,0 +1,27 @@
+<div class="container" ng-controller="TeacherCtrl">
+	<h3>Class {{currentClass.number}}</h3>
+	<div class="group" ng-repeat="group in currentClass.groups track by $index">
+		<h4>Group: {{group.name}}</h4>
+		<div class="row">
+			<div class="col-md-3">
+				<p>Show notes :</p>
+			</div>
+			<div class="col-md-9">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Location</th>
+							<th ng-repeat="student in group.students">{{student}}</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="marker in markers track by $index">
+							<td>{{marker.name}}</td>
+							<td ng-repeat="i in range(group.studentamount) track by $index"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
