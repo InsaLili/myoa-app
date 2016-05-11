@@ -94,22 +94,22 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
     updateNote = function(){
         var db = new PouchDB('https://myoa.smileupps.com/user');
         
-        db.get('note_'+$scope.groupNum).then(function(doc){
-            return db.put({
-                notes:$scope.notes,
-                common:$scope.commonNotes
-            }, 'note_'+$scope.groupNum, doc._rev);
-        });
+        // db.get('note_'+$scope.groupNum).then(function(doc){
+        //     return db.put({
+        //         notes:$scope.notes,
+        //         common:$scope.commonNotes
+        //     }, 'note_'+$scope.groupNum, doc._rev);
+        // });
     }
     // update vote to the database
     updateVote = function(){
         var db = new PouchDB('https://myoa.smileupps.com/user');
 
-        db.get('vote_'+$scope.groupNum).then(function(doc){
-            return db.put({
-                votes:$scope.votes
-            }, 'vote_'+$scope.groupNum, doc._rev);
-        });
+        // db.get('vote_'+$scope.groupNum).then(function(doc){
+        //     return db.put({
+        //         votes:$scope.votes
+        //     }, 'vote_'+$scope.groupNum, doc._rev);
+        // });
     }
     $scope.addCri = function($event){
         if(!$scope.currentCri){
@@ -148,7 +148,7 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
         }
         $scope.commonNotes.push(currentCommonNote);
         $scope.currentCommonNote=undefined;
-        updateNote();
+        // updateNote();
         socket.emit('addcommonnote', {player: $scope.player, group: $scope.groupNum, notes:$scope.commonNotes});
     }    
     // add note on a location card
@@ -170,7 +170,7 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
     	}
     	$scope.notes.push(currentLocalNote);
     	$scope.currentLocalNote=undefined;
-    	updateNote();
+    	// updateNote();
     	socket.emit('addlocalnote', {player: $scope.player, group: $scope.groupNum, location:$scope.currentLocation, notes:$scope.notes});
     }
     // delete note on the common space
@@ -182,7 +182,7 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
             return value.id != id;
         });
         // update database
-        updateNote();
+        // updateNote();
         socket.emit('deletecommonnote', {player: $scope.player, group: $scope.groupNum, notes:$scope.commonNotes});
     }    // delete note on a location card
     $scope.deleteLocalNote = function($event){
@@ -193,7 +193,7 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
 		 	return value.id != id;
 		});
         // update database
-		updateNote();
+		// updateNote();
     	socket.emit('deletelocalnote', {player: $scope.player, group: $scope.groupNum, location:$scope.currentLocation, notes:$scope.notes});
     }
     // submit evaluation of one location
@@ -218,39 +218,6 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
         // store new vote to db
         // updateVote();
         socket.emit('evaluate', {group: $scope.groupNum, location: $scope.currentLocation, cri:index, player: $scope.player, newvote:newVote, value: value});
-    }
-    $scope.updateHeart = function(){
-        if(!$scope.currentLocation){
-            $('#chooseLocationDlg').dialog('open');
-            return;
-        }
-        if($scope.voteVal == 0){
-            $scope.voteVal++;
-        }else{
-            $scope.voteVal--;
-        }
-        // update $scope.votes
-        var id = $scope.player+'/'+$scope.currentLocation;
-        var vote = $.grep($scope.votes, function(value) {
-            return value.id == id;
-        });
-        // if the vote already exists, update the vote value;
-        // if not, push a new vote object to the votes array
-        if(vote.length>0){
-            var index = $scope.votes.indexOf(vote[0]);
-            $scope.votes[index].vote = $scope.voteVal;
-        }else {
-            var newVote={
-                id: id,
-                player: $scope.player,
-                location: $scope.currentLocation,
-                vote: $scope.voteVal
-            }
-            $scope.votes.push(newVote);
-        }
-        // store new vote to db
-        updateVote();
-        socket.emit('vote', {location: $scope.currentLocation, group: $scope.groupNum, player: $scope.player, id: id, votes: $scope.votes, value: $scope.voteVal});
     }
     // init dialog when dom is ready
 	$timeout(function(){
