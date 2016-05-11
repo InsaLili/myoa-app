@@ -187,7 +187,12 @@
         </div>
         <div ng-repeat="info in infos">
             <div class="infoDlg" id="infoDlg{{$index}}" title="{{info.name}}">
-                <h4>{{info.data}}</h4>
+                <div ng-if="info.type == 'text'">
+                    <h4>{{info.text}}</h4>
+                </div>
+                <div ng-if="info.type == 'img'">
+                    <img src="{{info.photo}}" alt="information photo">
+                </div>
             </div>
         </div>
     </div>
