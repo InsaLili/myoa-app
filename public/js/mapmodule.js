@@ -672,12 +672,10 @@ mapModule.controller("MapCtrl", [ "$scope", "$http", "DataService",function($sco
         var doc = DataService.app;
         $scope.map = doc.mapstep1.map;
         $scope.markers = doc.mapstep1.markers;
-        $scope.commonspace = doc.mapstep4.share.commonspace;
         var studentAmount = parseInt(DataService.group.studentamount);
         var locationAmount = $scope.markers.length;
-        var browse = doc.mapstep4.share.browse;
+        var devicecompo = doc.mapstep4.device;
 
-        // $scope.commonSpace = mapsetting.additional.commonspace;
         angular.extend($scope, {
             tiles: {
                 name: 'MYOA',
@@ -695,8 +693,8 @@ mapModule.controller("MapCtrl", [ "$scope", "$http", "DataService",function($sco
             if($scope.markers[i].photo !== undefined){
                 message += '<img class="markerImg" src="'+$scope.markers[i].photo+'" />';
             }
-            // if let students browse information on markers, then hide the avatar inside the marker
-            if(browse == true){
+            // when only has the large display, hide the avatar in the marker;; to be improved
+            if(devicecompo == "large"){
                 message += '<p class="markerInfo">'+$scope.markers[i].data+'</p>';
             }else{
                 for(var j=1; j<=studentAmount;j++){

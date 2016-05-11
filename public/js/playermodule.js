@@ -25,8 +25,9 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
         ($scope.steps.s1.eval)?($scope.evaltype = $scope.steps.s1.eval):($scope.evaltype = "group");
 
         $scope.crisTea = doc.mapstep1.cris.teacher;
+        ($scope.crisTea.length>0)?($scope.crisTeaExist = true):($scope.crisTeaExist = false);
         $scope.crisStu = doc.mapstep1.cris.student;
-        $scope.cris = $scope.crisTea.concat($scope.crisStu);
+        // $scope.cris = $scope.crisTea.concat($scope.crisStu);
         $scope.notes=[];
         $scope.commonNotes=[];
         // $scope.notes = DataService.notes.rows[DataService.groupNum-1].doc.notes;
@@ -204,16 +205,16 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
         }
         var newVote;
         if($scope.evalVal[index] == undefined){
+            $scope.evalVal[index] = value;
             // clone the evalVal array
             var newarray = $scope.evalVal.slice(0);
-            // 
-            newarray.splice(index,1);
+            // check if there is null in other array
             var nullExist = newarray.reduce(function(a,b){return a&&b;});
             (nullExist == null)?(newVote = false):(newVote = true);
         }else{
+            $scope.evalVal[index] = value;
             newVote = false;
         }
-        $scope.evalVal[index] = value;
                
         // store new vote to db
         // updateVote();

@@ -68,7 +68,7 @@
         <span class="glyphicon glyphicon-heart" ng-if="add.eval == 'heart'" ng-class="{true: 'heart', false: 'grey'}[voteVal>0]" ng-click="updateHeart()"></span>
 
         <div class="rating">
-            <div class="col-sm-6">
+            <div class="col-sm-6" ng-if="crisTeaExist">
                 <p>Predefined criteria</p>
                 <div ng-repeat="cri in crisTea">
                     <div class="row">

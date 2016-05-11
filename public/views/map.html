@@ -96,7 +96,7 @@
                 </div> 
                 <!-- config evaluation type -->
                 <div class="vote" id="vote{{$index+1}}">
-                    <h4>Évaluation for criteria:</h4>
+                    <h4>Évaluation:</h4>
                     <!-- when doing evaluation on personal device, shared display only show the eval results -->
                     <div ng-if="crisTea == 0 && steps.s0.exist == false">
                         <span class="glyphicon glyphicon-star grey" ng-repeat="i in range(steps.s1.scale) track by $index" ng-class="{true: 'star', false: 'grey'}[evalVal[$parent.$parent.$index]>$index]" ng-click="!clickStar||changeEval($parent.$parent.$parent.$index,$parent.$parent.$index,$index+1)"></span><span class="label label-default caption" ng-hide="evaltype == 'individual' && currentStep == 1">{{evalVal[$parent.$index]}}</span>
@@ -147,7 +147,7 @@
                 </div>
             </div>
         </div>
-        <div id="commonSpace" ng-if="shareDis.commonspace == true">
+        <div id="commonSpace">
             <div id="commonTitle">
                     <h3>Shared comments space</h3>
             </div>
