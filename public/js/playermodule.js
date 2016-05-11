@@ -69,6 +69,7 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
 
         });
         socket.on('successcri', function(data){
+            if(data.group !== $scope.groupNum) return;
             $scope.crisStu.push(data.cri);
             $scope.$apply();
 

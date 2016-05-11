@@ -72,6 +72,7 @@ io.on('connection', function (socket) {
         agree[data.group]=0;
         io.emit('agreecri', data);
     });
+    // add group 
     socket.on('confirmcri', function(data){
 
         logger.info('agree with criteria', data);
