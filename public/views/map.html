@@ -18,11 +18,12 @@
             <h3 ng-bind="groupName"></h3>
             <div class="row">
                 <div class="players col-md-10" ng-model="avatarWidth">
-                    <div class="player col-md-{{avatarWidth}}" ng-repeat="i in range(studentAmount) track by $index">
+                    <div class="player col-md-{{avatarWidth}}" ng-repeat="student in students track by $index">
                         <div class="avatars">
                             <img src="img/player{{$index+1}}.png">
+                            <p ng-bind="student" class="studentName"></p>
                         </div>
-                        <div ng-if="indiStu.badge.comment !== undefined" id="badgeSpace">
+                        <div ng-if="indiStu.badge.comment !== undefined" class="badgeSpace">
                             <p>Comment badge</p>
                             <div class="noteBadge" ng-if="studentNotes[$index]>=indiStu.badge.comment">
                                 <img src="img/badgeNote-show.png">

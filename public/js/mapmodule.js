@@ -16,6 +16,8 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         $scope.groupNum = DataService._indexGroup+1;
         // get current group names
         $scope.groupName = DataService.group.name;
+        // get students' names
+        $scope.students = DataService.group.students;
         // get student amount
         $scope.studentAmount = parseInt(DataService.group.studentamount);
         // caculate avatar width based on student amount

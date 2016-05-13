@@ -7,6 +7,7 @@ appSetModule.service('DataService', function(){
 
 appSetModule.controller('ShareCtrl', function($scope, DataService) {
     getDeploy = function(){
+        $scope.dbsuccess = false;
         var db = new PouchDB('https://myoa.smileupps.com/user');
         db.get('setting').then(function (docs) {
             // handle result
@@ -18,6 +19,8 @@ appSetModule.controller('ShareCtrl', function($scope, DataService) {
             var apps = new PouchDB('https://myoa.smileupps.com/myoa');
             apps.get($scope.deploy.app).then(function(doc){
                 DataService.app = doc;
+                $scope.dbsuccess = true;
+                $scope.$apply();
             }).catch(function (err) {
                 console.log(err);
             });
@@ -26,8 +29,8 @@ appSetModule.controller('ShareCtrl', function($scope, DataService) {
         }); 
     }
     $scope.chooseGroup = function (event,index){
-        $('.groupBtn').removeClass('active');
-        $(event.target).addClass('active');
+        // $('.groupBtn').removeClass('active');
+        // $(event.target).addClass('active');
         DataService._indexGroup = index;
         DataService.group = $scope.currentClass.groups[index];
     }

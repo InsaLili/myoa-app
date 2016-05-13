@@ -104,6 +104,10 @@ p{
 .avatars img{
     width: 70px;
     height: 70px;
+    margin-left: 5px;
+}
+.studentName{
+    text-align: center;
 }
 .noteBadge{
     float: left;
@@ -112,8 +116,9 @@ p{
 .noteBadge img{
     width: 100%;
 }
-#badgeSpace{
-    max-width: 180px;
+.badgeSpace{
+    float: left;
+    width: 70px;
 }
 #leaderboard .progressbars{
     float: left;
@@ -127,7 +132,7 @@ p{
     float: left;
     padding-left: 0;
     padding-right: 0;
-    margin-top: 2px;
+    margin-top: 12px;
 }
 #progressbar1 .ui-widget-header{
     border: 1px solid #009688;
