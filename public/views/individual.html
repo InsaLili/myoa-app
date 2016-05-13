@@ -9,7 +9,7 @@
 	<div class="col-md-offset-4 col-md-4" ng-show="dbsuccess == false">
 		<h4><i>(Waiting for loading group information...)</i></h4>
 	</div>
-	<div ng-show="dbsuccess == false">
+	<div ng-show="dbsuccess == true">
 		<div class="col-sm-offset-4 col-sm-4">
 			<div class="docList" ng-repeat="group in currentClass.groups track by $index">
 	        <button class="btn btn-default btn-lg groupBtn" ng-click="chooseGroup($event, $index)">{{group.name}}</button>
