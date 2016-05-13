@@ -40,6 +40,7 @@ appSetModule.controller('ShareCtrl', function($scope, DataService) {
 
 appSetModule.controller('IndividualCtrl', function($scope, DataService) {
     getDeploy = function(){
+        $scope.dbsuccess = false;
         var db = new PouchDB('https://myoa.smileupps.com/user');
         db.get('setting').then(function (docs) {
             // handle result
@@ -51,6 +52,8 @@ appSetModule.controller('IndividualCtrl', function($scope, DataService) {
             var apps = new PouchDB('https://myoa.smileupps.com/myoa');
             apps.get($scope.deploy.app).then(function(doc){
                 DataService.app = doc;
+                $scope.dbsuccess = true;
+                $scope.$apply();
             }).catch(function (err) {
                 console.log(err);
             });
