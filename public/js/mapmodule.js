@@ -1,6 +1,6 @@
 var mapModule = angular.module("MapModule", ["leaflet-directive"]);
 
-mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
+mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
     // var socket = io.connect('http://localhost:8000');
     var socket = io.connect('https://myoa.herokuapp.com');
 
@@ -8,10 +8,9 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         return new Array(n);   
     }
     //!!!!todo,delete some var
-    getAppData = function(){
-        var doc = DataService.app;
+    getInfo = function(){
         // get location amount
-        $scope.locationAmount = doc.mapstep1.markers.length;
+        $scope.locationAmount = DataService.app.mapstep1.markers.length;
         // get group number
         $scope.groupNum = DataService._indexGroup+1;
         // get current group names
@@ -22,24 +21,37 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         $scope.studentAmount = parseInt(DataService.group.studentamount);
         // caculate avatar width based on student amount
         $scope.avatarWidth = Math.round(12/$scope.studentAmount);
-        // get markers
-        $scope.markers = doc.mapstep1.markers;
+        
+        // get votes
+        $scope.votes = [];
+        // store the number of evaluated location of each student
+        $scope.evalAmount=[];
+        // store notes
+        $scope.notes = [];
+        $scope.commonNotes = [];
+        // get relevant information
+        $scope.infos = DataService.app.mapstep1.infos;
+        // check device
+        $scope.shareDis = DataService.app.mapstep4.share;
+
+    }
+    getMarkers = function(){
+      // get markers
+        $scope.markers = DataService.app.mapstep1.markers;
         // get symbol of each location, and change lower case to upper case
         for(var i=0; i<$scope.locationAmount;i++){
             $scope.markers[i].symbol = $scope.markers[i].icon.icon;
             if(isNaN($scope.markers[i].icon.icon)){
                 $scope.markers[i].symbol = $scope.markers[i].symbol.toUpperCase();
             }
-        }
-        // get student indicators
-        $scope.indiStu = doc.mapstep3.indiStu;
-        // check device
-        $scope.shareDis = doc.mapstep4.share;
+        }  
+    }
+    getSteps = function(){
         // get the type of sequence, and set steps based on the sequence type
-        $scope.seqtype = doc.mapstep2.seqtype;
+        $scope.seqtype = DataService.app.mapstep2.seqtype;
         if($scope.seqtype == "restricted"){
             // rebuild steps
-            $scope.steps = doc.mapstep2.reseq;
+            $scope.steps = DataService.app.mapstep2.reseq;
             if($scope.steps.s3.exist == false){
                 delete $scope.steps.s3;
             }else{
@@ -58,7 +70,7 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
             ($scope.steps.s1.alter !== "one")?($scope.chosenNum = []):null;
 
         }else{
-            $scope.steps = doc.mapstep2.unseq;
+            $scope.steps = DataService.app.mapstep2.unseq;
             delete $scope.indiStu.timerValue[3];
             if($scope.steps.s2.exist == false){
                 delete $scope.steps.s2;
@@ -70,10 +82,14 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
             // build an array to store chosen locations
             $scope.chosenNum = []
         }
+    }
+    getCris = function(){
         // get criterias
-        $scope.cris = doc.mapstep1.cris;
+        $scope.cris = DataService.app.mapstep1.cris;
         $scope.crisTea = $scope.cris.teacher.length;
         $scope.cris.num = $scope.crisTea;
+    }
+    getEvalConfig = function(){
         // get steps and evalate on which device
         ($scope.steps.s1.eval)?($scope.evaltype = $scope.steps.s1.eval):($scope.evaltype = "group");
         // judge on which device to make the evaluation
@@ -98,26 +114,33 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         // when there is no s0, structure evalVal
         if($scope.steps.s0 == undefined){
             $scope.cris.num = $scope.cris.teacher.length;
-            // 没有cris的时候，votes为一维数组
-            if($scope.cris.num == 0){
-                $scope.evalVal.length = $scope.locationAmount;
-            }else{
-                // 有多个cris的时候，votes为二维数组，x维是location，y维是cris
-                for(var j=0; j<$scope.locationAmount;j++){
-                    var cris = [];
-                    // if evluating individually, add the player dimention to the array
-                    if($scope.evaltype=="individual"){
+
+            // if($scope.cris.num == 0){
+            //     $scope.evalVal.length = $scope.locationAmount;
+            // }else{
+            for(var j=0; j<$scope.locationAmount;j++){
+                var cris = [];
+                // if evluating individually, add the player dimention to the array
+                if($scope.evaltype=="individual"){
+                    // when no predefined cris, evalVal[location][0][player]
+                    if($scope.cris.num == 0){
+                        var crisplayer = [];
+                        crisplayer.length = $scope.studentAmount;
+                        cris.push(crisplayer);
+                    }else{
+                        // 有多个cris的时候，evalVal[location][cri][player]
                         for(var k=0;k<$scope.cris.num;k++){
                             var crisplayer = [];
                             crisplayer.length = $scope.studentAmount;
                             cris.push(crisplayer);
                         }
-                    }else{
-                        cris.length = $scope.cris.num;
                     }
-                    $scope.evalVal.push(cris);
+                }else{
+                    cris.length = $scope.cris.num;
                 }
+                $scope.evalVal.push(cris);
             }
+            // }
             // set the number of the current step, 不让学生添加cris的时候第一步为1
             $scope.currentStep = 1;
         }else{
@@ -126,33 +149,12 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         }
         // 判断什么时候可以点击公共屏幕上的星星
         ($scope.evalDevice == "share" && $scope.currentStep==1)?($scope.clickStar = true):($scope.clickStar=false);
-
-        // get votes
-        $scope.votes = [];
-        // $scope.votes = DataService.votes.rows[$scope.groupNum-1].doc.votes;
-        // when the votes is empty, rebuild it
-        // actually, we always need to rebuild the array as the cris might be changed which would influence the dimention of votes
-
-        // store the number of evaluated location of each student
-        $scope.evalAmount=[];
-
-        // get notes
-        // $scope.notes = DataService.notes.rows[$scope.groupNum-1].doc.notes;
-        // get common notes
-        // $scope.commonNotes = DataService.notes.rows[$scope.groupNum-1].doc.common;
-        $scope.notes = [];
-        $scope.commonNotes = [];
+    }
+    getIncidator = function(){
+        // get student indicators
+        $scope.indiStu = DataService.app.mapstep3.indiStu;
         // badge的配置
-        // $scope.badge = doc.mapstep3.badge;
         ($scope.indiStu.badge.timer)?($scope.timerWin = []):null;
-
-
-
-        
-        // get relevant information
-        $scope.infos = doc.mapstep1.infos;
-
-        
         // get timer badge number
         var timerBadgeNum = function(){
             var time=0;
@@ -165,6 +167,42 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         }
 
         $scope.badgeWidth = 12/timerBadgeNum();
+    }
+    configMap = function(){
+        $scope.map = DataService.app.mapstep1.map;
+        var devicecompo = DataService.app.mapstep4.device;
+        angular.extend($scope, {
+            tiles: {
+                name: 'MYOA',
+                url: 'https://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
+                type: 'xyz',
+                options: {
+                    apikey: 'pk.eyJ1IjoiaW5zYWxpbGkiLCJhIjoickF1VzlYVSJ9.JH9ZrV76fbU5Ub9ZgBhNCw',
+                    mapid: 'insalili.meikk0a8'
+                }
+            }
+        });
+        for(var i=0; i<$scope.locationAmount;i++){
+            var num = i+1;
+            var message = '<div id="marker'+num+'" class="mapMarker"><h3>'+$scope.markers[i].name+'</h3>';
+            if($scope.markers[i].photo !== undefined){
+                message += '<img class="markerImg" src="'+$scope.markers[i].photo+'" />';
+            }
+            // when only has the large display, hide the avatar in the marker;; to be improved
+            if(devicecompo == "large"){
+                message += '<p class="markerInfo">'+$scope.markers[i].data+'</p>';
+            }else{
+                for(var j=1; j<=$scope.studentAmount;j++){
+                    message += '<button type="button" class="btn player'+j+' markerBtn" ng-click="checkLocation($event,'+num+','+j+')"><img src="/img/player'+j+'.png"></button>'
+                }
+            }
+            message += '</div>';
+            $scope.markers[i].getMessageScope = function(){return $scope;};
+            $scope.markers[i].message = message;
+            $scope.markers[i].compileMessage = true;
+            $scope.markers[i].draggable = false;
+
+        }
     }
 
     serviceInit = function(){
@@ -401,10 +439,6 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
         // update current number of evaluated locations
         $scope.currentEval++;
     }
-    updateHeart = function(data){
-        $scope.evalVal[data.location-1][data.player-1] = data.value;
-        $scope.$apply();
-    }
     updateStep = function($event,index,step){
         // change the check mark
         var element = $event.target.parentElement;
@@ -620,7 +654,13 @@ mapModule.controller('DOMCtrl', function($scope, $timeout, DataService){
     }
     init = function(){
         // get data and initialize service
-        getAppData();
+        getInfo();
+        getMarkers();
+        getSteps();
+        getCris();
+        getEvalConfig();
+        getIncidator();
+        configMap();
         serviceInit();
         attachNotes();
     }
@@ -669,47 +709,16 @@ mapModule.controller("MapCtrl", [ "$scope", "$http", "DataService",function($sco
     // var socket = io.connect('https://localhost:8000');
     var socket = io.connect('https://myoa.herokuapp.com');
 
-
     getAppData = function(){
         var doc = DataService.app;
         $scope.map = doc.mapstep1.map;
         $scope.markers = doc.mapstep1.markers;
+        $scope.groupNum = DataService._indexGroup+1;
+
         var studentAmount = parseInt(DataService.group.studentamount);
         var locationAmount = $scope.markers.length;
         var devicecompo = doc.mapstep4.device;
 
-        angular.extend($scope, {
-            tiles: {
-                name: 'MYOA',
-                url: 'https://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
-                type: 'xyz',
-                options: {
-                    apikey: 'pk.eyJ1IjoiaW5zYWxpbGkiLCJhIjoickF1VzlYVSJ9.JH9ZrV76fbU5Ub9ZgBhNCw',
-                    mapid: 'insalili.meikk0a8'
-                }
-            }
-        });
-        for(var i=0; i<locationAmount;i++){
-            var num = i+1;
-            var message = '<div id="marker'+num+'" class="mapMarker"><h3>'+$scope.markers[i].name+'</h3>';
-            if($scope.markers[i].photo !== undefined){
-                message += '<img class="markerImg" src="'+$scope.markers[i].photo+'" />';
-            }
-            // when only has the large display, hide the avatar in the marker;; to be improved
-            if(devicecompo == "large"){
-                message += '<p class="markerInfo">'+$scope.markers[i].data+'</p>';
-            }else{
-                for(var j=1; j<=studentAmount;j++){
-                    message += '<button type="button" class="btn player'+j+' markerBtn" ng-click="checkLocation($event,'+num+','+j+')"><img src="/img/player'+j+'.png"></button>'
-                }
-            }
-            message += '</div>';
-            $scope.markers[i].getMessageScope = function(){return $scope;};
-            $scope.markers[i].message = message;
-            $scope.markers[i].compileMessage = true;
-            $scope.markers[i].draggable = false;
-
-        }
     }
 
     $scope.checkLocation = function($event,marker,player){

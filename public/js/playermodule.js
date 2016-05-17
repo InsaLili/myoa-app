@@ -25,7 +25,6 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
         ($scope.steps.s1.eval)?($scope.evaltype = $scope.steps.s1.eval):($scope.evaltype = "group");
 
         $scope.crisTea = doc.mapstep1.cris.teacher;
-        ($scope.crisTea.length>0)?($scope.crisTeaExist = true):($scope.crisTeaExist = false);
         $scope.crisStu = doc.mapstep1.cris.student;
         // $scope.cris = $scope.crisTea.concat($scope.crisStu);
         $scope.notes=[];
@@ -205,6 +204,7 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
             return;
         }
         var newVote;
+        
         if($scope.evalVal[index] == undefined){
             $scope.evalVal[index] = value;
             // clone the evalVal array

@@ -429,7 +429,7 @@ p{
     height: 62px;
 }
 #map button img{
-    width: 100%;
+    /*width: 100%;*/
     height: 100%;
 }
     /*.leaflet-popup-content-wrapper{*/
