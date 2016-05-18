@@ -92,6 +92,8 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
     getEvalConfig = function(){
         // get steps and evalate on which device
         ($scope.steps.s1.eval)?($scope.evaltype = $scope.steps.s1.eval):($scope.evaltype = "group");
+        // check device
+        $scope.shareDis = DataService.app.mapstep4.share;
         // judge on which device to make the evaluation
         if($scope.evaltype == "individual"){
             $scope.evalDevice = "person";
@@ -101,7 +103,7 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
             $scope.currentEval = 0;
         }else{
             // evalVal are configed when each alternative would be evaluated once
-            if($scope.shareDis.eval==true){
+            if($scope.shareDis=="both"){
                 $scope.evalDevice = "share";
             }else{
                 $scope.evalDevice = "person";
