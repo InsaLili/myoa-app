@@ -104,14 +104,14 @@
                     </div>
                     <div class="row">
                         <div ng-show="crisTea !== 0" class="cris col-md-12">
-                            <div class="col-md-12">
+                            <!-- <div class="col-md-12">
                                 Predefined criteria
-                            </div>
+                            </div> -->
                             <div class="col-md-12" ng-repeat="cri in cris.teacher">
                                 <!-- <label>{{cri.name}}</label> -->
                                 <div class="row">
-                                    <span class="label criName col-md-3">{{cri.name}}</span>
-                                    <div class="col-md-8">
+                                    <span class="label criName col-md-12">{{cri.name}}</span>
+                                    <div class="col-md-12 stars">
                                         <span class="glyphicon glyphicon-star grey" ng-repeat="i in range(steps.s1.scale) track by $index" ng-class="{true: 'star', false: 'grey'}[evalVal[$parent.$parent.$index][$parent.$index]>$index]" ng-click="!clickStar||changeEval($parent.$parent.$index,$parent.$index,$index+1)"></span><span class="label label-default caption" ng-hide="evaltype == 'individual' && currentStep == 1">{{evalVal[$parent.$index][$index]}}</span>
                                     </div>
                                 </div>

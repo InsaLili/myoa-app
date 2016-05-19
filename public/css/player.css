@@ -56,8 +56,8 @@ p, table{
 .item{
     border-bottom: 1px solid #009688;
 }
-.commentSpace{
-    height: 200px;
+#evaluation{
+    padding: 10px;
 }
 
 #markerSpace{
@@ -74,7 +74,7 @@ p, table{
 .criName{
     color: #616161;
     font-size: 85%;
-    text-align: right;
+    text-align: left;
     margin-top: 5px;
     margin-left: 10px;
 }
