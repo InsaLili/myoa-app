@@ -77,7 +77,7 @@
                 <div ng-repeat="cri in crisTea">
                     <div class="row">
                         <span class="label criName col-sm-12">{{cri.name}}</span>
-                        <div class="col-sm-12">
+                        <div class="col-sm-12 stars">
                             <span class="glyphicon glyphicon-star grey" ng-repeat="i in range(steps.s1.scale) track by $index" ng-class="{true: 'star', false: 'grey'}[evalVal[$parent.$index]>$index]" ng-click="changeEval($parent.$index,$index+1)"></span><span class="label label-default caption">{{evalVal[$index]}}</span>
                         </div>
                     </div>

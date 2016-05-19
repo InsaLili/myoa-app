@@ -59,7 +59,9 @@ p, table{
 #evaluation{
     padding: 10px;
 }
-
+.stars{
+    margin-bottom: 5px;
+}
 #markerSpace{
     float: left;
     height: 750px;
