@@ -8,7 +8,7 @@
                     <!-- <img src="img/info.png" alt="info"> -->
                     <span class="glyphicon glyphicon-info-sign"></span>
                 </button>
-                <ul class="dropdown-menu col-md-12" aria-labelledby="dropdownMenu1">
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                     <li ng-repeat="info in infos"><a id="info{{$index}}" ng-click="getInfo($index)">{{info.name}}</a></li>
                 </ul>
             </div>
@@ -150,7 +150,7 @@
         </div>
         <div id="commonSpace">
             <div id="commonTitle">
-                    <h3>Shared comments space</h3>
+                    <h3>Shared comments</h3>
             </div>
             <div id="commonContent">
                 <div>
@@ -168,7 +168,7 @@
         <div ng-repeat="step in steps">
             <div id="dialog{{$index}}" class="dialog" title="Consignes">
                 <h4>Étape {{$index+1}} :</h4>
-                <h4>
+                <h4 style="white-space: pre;">
                     {{step.dlg}}
                 </h4>
                 <h4 ng-if="indiStu.timers[currentStep]">
@@ -189,10 +189,13 @@
         <div ng-repeat="info in infos">
             <div class="infoDlg" id="infoDlg{{$index}}" title="{{info.name}}">
                 <div ng-if="info.type == 'text'">
-                    <h4>{{info.text}}</h4>
+                    <h4 style="white-space: pre;">{{info.text}}</h4>
                 </div>
-                <div ng-if="info.type == 'img'">
+                <div ng-if="info.type == 'img'" class="dlgFullScreen">
                     <img src="{{info.photo}}" alt="information photo">
+                </div>
+                <div ng-if="info.type =='link'" class="dlgFullScreen">
+                    <iframe ng-src="{{info.link | trustAsResourceUrl}}" class="dlgFullScreen"></iframe>
                 </div>
             </div>
         </div>

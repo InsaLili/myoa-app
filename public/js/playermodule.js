@@ -34,7 +34,7 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
         // $scope.voteValue = DataService.votes.rows[DataService.groupNum-1].doc.votes;
         $scope.evalVal = [];
         $scope.markers = doc.mapstep1.markers;
-        $scope.locationInfo = "hello lili";
+        $scope.locationInfo = "(Choose a location on the shared display.)";
         $scope.device = doc.mapstep4.device;
         // $scope.like = false;
     } 
@@ -55,8 +55,7 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
         })
         socket.on('evalonshare', function (data) {
             // {group: $scope.groupNum, location: locationNum, cri: criNum, value: value}
-            var location = data.location+1;
-            if($scope.groupNum !== data.group || $scope.currentLocation !== location) return;
+            if($scope.groupNum !== data.group || $scope.currentLocation !== data.location) return;
             $scope.evalVal[data.cri]=data.value;
             $scope.$apply();
         });
@@ -80,11 +79,22 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
             });
            $scope.$apply();
         });
+        // in a "group" evaluation mode, when one player submits a eval, other players who's having the same location on the tablet should also receive an updated eval
+        socket.on('evaluate', function(data){
+            if($scope.evaltype == "individual") return;
+
+            if($scope.groupNum !== data.group || $scope.currentLocation !== data.location) return;
+            $scope.evalVal[data.cri]=data.value;
+            $scope.$apply();
+        })
     };
     // load data, vote and note of a location
     checklocation = function(data){
 		if(data.player == $scope.player){
             $scope.currentLocation = data.location;
+            var symbol = $scope.markers[$scope.currentLocation-1].icon.icon;
+            var name = $scope.markers[$scope.currentLocation-1].name;
+            $scope.locationTitle = symbol + ". " + name;
             $scope.locationInfo = $scope.markers[$scope.currentLocation-1].data;
             var id = $scope.player+'/'+$scope.currentLocation;
             $scope.evalVal = data.vote;
@@ -204,7 +214,7 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
             return;
         }
         var newVote;
-        
+
         if($scope.evalVal[index] == undefined){
             $scope.evalVal[index] = value;
             // clone the evalVal array

@@ -1,5 +1,11 @@
 var mapModule = angular.module("MapModule", ["leaflet-directive"]);
 
+mapModule.filter('trustAsResourceUrl', ['$sce', function($sce) {
+    return function(val) {
+        return $sce.trustAsResourceUrl(val);
+    };
+}]);
+
 mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
     // var socket = io.connect('http://localhost:8000');
     var socket = io.connect('https://myoa.herokuapp.com');
@@ -96,18 +102,10 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
         $scope.shareDis = DataService.app.mapstep4.share;
         // judge on which device to make the evaluation
         if($scope.evaltype == "individual"){
-            $scope.evalDevice = "person";
-
             // caculate the needed number of evaluation in restricted/individual type
             $scope.needEvals = $scope.studentAmount * $scope.locationAmount;
             $scope.currentEval = 0;
         }else{
-            // evalVal are configed when each alternative would be evaluated once
-            if($scope.shareDis=="both"){
-                $scope.evalDevice = "share";
-            }else{
-                $scope.evalDevice = "person";
-            }
             // caculate the needed number of evaluation in restricted/individual type
             $scope.needEvals = $scope.locationAmount;
             $scope.currentEval = 0;
@@ -150,7 +148,7 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
             $scope.currentStep = 0;
         }
         // 判断什么时候可以点击公共屏幕上的星星
-        ($scope.evalDevice == "share" && $scope.currentStep==1)?($scope.clickStar = true):($scope.clickStar=false);
+        ($scope.evaltype == "group" && $scope.currentStep==1)?($scope.clickStar = true):($scope.clickStar=false);
     }
     getIncidator = function(){
         // get student indicators
@@ -393,8 +391,8 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
         $(".infoDlg").dialog({
             autoOpen: false,
             resizable: true,
-            width:600,
-            height:420,
+            width:800,
+            height:800,
             modal: false,
             buttons: {
                 "OK": function() {
@@ -413,13 +411,6 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
                 startTime: timerValue
             });
         }
-        // if($scope.steps[num].timer == 'true'){
-        //     $('#timer'+step).countdown({
-        //         image: "/img/digits.png",
-        //         format: "mm:ss",
-        //         startTime: $scope.steps[num].timerval
-        //     });
-        // }
     }
     updateProg = function(data){
         var location = data.location;
@@ -553,7 +544,7 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
                 case 0:
                     updateStep($event,index,step);
                     // make stars clickable when students are allowed to evaluate on the shared display
-                    ($scope.evalDevice == "share")?($scope.clickStar = true):null;
+                    ($scope.evaltype == "group")?($scope.clickStar = true):null;
                     // get the length of the current criteria
                     $scope.cris.num = $scope.cris.teacher.length+$scope.cris.student.length;
                     for(var j=0; j<$scope.locationAmount;j++){
@@ -605,7 +596,8 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
         }else{
             $scope.evalVal[locationNum][criNum] = value;
         }
-        socket.emit('evalOnShare', {group: $scope.groupNum, location: locationNum, cri: criNum, value: value});
+        var location = locationNum+1;
+        socket.emit('evalonshare', {group: $scope.groupNum, location: location, cri: criNum, value: value});
     }
     $scope.checkLocation = function($event,marker,player){
         var socket = io.connect('https://myoa.herokuapp.com');

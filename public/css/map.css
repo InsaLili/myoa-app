@@ -125,9 +125,10 @@ p{
     height: 100%;
     border-radius: 5px;
     margin-left: 10px;
-
 }
-
+#groupProgress p{
+    margin-top: 10px;
+}
 #leaderboard .progressbar{
     float: left;
     padding-left: 0;
@@ -506,4 +507,8 @@ p{
 }
 .leaflet-control-zoom{
     visibility: hidden;
+}
+.dlgFullScreen{
+    height: 100%;
+    width: 100%;
 }

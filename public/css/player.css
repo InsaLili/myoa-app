@@ -36,7 +36,7 @@ p, table{
     box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.3);
 }
 #personalMenu{
-    height: 120px;
+    /*height: 120px;*/
 }
 .identity{
     width: 100%;
@@ -54,10 +54,11 @@ p, table{
     margin-top: 10px;
 }
 .item{
-    border-bottom: 1px solid #009688;
+    border-bottom: 3px solid #E0E0E0;
 }
-#evaluation{
-    padding: 10px;
+.block{
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 .stars{
     margin-bottom: 5px;
@@ -71,7 +72,7 @@ p, table{
     box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.3);
 }
 #markerInfo{
-    height: 250px;
+    min-height: 150px;
 }
 .criName{
     color: #616161;

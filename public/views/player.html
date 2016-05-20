@@ -10,36 +10,23 @@
                         <p ng-bind="playerName"></p>
                     </div>
                 </div>
-                <div class="col-sm-7">
- <!--                    <div class="row" ng-show="device == 'person'">
-                        <div class="col-md-12"><h4>Badge</h4></div>
-                        <div class="col-md-12"><h4>Progress</h4></div>
-                        <div class="col-md-8 progressbar"></div>
-                    </div> -->
-                </div>
             </div>
             <div class="col-sm-4">
                 <h1>Étape {{shownStep}}</h1>
             </div>
-            <div class="col-sm-4">
-                <!-- timer -->
-<!--                 <div class="row" ng-show="device == 'person'">
-                    <div class="col-md-4">Timer</div>
-                    <div class="col-md-8 progressbar"></div>
-                </div> -->
-            </div>
         </div>
     </div>
-    <div class="item col-sm-12">
+    <div class="item col-sm-12 block">
         <div class="row">
             <div class="col-sm-12" id="markerInfo">
                 <h4>Information</h4>
-                <p>{{locationInfo}}</p>
+                <h5>{{locationTitle}}</h5>
+                <p style="white-space: pre;">{{locationInfo}}</p>
             </div>
             
         </div>
     </div>
-    <div class="item col-sm-12" ng-show="currentStep==0">
+    <div class="item col-sm-12 block" ng-show="currentStep==0">
         <div class="row">
             <div class="col-sm-6 commentSpace" id="addCri">
                 <h4>Add criteria</h4>
@@ -63,7 +50,7 @@
             </div>
         </div>
     </div>
-    <div class="item col-sm-12" id="evaluation" ng-hide="currentStep==0">
+    <div class="item col-sm-12" class="block" ng-hide="currentStep==0 || evaltype == 'group'">
         <h4>Evaluation</h4>
         <span class="glyphicon glyphicon-heart" ng-if="add.eval == 'heart'" ng-class="{true: 'heart', false: 'grey'}[voteVal>0]" ng-click="updateHeart()"></span>
 
@@ -96,25 +83,7 @@
             </div>
         </div>
     </div>
-    <div class="item col-sm-12" ng-hide="currentStep==0">
-        <div class="row">
-            <div class="col-sm-6 commentSpace" id="addCommonNotes">
-                <h4>Add common comments</h4>
-                <textarea class="form-control" rows="4" ng-model="currentCommonNote"></textarea>
-                <button class="btn btn-default pull-right btn-sm" ng-click="addCommonNote($event)">Validation</button>
-            </div>
-            <div class="col-sm-6 commentSpace" id="commonNotes">
-                <h4>Common comments</h4>
-                <div ng-repeat="note in commonNotes track by $index">
-                    <div class="noteOfPlayer" ng-if="note.player==player">
-                        <p class="notePlayer{{player}}">{{note.content}}</p>
-                        <button class="btn btn-default btn-xs deletenote" ng-click="deleteCommonNote($event)" id="{{note.id}}">Effacer</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="item col-sm-12" ng-hide="currentStep==0">
+    <div class="item col-sm-12 block" ng-hide="currentStep==0">
         <div class="row">
             <div class="col-sm-6 commentSpace" id="addMarkerNote">
                 <h4>Add location comments</h4>
@@ -134,42 +103,24 @@
             </div>
         </div>
     </div>
-<!--     <div class="col-md-12" id="markerSpace">
+    <div class="item col-sm-12 block" ng-hide="currentStep==0">
         <div class="row">
-            <div class="col-md-12" id="markerInfo">
-                <h4>Information</h4>
-                <p>{{locationInfo}}</p>
+            <div class="col-sm-6 commentSpace" id="addCommonNotes">
+                <h4>Add common comments</h4>
+                <textarea class="form-control" rows="4" ng-model="currentCommonNote"></textarea>
+                <button class="btn btn-default pull-right btn-sm" ng-click="addCommonNote($event)">Validation</button>
             </div>
-            <div class="col-md-6">
-                <div class="row">
-                    <div class="col-md-12" id="addMarkerNote">
-                        <h4>Add location notes</h4>
-                        <textarea class="form-control" rows="4" ng-model="currentLocalNote"></textarea>
-                        <button class="btn btn-default pull-right btn-sm" ng-disabled="form.$invalid" ng-click="addLocalNote($event)">Validation</button>
-                    </div>
-                    <div class="col-md-12" id="evaluation">
-                        <h4>Evaluation</h4>
-                        <span class="glyphicon glyphicon-heart" ng-if="add.eval == 'heart'" ng-class="{true: 'heart', false: 'grey'}[voteVal>0]" ng-click="updateHeart()"></span>
-
-                        <div class="rating" ng-if="add.eval == 'star'">
-                            <span class="glyphicon glyphicon-star" ng-repeat="i in range(5) track by $index" ng-class="{true: 'star', false: 'grey'}[voteVal>$index]" ng-click="updateStar($index+1)"></span><span class="label label-default caption" ng-bind="caption[voteVal]">Pas Encore Évalué</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6" id="markerNote">
-                <h4>Location notes</h4>
-                <div ng-repeat="note in notes track by $index">
-                    <div ng-if="(note.location == currentLocation)">
-                        <div class="noteOfPlayer" ng-if="note.player==player">
-                            <p class="notePlayer{{player}}">{{note.content}}</p>
-                            <button class="btn btn-default btn-xs deletenote" ng-click="deleteLocalNote($event)" id="{{note.id}}">Effacer</button>
-                        </div>
+            <div class="col-sm-6 commentSpace" id="commonNotes">
+                <h4>Common comments</h4>
+                <div ng-repeat="note in commonNotes track by $index">
+                    <div class="noteOfPlayer" ng-if="note.player==player">
+                        <p class="notePlayer{{player}}">{{note.content}}</p>
+                        <button class="btn btn-default btn-xs deletenote" ng-click="deleteCommonNote($event)" id="{{note.id}}">Effacer</button>
                     </div>
                 </div>
             </div>
         </div>
-    </div> -->
+    </div>
     <div id="dialogSpace">
         <div id="chooseLocationDlg" title="Attention">
             Choisissez d'abord un emplacement!

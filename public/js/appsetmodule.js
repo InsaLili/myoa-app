@@ -83,7 +83,3 @@ appSetModule.controller('IndividualCtrl', function($scope, DataService) {
 
 
 
-
-
-
-
