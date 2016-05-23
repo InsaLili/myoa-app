@@ -1,27 +1,25 @@
-<div class="container" ng-controller="TeacherCtrl">
-	<h3>Class {{currentClass.number}}</h3>
-	<div class="group" ng-repeat="group in currentClass.groups track by $index">
-		<h4>Group: {{group.name}}</h4>
-		<div class="row">
-			<div class="col-md-3">
-				<p>Show notes :</p>
+<div id="maskLayer" class="row" ng-controller="MonitorCtrl">
+	<div class="col-sm-12 appName">
+		<h1>Activité: {{deploy.app}}</h1>
+	</div>
+	<div class="col-sm-12 chooseTitle">
+		<h1>Choisissez les groupes que vous souhaitez surveiller :</h1>
+	</div>
+	<div class="col-md-offset-4 col-md-4" ng-show="dbsuccess == false">
+		<!-- <h4><i>(Waiting for loading group information...)</i></h4> -->
+		<h4><i>(En attente d'informations de groupe de chargement...)</i></h4>
+	</div>
+	<div ng-show="dbsuccess == true">
+		<div class="col-sm-12">
+			<div class="col-sm-offset-3 col-sm-6">
+				<div class="docList" ng-repeat="group in currentClass.groups track by $index">
+		        <button class="btn btn-default btn-lg groupBtn" ng-class="" ng-click="chooseGroup($event, $index)">{{group.name}}</button>
+		    </div>
 			</div>
-			<div class="col-md-9">
-				<table class="table">
-					<thead>
-						<tr>
-							<th>Location</th>
-							<th ng-repeat="student in group.students">{{student}}</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr ng-repeat="marker in markers track by $index">
-							<td>{{marker.name}}</td>
-							<td ng-repeat="i in range(group.studentamount) track by $index">note[]</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
+		</div>
+		<div class="text-center">
+			<a class="btn btn-success btn-lg" id="goMonitor" ui-sref="monitor" ng-click="validateGroup()">Commencer <span class="glyphicon glyphicon-chevron-right"></span></a>
 		</div>
 	</div>
 </div>
+    

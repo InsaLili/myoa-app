@@ -56,7 +56,14 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
             url: '/teacher',
             templateUrl: 'views/teacher.html',
             data: {
-              css: 'css/player.css'
+              css: 'css/monitor.css'
+            }
+        })
+        .state('monitor', {
+            url: '/monitor',
+            templateUrl: 'views/monitor.html',
+            data: {
+              css: 'css/monitor.css'
             }
         })        
 });

@@ -1,0 +1,40 @@
+<div class="container" ng-controller="TeacherCtrl">
+	<div class="group jumbotron" ng-repeat="group in groups track by $index" ng-show="chosenGroup.indexOf($index)>=0">
+		<h3>Group: {{group.name}}</h3>
+		<div class="row">
+			<div class="col-md-2">
+				<p>Show notes :</p>
+			</div>
+			<div class="col-md-10">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Location</th>
+							<th ng-repeat="student in group.students">{{student}}</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="marker in markers track by $index">
+							<td>{{marker}}</td>
+							<td ng-repeat="i in range(group.studentamount) track by $index" class="noteOfPlayer">
+								<!-- <p ng-repeat="note in notes[$parent.$parent.$index][$index] track by $index" ng-show="note.location == $parent.$index+1" class="notePlayer{{note.player}}">{{note.content}}</p> -->
+								<p ng-repeat="note in notes[$parent.$parent.$index][$index] track by $index" ng-show="note.location == $parent.$parent.$index+1">
+<!-- 									group: {{$parent.$parent.$parent.$index}}
+									location: {{$parent.$parent.$index}}
+									player:{{$parent.$index}}
+									note:{{$index}} -->
+									{{note.content}}
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td>Shared</td>
+							<td ng-repeat="i in range(group.studentamount) track by $index" class="noteOfPlayer">
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

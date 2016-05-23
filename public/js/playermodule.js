@@ -147,10 +147,10 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
     }  
     // add note on the common space
     $scope.addCommonNote = function($event){
-        if(!$scope.currentCommonNote){
-            $('#writeNoteDlg').dialog('open');
-            return;
-        }
+        // if(!$scope.currentCommonNote){
+        //     $('#writeNoteDlg').dialog('open');
+        //     return;
+        // }
         var id=$scope.player+'/'+Math.random();
         var currentCommonNote = {
             player:$scope.player,
@@ -168,10 +168,10 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
 			$('#chooseLocationDlg').dialog('open');
 			return;
     	}
-    	if(!$scope.currentLocalNote){
-            $('#writeNoteDlg').dialog('open');
-            return;
-        }
+    	// if(!$scope.currentLocalNote){
+     //        $('#writeNoteDlg').dialog('open');
+     //        return;
+     //    }
         var id=$scope.player+'/'+Math.random();
     	var currentLocalNote = {
     		player: $scope.player,
