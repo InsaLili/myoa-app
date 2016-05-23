@@ -62,7 +62,7 @@ var agree = [];
 var criid;
 var io = require('socket.io')(httpserver);
 io.on('connection', function (socket) {
-    console.log("a new device is connected");
+    // console.log("a new device is connected");
     socket.on('choosegroup', function(data){
         logger.info('choose the group',data);
         groupNum = data.group;
