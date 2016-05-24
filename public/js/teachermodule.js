@@ -4,7 +4,7 @@ teacherModule.service('DataService', function(){
     DataService = {};
 });
 
-teacherModule.controller('MonitorCtrl', function($scope, DataService){
+teacherModule.controller('TeacherCtrl', function($scope, DataService){
   var chosenGroup = [];
 
   getDeploy = function(){
@@ -19,14 +19,25 @@ teacherModule.controller('MonitorCtrl', function($scope, DataService){
       // get app based on the deploy
       var apps = new PouchDB('https://myoa.smileupps.com/myoa');
       apps.get($scope.deploy.app).then(function(doc){
-          var markers = doc.mapstep1.markers;
-          var markerNames = [];
-          for(var i=0; i<markers.length; i++){
-            markerNames.push(markers[i].name);
-          }
-          DataService.markers = markerNames;
-          $scope.dbsuccess = true;
-          $scope.$apply();
+        var app={};
+        var markers = doc.mapstep1.markers;
+        app.markers = [];
+        for(var i=0; i<markers.length; i++){
+          app.markers.push(markers[i].name);
+        }
+        app.cris = doc.mapstep1.cris.teacher;
+        // set evaluation type
+        var seqtype = doc.mapstep2.seqtype;
+        if(seqtype == "restricted"){
+          app.evalType = doc.mapstep2.reseq.s1.eval;
+          app.evalScale = doc.mapstep2.reseq.s1.scale;
+        }else{
+          app.evalType = "group";
+          app.evalScale = doc.mapstep2.unseq.s1.scale;
+        }
+        DataService.app = app;
+        $scope.dbsuccess = true;
+        $scope.$apply();
       }).catch(function (err) {
           console.log(err);
       });
@@ -58,23 +69,43 @@ teacherModule.controller('MonitorCtrl', function($scope, DataService){
   getDeploy();
 })
 
-teacherModule.controller('TeacherCtrl', function($scope,DataService){
-	// var socket = io.connect('http://localhost:8000');
-  var socket = io.connect('https://myoa.herokuapp.com');
+teacherModule.controller('MonitorCtrl', function($scope,DataService){
+	var socket = io.connect('http://localhost:8000');
+  // var socket = io.connect('https://myoa.herokuapp.com');
   $scope.range = function(n) {
     var num = parseInt(n);
     return new Array(num);   
   }
 
   init = function(){
-    $scope.markers = DataService.markers;
+    $scope.app = DataService.app;
     $scope.groups = DataService.groups;
     $scope.chosenGroup = DataService.chosenGroup;
+    // construct notes array
     $scope.notes = [];
+    $scope.commonNotes = [];
     for(var i=0; i<$scope.groups.length; i++){
       var notePlayer = [];
+      var commonnotePlayer = [];
       notePlayer.length = parseInt($scope.groups[i].studentamount);
+      commonnotePlayer.length = parseInt($scope.groups[i].studentamount);
       $scope.notes.push(notePlayer);
+      $scope.commonNotes.push(commonnotePlayer);
+    }
+    // construct evaluation array
+    $scope.eval = [];
+    if($scope.app.evalType=="group"){
+      for(var j=0; j<$scope.groups.length; j++){
+        var evalMarker = [];
+        for(var k=0;k<$scope.app.markers.length;k++){
+          var evalCri=[];
+          evalCri.length = $scope.app.cris.length;
+          evalMarker.push(evalCri);
+        }
+        $scope.eval.push(evalMarker);
+      }
+    }else{
+
     }
   }
 
@@ -86,7 +117,19 @@ teacherModule.controller('TeacherCtrl', function($scope,DataService){
     socket.on('deletelocalnote',function(data){
       $scope.notes[data.group-1][data.player-1]=data.notes;
       $scope.$apply();
-    })
+    });
+    socket.on('addcommonnote', function(data){
+      $scope.commonNotes[data.group-1][data.player-1] = data.notes;
+      $scope.$apply();
+    });
+    socket.on('deletecommonnote', function(data){
+      $scope.commonNotes[data.group-1][data.player-1] = data.notes;
+      $scope.$apply();
+    });
+    socket.on('evalonshare', function(data){
+      $scope.eval[data.group-1][data.location-1][data.cri] = data.value;
+      $scope.$apply();
+    });
   }
 
   init();

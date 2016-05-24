@@ -1,6 +1,7 @@
-<div class="container" ng-controller="TeacherCtrl">
+<div class="container" ng-controller="MonitorCtrl">
 	<div class="group jumbotron" ng-repeat="group in groups track by $index" ng-show="chosenGroup.indexOf($index)>=0">
 		<h3>Group: {{group.name}}</h3>
+		<!-- Notes -->
 		<div class="row">
 			<div class="col-md-2">
 				<p>Show notes :</p>
@@ -14,15 +15,10 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="marker in markers track by $index">
+						<tr ng-repeat="marker in app.markers track by $index">
 							<td>{{marker}}</td>
 							<td ng-repeat="i in range(group.studentamount) track by $index" class="noteOfPlayer">
-								<!-- <p ng-repeat="note in notes[$parent.$parent.$index][$index] track by $index" ng-show="note.location == $parent.$index+1" class="notePlayer{{note.player}}">{{note.content}}</p> -->
 								<p ng-repeat="note in notes[$parent.$parent.$index][$index] track by $index" ng-show="note.location == $parent.$parent.$index+1">
-<!-- 									group: {{$parent.$parent.$parent.$index}}
-									location: {{$parent.$parent.$index}}
-									player:{{$parent.$index}}
-									note:{{$index}} -->
 									{{note.content}}
 								</p>
 							</td>
@@ -30,11 +26,57 @@
 						<tr>
 							<td>Shared</td>
 							<td ng-repeat="i in range(group.studentamount) track by $index" class="noteOfPlayer">
+								<p ng-repeat="note in commonNotes[$parent.$index][$index] track by $index">
+									{{note.content}}
+								</p>
 							</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 		</div>
+		<!-- Evaluation -->
+		<div class="row">
+			<div class="col-md-2">
+				<p>Show evaluation:</p>
+			</div>
+				<!-- group evaluation type -->
+				<div class="col-md-10">
+					<div ng-if="app.evalType == 'group'">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>Criteria</th>
+									<th ng-repeat="marker in app.markers track by $index">{{marker}}</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="cri in app.cris track by $index">
+									<td>{{cri.name}}</td>
+									<td ng-repeat="marker in app.markers track by $index">
+										<span class="glyphicon glyphicon-star" ng-repeat="i in range(app.evalScale) track by $index" ng-class="{true: 'star', false: 'grey'}[eval[$parent.$parent.$parent.$parent.$index][$parent.$index][$parent.$parent.$index] > $index ]"></span>
+										<span class="label label-default caption" ng-bind="eval[$parent.$parent.$parent.$index][$index][$parent.$index]"></span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+<!-- 						<div class="evalMarker col-md-12" ng-repeat="marker in app.markers track by $index">
+							<p class="col-md-2">{{marker}}</p>
+							<div class="col-md-10">
+								<div class="col-md-12 evalCri" ng-repeat="cri in app.cris track by $index">
+									<span class="label criName">{{cri.name}}</span>
+		              <div class="stars">
+		                <span class="glyphicon glyphicon-star grey" ng-repeat="i in range(app.evalScale) track by $index"></span><span class="label label-default caption" ng-bind="">No value</span>
+		              </div>
+								</div>
+							</div>
+						</div> -->
+					</div>
+					<!-- individual evaluation type -->
+					<div ng-if="app.evalType !== 'group'"></div>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
+ <!-- ng-class="{true: 'star', false: 'grey'}[evalVal[$parent.$parent.$index][$parent.$index]>$index]" -->

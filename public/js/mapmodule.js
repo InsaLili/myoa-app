@@ -7,8 +7,8 @@ mapModule.filter('trustAsResourceUrl', ['$sce', function($sce) {
 }]);
 
 mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
-    // var socket = io.connect('http://localhost:8000');
-    var socket = io.connect('https://myoa.herokuapp.com');
+    var socket = io.connect('http://localhost:8000');
+    // var socket = io.connect('https://myoa.herokuapp.com');
 
     $scope.range = function(n) {
         return new Array(n);   
@@ -600,8 +600,6 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
         socket.emit('evalonshare', {group: $scope.groupNum, location: location, cri: criNum, value: value});
     }
     $scope.checkLocation = function($event,marker,player){
-        var socket = io.connect('https://myoa.herokuapp.com');
-        // var socket = io.connect('http://localhost:8000');
     	console.log(marker,player);
         // in s0, cris.num always equal to 0, so vote=[]
         var vote = [];
@@ -698,34 +696,3 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
 
     init();
 });
-
-mapModule.controller("MapCtrl", [ "$scope", "$http", "DataService",function($scope, $http, DataService) {
-    // var socket = io.connect('https://localhost:8000');
-    var socket = io.connect('https://myoa.herokuapp.com');
-
-    getAppData = function(){
-        var doc = DataService.app;
-        $scope.map = doc.mapstep1.map;
-        $scope.markers = doc.mapstep1.markers;
-        $scope.groupNum = DataService._indexGroup+1;
-
-        var studentAmount = parseInt(DataService.group.studentamount);
-        var locationAmount = $scope.markers.length;
-        var devicecompo = doc.mapstep4.device;
-
-    }
-
-    $scope.checkLocation = function($event,marker,player){
-        console.log(marker,player);
-        socket.emit('checklocation', { marker: marker, player: player, group: $scope.groupNum});
-
-        var element = $event.currentTarget;
-        var className = element.className;
-        var elements = document.getElementsByClassName(className);
-        $(elements).css({'background-color': '#5bc0de', 'border-color': '#46b8da'});
-        $(element).css({'background-color': '#f0ad4e', 'border-color': '#eea236'});
-        $($(elements)[marker-1]).css({'background-color': '#f0ad4e', 'border-color': '#eea236'});
-    }
-    getAppData();
-    // addMarkerMsg();
-}]);
