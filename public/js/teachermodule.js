@@ -70,8 +70,8 @@ teacherModule.controller('TeacherCtrl', function($scope, DataService){
 })
 
 teacherModule.controller('MonitorCtrl', function($scope,DataService){
-	var socket = io.connect('http://localhost:8000');
-  // var socket = io.connect('https://myoa.herokuapp.com');
+	// var socket = io.connect('http://localhost:8000');
+  var socket = io.connect('https://myoa.herokuapp.com');
   $scope.range = function(n) {
     var num = parseInt(n);
     return new Array(num);   

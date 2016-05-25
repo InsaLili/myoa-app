@@ -7,8 +7,8 @@ mapModule.filter('trustAsResourceUrl', ['$sce', function($sce) {
 }]);
 
 mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
-    var socket = io.connect('http://localhost:8000');
-    // var socket = io.connect('https://myoa.herokuapp.com');
+    // var socket = io.connect('http://localhost:8000');
+    var socket = io.connect('https://myoa.herokuapp.com');
 
     $scope.range = function(n) {
         return new Array(n);   
