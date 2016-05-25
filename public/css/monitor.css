@@ -1,8 +1,11 @@
 body{
 	background-color: #fafafa;
 }
-.nav, .pagination, .carousel, .panel-title a, li p {
+a{
     cursor: pointer;
+}
+a:hover{
+    text-decoration: none;
 }
 .container{
     width: 100%;
@@ -102,8 +105,9 @@ h1{
   position: relative;
   top: 2px;
 }
-
-
+.funcTitle{
+	
+}
 
 
 

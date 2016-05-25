@@ -82,6 +82,7 @@ teacherModule.controller('MonitorCtrl', function($scope,DataService){
     $scope.groups = DataService.groups;
     $scope.chosenGroup = DataService.chosenGroup;
     // construct notes array
+    // note[group][student]
     $scope.notes = [];
     $scope.commonNotes = [];
     for(var i=0; i<$scope.groups.length; i++){
@@ -95,6 +96,7 @@ teacherModule.controller('MonitorCtrl', function($scope,DataService){
     // construct evaluation array
     $scope.eval = [];
     if($scope.app.evalType=="group"){
+      // eval[group][location][cri]
       for(var j=0; j<$scope.groups.length; j++){
         var evalMarker = [];
         for(var k=0;k<$scope.app.markers.length;k++){
@@ -105,7 +107,32 @@ teacherModule.controller('MonitorCtrl', function($scope,DataService){
         $scope.eval.push(evalMarker);
       }
     }else{
-
+      // eval[group][student][location][cri]
+      for(var j=0; j<$scope.groups.length; j++){
+        var evalMarker = [];
+        for(var k=0;k<$scope.groups[j].studentamount;k++){
+          var evalStudent=[];
+          for(var l=0;l<$scope.app.markers.length;l++){
+            var evalCri=[];
+            evalCri.length = $scope.app.cris.length;
+            evalStudent.push(evalCri);
+          }
+          evalMarker.push(evalStudent);
+        }
+        $scope.eval.push(evalMarker);
+      }
+    }
+    // contruct navigation array
+    // nav[group][student][location]
+    $scope.nav=[];
+    for(i=0;i<$scope.groups.length;i++){
+      var navPlayer=[];
+      for(j=0;j<$scope.groups[i].studentamount;j++){
+        var navMarker=[];
+        navMarker.length = $scope.app.markers.length;
+        navPlayer.push(navMarker);
+      }
+      $scope.nav.push(navPlayer);
     }
   }
 
@@ -130,8 +157,39 @@ teacherModule.controller('MonitorCtrl', function($scope,DataService){
       $scope.eval[data.group-1][data.location-1][data.cri] = data.value;
       $scope.$apply();
     });
+    socket.on('evaluate', function(data){
+      $scope.eval[data.group-1][data.player-1][data.location-1][data.cri] = data.value;
+      $scope.$apply();
+    });
+    socket.on('checklocation', function(data){
+      console.log(data);
+      ($scope.nav[data.group-1][data.player-1][data.location-1]==undefined)?($scope.nav[data.group-1][data.player-1][data.location-1])=1:($scope.nav[data.group-1][data.player-1][data.location-1]++);
+      $scope.$apply();
+    });
   }
 
   init();
   serviceInit();
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
