@@ -246,6 +246,8 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
             $scope.commonNotes = data.notes;
             $scope.studentNotes[data.player-1]++;
             $scope.$apply();
+        });
+            
 
         // delete common comment
         socket.on('deletecommonnote', function (data) {
