@@ -34,7 +34,7 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
         // $scope.voteValue = DataService.votes.rows[DataService.groupNum-1].doc.votes;
         $scope.evalVal = [];
         $scope.markers = doc.mapstep1.markers;
-        $scope.locationInfo = "(Choose a location on the shared display.)";
+        $scope.locationInfo = "(Choisissez un emplacement sur l'écran partagé.)";
         $scope.device = doc.mapstep4.device;
         // $scope.like = false;
     } 
