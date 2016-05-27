@@ -87,7 +87,7 @@
                     <button class="btn btn-default btn-md choisirBtn" name="{{marker.name}}" ng-click="chooseLocation($event, $index+1, marker.name)">Choisir</button>
                 </div>
                 <div class="visualPlayers row" id="visualLocation{{$index}}" ng-model="avatarWidth">
-                    <h4>Press your avatar to check this location:</h4>
+                    <h4>Appuyez sur votre avatar pour obtenir des informations de cet emplacement :</h4>
                     <div class="visualBtns col-md-{{avatarWidth}}" ng-repeat="i in range(studentAmount) track by $index">
                         <button class="btn player{{$index+1}} markerBtn col-md-7" type="button" ng-click="checkLocation($event,$parent.$index+1,$index+1)"><img src="/img/player{{$index+1}}.png"></button>
                         <div ng-show="evaltype == 'individual'">
@@ -135,7 +135,7 @@
                 </div>
 
                 <div class="note" id="note{{$index+1}}" ng-hide="currentStep == 0">
-                    <h4>Comments :</h4>
+                    <h4>Commentaires :</h4>
                     <div class="shortNote">
                     <!-- <div ng-class="{true: 'shortNote', false: 'longNote'}[add.eval=='star']"> -->
                         <span id="note{{$index+1}}">
@@ -150,7 +150,7 @@
         </div>
         <div id="commonSpace">
             <div id="commonTitle">
-                    <h3>Shared comments</h3>
+                    <h3>Commentaires partagés</h3>
             </div>
             <div id="commonContent">
                 <div>
