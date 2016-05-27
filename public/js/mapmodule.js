@@ -228,7 +228,6 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
             $scope.notes = data.notes;
             $scope.studentNotes[data.player-1]++;
             $scope.$apply();
-            console.log($scope.studentNotes);
         });
 
         // delete comment from alternative
@@ -238,7 +237,6 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
             $scope.notes = data.notes;
             $scope.studentNotes[data.player-1]--;
             $scope.$apply();
-            console.log($scope.studentNotes);
         });
 
         // add comment to common space
@@ -248,8 +246,6 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
             $scope.commonNotes = data.notes;
             $scope.studentNotes[data.player-1]++;
             $scope.$apply();
-            console.log($scope.studentNotes);
-        });
 
         // delete common comment
         socket.on('deletecommonnote', function (data) {
@@ -258,7 +254,6 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
             $scope.commonNotes = data.notes;
             $scope.studentNotes[data.player-1]--;
             $scope.$apply();
-            console.log($scope.studentNotes);
         });
 
         // evaluate 

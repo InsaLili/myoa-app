@@ -1,13 +1,13 @@
 
 <div  id="maskLayer" class="row" ng-controller="IndividualCtrl">
 	<div class="col-sm-12 appName">
-		<h1>Activity: {{deploy.app}}</h1>
+		<h1>Activité: {{deploy.app}}</h1>
 	</div>
 	<div class="col-sm-12 chooseTitle">
 		<h1>Sélectionnez votre groupe :</h1>
 	</div>
 	<div class="col-md-offset-4 col-md-4" ng-show="dbsuccess == false">
-		<h4><i>(Waiting for loading group information...)</i></h4>
+		<h4><i>(En attente d'informations de groupe de chargement...)</i></h4>
 	</div>
 	<div ng-show="dbsuccess == true">
 		<div class="col-sm-offset-4 col-sm-4">
@@ -16,7 +16,7 @@
 	    </div>
 		</div>
 		<div class="col-sm-12 chooseTitle">
-	  	<h1>Choose your role</h1>
+	  	<h1>Choisissez votre rôle</h1>
 		</div>
 		<div id="choosePlayer" ng-if="showStudents">
 	    <div class="col-sm-offset-3 col-sm-9">
