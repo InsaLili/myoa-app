@@ -99,7 +99,7 @@
             </form>
             <div class="col-sm-6 commentSpace" id="markerNote">
                 <!-- <h4>Location comments</h4> -->
-                <h4>Commentaires des emplacements</h4>
+                <h4>Commentaires d'emplacements</h4>
                 <div ng-repeat="note in notes track by $index">
                     <div ng-if="(note.location == currentLocation)">
                         <div class="noteOfPlayer" ng-if="note.player==player">
@@ -126,7 +126,7 @@
                 </div>
             </form>
             <div class="col-sm-6 commentSpace" id="commonNotes">
-                <h4>Common comments</h4>
+                <h4>Commentaires partagés</h4>
                 <div ng-repeat="note in commonNotes track by $index">
                     <div class="noteOfPlayer" ng-if="note.player==player">
                         <p class="notePlayer{{player}}">{{note.content}}</p>
@@ -141,7 +141,7 @@
             Choisissez d'abord un emplacement!
         </div>
         <div id="agreeCri" title="Add a criteria">
-            Do you agree with the new critera "{{newCri.name}}"?
+            Êtes-vous d'accord avec ce nouveau critère "{{newCri.name}}"?
         </div>
     </div>
 </div>
