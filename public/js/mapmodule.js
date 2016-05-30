@@ -694,7 +694,7 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
         var elements = $('.location');
         elements.touch();
         for(var i=0; i<elements.length;i++){
-            var left = 150*i+200;
+            var left = 50*i+100;
             $(elements[i]).offset({top: 250, left: left});
         }
         $('#commonSpace').touch();
