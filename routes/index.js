@@ -5,7 +5,7 @@
 
 var express = require('express');
 var router = express.Router();
-var data = require('./data.js');
+// var data = require('./data.js');
 // console.log(data);
 
 /* GET home page. */
@@ -13,17 +13,17 @@ var data = require('./data.js');
 //     res.render('map', { title: 'Map' });
 // });
 
-router.get('/player', function(req, res){
-    res.render('player', {
-    });
-});
+// router.get('/player', function(req, res){
+//     res.render('player', {
+//     });
+// });
 
-router.get('/framework', function(req, res){
-    res.render('framework', {});
-});
+// router.get('/framework', function(req, res){
+//     res.render('framework', {});
+// });
 
-router.get('/upload', function(req, res){
-});
+// router.get('/upload', function(req, res){
+// });
 
 module.exports = router;
 
