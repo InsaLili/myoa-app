@@ -690,8 +690,13 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
             //     $scope.allRating++;
             // });
         }
-        
-        $('.location').touch();
+
+        var elements = $('.location');
+        elements.touch();
+        for(var i=0; i<elements.length;i++){
+            var left = 150*i+200;
+            $(elements[i]).offset({top: 250, left: left});
+        }
         $('#commonSpace').touch();
         $("#step0 p").css('color', '#E0E0E0');
         $("#step0 span").css('color', '#E0E0E0');
