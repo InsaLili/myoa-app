@@ -99,6 +99,7 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
             var id = $scope.player+'/'+$scope.currentLocation;
             $scope.evalVal = data.vote;
             $scope.notes = data.note;
+            $scope.commonNotes = data.commonnote;
             $scope.currentLocalNote="";
         	$scope.$apply();
     	}
