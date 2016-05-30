@@ -27,14 +27,11 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
         $scope.studentAmount = parseInt(DataService.group.studentamount);
         // caculate avatar width based on student amount
         $scope.avatarWidth = Math.round(12/$scope.studentAmount);
-        
         // get votes
         $scope.votes = [];
         // store the number of evaluated location of each student
         $scope.evalAmount=[];
-        // store notes
-        $scope.notes = [];
-        $scope.commonNotes = [];
+        
         // get relevant information
         $scope.infos = DataService.app.mapstep1.infos;
         // check device
@@ -168,6 +165,15 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
 
         $scope.badgeWidth = 12/timerBadgeNum();
     }
+    configNote = function(){
+        // store notes
+        $scope.notes = [];
+        // for(var i=0; i<$scope.studentAmount;i++){
+        //     var pnote = [];
+        //     $scope.notes.push(pnote);
+        // }
+        $scope.commonNotes = [];
+    }
     configMap = function(){
         $scope.map = DataService.app.mapstep1.map;
         var devicecompo = DataService.app.mapstep4.device;
@@ -225,7 +231,7 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
         socket.on('addlocalnote', function (data) {
             if(data.group !== $scope.groupNum) return;
             
-            $scope.notes = data.notes;
+            $scope.notes.push(data.newnote);
             $scope.studentNotes[data.player-1]++;
             $scope.$apply();
         });
@@ -233,8 +239,9 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
         // delete comment from alternative
         socket.on('deletelocalnote', function (data) {
             if(data.group !== $scope.groupNum) return;
-
-            $scope.notes = data.notes;
+            $scope.notes = $.grep($scope.notes, function(value){
+                return value.id != data.noteid;
+            });
             $scope.studentNotes[data.player-1]--;
             $scope.$apply();
         });
@@ -243,7 +250,7 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
         socket.on('addcommonnote', function (data) {
             if(data.group !== $scope.groupNum) return;
 
-            $scope.commonNotes = data.notes;
+            $scope.commonNotes.push(data.newnote);
             $scope.studentNotes[data.player-1]++;
             $scope.$apply();
         });
@@ -252,8 +259,9 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
         // delete common comment
         socket.on('deletecommonnote', function (data) {
             if(data.group !== $scope.groupNum) return;
-
-            $scope.commonNotes = data.notes;
+            $scope.commonNotes = $.grep($scope.commonNotes, function(value){
+                return value.id != data.noteid;
+            });
             $scope.studentNotes[data.player-1]--;
             $scope.$apply();
         });
@@ -607,7 +615,14 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
                 vote.push(value);
             }
         }
-        socket.emit('checklocation', { location: marker, player: player, group: $scope.groupNum, vote: vote});
+        var notes = $.grep($scope.notes, function(value){
+            return value.player == player;
+        }); 
+        var commonNotes = $.grep($scope.commonNotes, function(value){
+            return value.player == player;
+        }); 
+
+        socket.emit('checklocation', { location: marker, player: player, group: $scope.groupNum, vote: vote, note: notes, commonnote: commonNotes});
 
         var element = $event.currentTarget;
         var className = element.className;
@@ -650,6 +665,7 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
         getEvalConfig();
         getIncidator();
         configMap();
+        configNote();
         serviceInit();
         attachNotes();
     }
