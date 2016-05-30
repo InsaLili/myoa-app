@@ -9,9 +9,12 @@
 	<div class="col-md-offset-4 col-md-4" ng-show="dbsuccess == false">
 		<h4><i>(En attente d'informations de groupe de chargement...)</i></h4>
 	</div>
-	<div class="col-md-offset-4 col-md-4" ng-show="dbsuccess == true">
+	<div class="col-md-offset-2" ng-show="dbsuccess == true">
 		<div class="docList" ng-repeat="group in currentClass.groups track by $index">
-        <a class="btn btn-default btn-lg groupBtn" ng-click="chooseGroup($event, $index)" ui-sref="map">{{group.name}}</a>
+        <a class="btn btn-default groupBtn" ng-click="chooseGroup($event, $index)" ui-sref="map">
+        	<!-- {{group.name}} -->
+        	<img src="img/group{{$index+1}}.png" alt="group{{$index+1}}">
+        </a>
     </div>
 	</div>
 </div>

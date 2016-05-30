@@ -12,6 +12,9 @@ h1,h3{
     text-align: center;
     color: #fff;
 }
+.groupBtn{
+    height: 100px;
+}
 .appName{
 	margin-top:100px;
 }
@@ -45,7 +48,7 @@ h1,h3{
     height: 110px;
 }
 
-#maskLayer a img{
-    width: 100%;
+#maskLayer a img, #maskLayer button img{
+    /*width: 100%;*/
     height: 100%;
 }
