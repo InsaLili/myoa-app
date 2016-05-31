@@ -36,6 +36,7 @@ playerModule.controller('PlayerCtrl', function($scope, DataService,$timeout){
         $scope.markers = doc.mapstep1.markers;
         $scope.locationInfo = "(Choisissez un emplacement sur l'écran partagé.)";
         $scope.device = doc.mapstep4.device;
+        $scope.locationTitle = "Choisissez un emplacement"
         // $scope.like = false;
     } 
     // communication between devices

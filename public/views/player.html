@@ -1,7 +1,7 @@
 <div id="appLayer" class="row" ng-controller="PlayerCtrl">
     <div class="item col-sm-12" id="personalMenu">
         <div class="row">
-            <div class="col-sm-4">
+            <div class="col-sm-3">
                 <div class="col-sm-5">
                     <div class="identity">
                         <div id="avatar">
@@ -11,8 +11,9 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-4">
-                <h1>Étape {{shownStep}}</h1>
+            <div class="col-sm-6">
+                <!-- <h1>Étape {{shownStep}}</h1> -->
+                <h1>{{locationTitle}}</h1>
             </div>
         </div>
     </div>
@@ -20,7 +21,7 @@
         <div class="row">
             <div class="col-sm-12" id="markerInfo">
                 <h4>Information</h4>
-                <h5>{{locationTitle}}</h5>
+                <!-- <h5>{{locationTitle}}</h5> -->
                 <p style="white-space: pre-wrap;">{{locationInfo}}</p>
             </div>
             
