@@ -664,10 +664,11 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
         getCris();
         getEvalConfig();
         getIncidator();
-        configMap();
         configNote();
         serviceInit();
         attachNotes();
+        configMap();
+        
     }
     // wait for dom ready
     $timeout(function(){
@@ -694,7 +695,7 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
         var elements = $('.location');
         elements.touch();
         for(var i=0; i<elements.length;i++){
-            var left = 50*i+100;
+            var left = 100*i+50;
             $(elements[i]).offset({top: 250, left: left});
         }
         $('#commonSpace').touch();
@@ -710,6 +711,7 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
 
         dialogInit();
         $('#dialog0').dialog('open');
+
     });
 
     init();

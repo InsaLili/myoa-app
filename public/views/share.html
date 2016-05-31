@@ -13,7 +13,7 @@
 		<div class="docList" ng-repeat="group in currentClass.groups track by $index">
         <a class="btn btn-default groupBtn" ng-click="chooseGroup($event, $index)" ui-sref="map">
         	<!-- {{group.name}} -->
-        	<img src="img/group{{$index+1}}.png" alt="group{{$index+1}}">
+        	<img ng-src="img/group{{$index+1}}.png" alt="group{{$index+1}}">
         </a>
     </div>
 	</div>

@@ -20,7 +20,7 @@
                 <div class="players col-md-10" ng-model="avatarWidth">
                     <div class="player col-md-{{avatarWidth}}" ng-repeat="student in students track by $index">
                         <div class="avatars">
-                            <img src="img/player{{$index+1}}.png">
+                            <img ng-src="img/player{{$index+1}}.png">
                             <p ng-bind="student" class="studentName"></p>
                         </div>
                         <div ng-if="indiStu.badge.comment !== undefined" class="badgeSpace">
@@ -89,7 +89,7 @@
                 <div class="visualPlayers row" id="visualLocation{{$index}}" ng-model="avatarWidth">
                     <h4>Appuyez sur votre avatar pour obtenir des informations de cet emplacement :</h4>
                     <div class="visualBtns col-md-{{avatarWidth}}" ng-repeat="i in range(studentAmount) track by $index">
-                        <button class="btn player{{$index+1}} markerBtn col-md-7" type="button" ng-click="checkLocation($event,$parent.$index+1,$index+1)"><img src="/img/player{{$index+1}}.png"></button>
+                        <button class="btn player{{$index+1}} markerBtn col-md-7" type="button" ng-click="checkLocation($event,$parent.$index+1,$index+1)"><img ng-src="/img/player{{$index+1}}.png"></button>
                         <div ng-show="evaltype == 'individual'">
                             <span class="checkMarker glyphicon glyphicon-ok-circle grey"></span>
                         </div>
@@ -193,7 +193,7 @@
                     <h4 style="white-space: pre;">{{info.text}}</h4>
                 </div>
                 <div ng-if="info.type == 'img'" class="dlgFullScreen">
-                    <img src="{{info.photo}}" alt="information photo">
+                    <img ng-src="{{info.photo}}" alt="information photo">
                 </div>
                 <div ng-if="info.type =='link'" class="dlgFullScreen">
                     <iframe ng-src="{{info.link | trustAsResourceUrl}}" class="dlgFullScreen"></iframe>
