@@ -44,7 +44,7 @@
                     </div>
                 </div>
                 <div class="badges col-md-2" ng-if="indiStu.badge.timer">
-                    <p>Timer badge</p>
+                    <p>Badge Timer</p>
                     <div ng-repeat="timer in indiStu.timers track by $index">
                         <div class="col-md-{{badgeWidth}} timerBadge" ng-if="timer">
                             <img src="img/badgeTimer-show.png" ng-show="timerWin[$index]">
@@ -172,17 +172,17 @@
                 <h4 style="white-space: pre;">
                     {{step.dlg}}
                 </h4>
-                <h4 ng-if="indiStu.timers[currentStep]">
+<!--                 <h4 ng-if="indiStu.timers[currentStep]">
                     Vous avez {{indiStu.timerValue[currentStep]}} mins pour cette étape.
-                </h4>
+                </h4> -->
                 <h4 ng-if="indiStu.timers[currentStep] && indiStu.badge.timer">
-                    Gagnez le badge Timer si vous finissez toutes les évaluation individuelle dans les {{indiStu.timerValue[currentStep]}} mins.
+                    Gagnez le badge Timer si vous finissez cet étape dans les {{indiStu.timerValue[currentStep]}} mins.
                 </h4>
             </div>
         </div>
-        <div id="dialogFinal" title="The end">
-            <h4>Congratulations!</h4>
-            <h4>You finishd all the tasks!</h4>
+        <div id="dialogFinal" title="La fin">
+            <h4>Félicitations!</h4>
+            <h4>Vous avez terminé toutes les tâches!</h4>
         </div>
         <div id="chooseDialog" title="Choisir un emplacement">
             <h4>Voulez vous choisir l'emplacement {{chosenTitle}} ?</h4>

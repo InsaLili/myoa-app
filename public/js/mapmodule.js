@@ -669,7 +669,7 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
         configDB();
         configMap();
         serviceInit();
-        // attachNotes();
+        attachNotes();
 
     }
     // wait for dom ready
