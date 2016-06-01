@@ -172,11 +172,11 @@
                 <h4 style="white-space: pre;">
                     {{step.dlg}}
                 </h4>
-<!--                 <h4 ng-if="indiStu.timers[currentStep]">
-                    Vous avez {{indiStu.timerValue[currentStep]}} mins pour cette étape.
-                </h4> -->
+                <h4 ng-if="currentStep==1">
+                    Gagnez le Badge Commentaire si vous soumettez plus de  {{indiStu.badge.comment}} commentaires.
+                </h4>
                 <h4 ng-if="indiStu.timers[currentStep] && indiStu.badge.timer">
-                    Gagnez le badge Timer si vous finissez cet étape dans les {{indiStu.timerValue[currentStep]}} mins.
+                    Gagnez le Badge Timer si vous finissez cet étape dans les {{indiStu.timerValue[currentStep]}} mins.
                 </h4>
             </div>
         </div>
