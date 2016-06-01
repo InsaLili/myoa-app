@@ -80,7 +80,7 @@ io.on('connection', function (socket) {
         var playernum = data.playeramount-1;
 
         if(agree[data.group] == playernum){
-            console.log("success");
+            logger.info('success adding criteria',data);
             io.emit('successcri',data);
         }
     })

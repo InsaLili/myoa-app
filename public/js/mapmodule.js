@@ -25,10 +25,11 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
         $scope.students = DataService.group.students;
         // get student amount
         $scope.studentAmount = parseInt(DataService.group.studentamount);
+        // store note number
+        $scope.studentNotes=[];
         // caculate avatar width based on student amount
         $scope.avatarWidth = Math.round(12/$scope.studentAmount);
-        // get votes
-        $scope.votes = [];
+
         // store the number of evaluated location of each student
         $scope.evalAmount=[];
         
@@ -36,6 +37,15 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
         $scope.infos = DataService.app.mapstep1.infos;
         // check device
         $scope.shareDis = DataService.app.mapstep4.share;
+        // browsed location of each player
+        $scope.browsed = [];
+        for(var i=0;i<$scope.studentAmount;i++){
+            var playerBrowsed = [];
+            $scope.browsed.push(playerBrowsed);
+        }
+        // dragged map
+        $scope.drag = 0;
+        $scope.zoom = 0;
 
     }
     getMarkers = function(){
@@ -174,6 +184,27 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
         // }
         $scope.commonNotes = [];
     }
+    configDB = function(){
+        var db = new PouchDB('https://myoa.smileupps.com/user');
+        // set DB title
+        var d = new Date();
+        var day = d.getDate();    
+        var h= d.getHours();
+        var m = d.getMinutes();
+        var s = d.getSeconds();
+        $scope.dbID = "group"+$scope.groupNum+'/'+day+'th'+h+'h'+m+'m'+s+'s';
+        db.put({
+            _id: $scope.dbID,
+            notes:[],
+            commonnotes:[],
+            eval:[],
+            browsed:0,
+            drag:0,
+            zoom:0
+        }).catch(function(err){
+            console.log(err);
+        });
+    }
     configMap = function(){
         $scope.map = DataService.app.mapstep1.map;
         var devicecompo = DataService.app.mapstep4.device;
@@ -209,6 +240,16 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
             $scope.markers[i].draggable = false;
 
         }
+        $scope.$on("leafletDirectiveMap.dragend", function(){
+            // update drag number
+            $scope.drag++;
+            updateDB();
+        });        
+        $scope.$on("leafletDirectiveMap.zoomend", function(){
+            // update drag number
+            $scope.zoom++;
+            updateDB();
+        });
     }
 
     serviceInit = function(){
@@ -234,6 +275,7 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
             $scope.notes.push(data.newnote);
             $scope.studentNotes[data.player-1]++;
             $scope.$apply();
+            updateDB();
         });
 
         // delete comment from alternative
@@ -244,6 +286,8 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
             });
             $scope.studentNotes[data.player-1]--;
             $scope.$apply();
+            updateDB();
+
         });
 
         // add comment to common space
@@ -253,6 +297,8 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
             $scope.commonNotes.push(data.newnote);
             $scope.studentNotes[data.player-1]++;
             $scope.$apply();
+            updateDB();
+
         });
             
 
@@ -264,6 +310,8 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
             });
             $scope.studentNotes[data.player-1]--;
             $scope.$apply();
+            updateDB();
+
         });
 
         // evaluate 
@@ -284,57 +332,12 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
                 }
             }
             $scope.$apply();
+            updateDB();
+
         });
     }
 
-    attachStar = function(){
-        var progressbarText = $('.player p');
-
-        // filte all the players, i is the number of player
-        for(var i=0; i<$scope.studentAmount;i++){
-            var player = i+1;
-            var votes = $.grep($scope.votes, function(value) {
-                return value.player == player;
-            });
-            var voteNum = votes.length;
-            $( "#progressbar"+player ).progressbar({
-                value: voteNum
-            });
-            $(progressbarText[i]).text(voteNum + '/'+$scope.locationAmount+' Emplacements');
-            $scope.voteAmount.push(voteNum);
-            // check all the location for the i player, change the checkmark color
-            for(var j=0; j<voteNum;j++){
-                var vote = votes[j];
-                var location = vote.location;
-                var checkMark = $('#location'+location+' .glyphicon-ok-circle')[i];
-                $(checkMark).removeClass('grey');
-                $(checkMark).addClass('checked');
-            }
-        }
-        console.log($scope.voteAmount);
-    }
-    attachHeart = function(){
-        $scope.evalVal=[];
-        for(var i=1;i<=$scope.locationAmount;i++){
-            var locationVote = [];
-            var votes = $.grep($scope.votes, function(value){
-                return value.location == i;
-            });
-            for(var j=1;j<=$scope.studentAmount;j++){
-                var votePlayer = $.grep(votes, function(value){
-                    return value.player == j;
-                });
-                if(votePlayer.length>0){
-                    locationVote.push(votePlayer[0].vote);
-                }else{
-                    locationVote.push(0);
-                }
-            }
-            $scope.evalVal.push(locationVote);
-        }
-    }
     attachNotes = function(){
-        $scope.studentNotes=[];
         for(var i=0; i<$scope.studentAmount;i++){
             var player = i+1;
             var notes = $.grep($scope.notes, function(value) {
@@ -466,31 +469,7 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
         ($('#dialog'+dlgIndex).length !== 0)?($('#dialog'+dlgIndex).dialog('open')):($('#dialogFinal').dialog('open'))
         // $('#dialog'+dlgIndex).dialog('open');
     }
-    showVote = function(){
-        $scope.evalVal = [];
-        var color = ['#d9534f','#ec971f','#31b0d5','#337ab7','#449d44'];
-        var caption= ['Très Faible', 'Faible', 'Moyen', 'Bon', 'Très Bon'];
-        
-        for(var i=0; i<$scope.locationAmount;i++){
-            // get all the votes for the same location i
-            var votes = $.grep($scope.votes, function(value){
-                return value.location == i+1;
-            });
-            var value=0;
-            for(var j=0; j<$scope.studentAmount;j++){
-                value += votes[j].vote;
-            }
-            // get average
-            value = Math.round(value/$scope.studentAmount);
-            // change star color
-            $scope.evalVal.push(value);
-            // change caption
-            var location = i+1;
-            var label = $('#vote'+location+' .caption');
-            label.text(caption[value-1]);
-            label.css('background-color', color[value-1]);
-        }
-    }
+
     confirmChoice = function(){
         $('.chooseLocation').hide();
         $('.location').hide();
@@ -503,7 +482,7 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
             }
         }
     }
-
+    // show the average of evaluation results
     getEvalAvg = function(){
         for(var i=0; i<$scope.locationAmount; i++){
             for(var j=0; j<$scope.cris.num;j++){
@@ -534,6 +513,20 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
             $("#groupProgTxt").text($scope.currentEval + '/'+$scope.locationAmount+' Emplacements');
         }
     }
+    updateDB = function(){
+        var db = new PouchDB('https://myoa.smileupps.com/user');
+        db.get($scope.dbID).then(function(doc){
+            return db.put({
+                notes: $scope.notes,
+                commonnotes: $scope.commonNotes,
+                eval: $scope.evalVal,
+                browsed: $scope.browsed,
+                drag: $scope.drag,
+                zoom: $scope.zoom
+            }, $scope.dbID, doc._rev);
+        });
+    }
+
     $scope.getInfo = function(num){
         $('#infoDlg'+num).dialog('open');
     }
@@ -630,6 +623,9 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
         $(elements).css({'background-color': '#5bc0de', 'border-color': '#46b8da'});
         $(element).css({'background-color': '#f0ad4e', 'border-color': '#eea236'});
         $($(elements)[marker-1]).css({'background-color': '#f0ad4e', 'border-color': '#eea236'});
+        // update browsed number
+        ($scope.browsed[player-1][marker-1]==undefined)?($scope.browsed[player-1][marker-1]=1):($scope.browsed[player-1][marker-1]++);
+        updateDB();
     }    
     $scope.chooseLocation = function(event, marker,name){
     	console.log(marker,name);
@@ -665,10 +661,11 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
         getEvalConfig();
         getIncidator();
         configNote();
-        serviceInit();
-        attachNotes();
+        configDB();
         configMap();
-        
+        serviceInit();
+        // attachNotes();
+
     }
     // wait for dom ready
     $timeout(function(){
@@ -687,11 +684,8 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
                     max: $scope.locationAmount
                 });
             }
-            // $( ".progressbar" ).on( "progressbarcomplete", function( event, ui ) {
-            //     $scope.allRating++;
-            // });
         }
-
+        // Change position of location cards
         var elements = $('.location');
         elements.touch();
         for(var i=0; i<elements.length;i++){
@@ -702,12 +696,6 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
         $("#step0 p").css('color', '#E0E0E0');
         $("#step0 span").css('color', '#E0E0E0');
         $(".chooseLocation").hide();
-
-        // if($scope.add.eval == 'star'){
-        //     attachStar();
-        // }else if($scope.add.eval == 'heart'){
-        //     attachHeart();
-        // }
 
         dialogInit();
         $('#dialog0').dialog('open');
