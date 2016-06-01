@@ -43,6 +43,8 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
             var playerBrowsed = [];
             $scope.browsed.push(playerBrowsed);
         }
+        // step time
+        $scope.timeline = [];
         // dragged map
         $scope.drag = 0;
         $scope.zoom = 0;
@@ -194,13 +196,7 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
         var s = d.getSeconds();
         $scope.dbID = "group"+$scope.groupNum+'/'+day+'th'+h+'h'+m+'m'+s+'s';
         db.put({
-            _id: $scope.dbID,
-            notes:[],
-            commonnotes:[],
-            eval:[],
-            browsed:0,
-            drag:0,
-            zoom:0
+            _id: $scope.dbID
         }).catch(function(err){
             console.log(err);
         });
@@ -522,7 +518,8 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
                 eval: $scope.evalVal,
                 browsed: $scope.browsed,
                 drag: $scope.drag,
-                zoom: $scope.zoom
+                zoom: $scope.zoom,
+                timeline: $scope.timeline
             }, $scope.dbID, doc._rev);
         });
     }
@@ -560,7 +557,6 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
                         $scope.evalVal.push(cris);
                     }
                     ($scope.seqtype == "unrestricted")?($(".chooseLocation").show()):null;
-
                     break;
                 case 1:
                     // in a restricted sequence, can only move to step2 when students evaluated all the locations
@@ -583,6 +579,15 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
             
             $scope.currentStep++;
             socket.emit("changestep", {group: $scope.groupNum, step:$scope.currentStep});
+
+            // update timeline
+            var d = new Date();
+            var h= d.getHours();
+            var m = d.getMinutes();
+            var s = d.getSeconds();
+            var timeline = h+'h'+m+'m'+s+'s';
+            $scope.timeline.push(timeline);
+            updateDB();
         }
     }
 

@@ -82,14 +82,18 @@ teacherModule.controller('MonitorCtrl', function($scope,DataService){
     $scope.groups = DataService.groups;
     $scope.chosenGroup = DataService.chosenGroup;
     // construct notes array
-    // note[group][student]
+    // note[group][student][num]
     $scope.notes = [];
     $scope.commonNotes = [];
     for(var i=0; i<$scope.groups.length; i++){
       var notePlayer = [];
       var commonnotePlayer = [];
-      notePlayer.length = parseInt($scope.groups[i].studentamount);
-      commonnotePlayer.length = parseInt($scope.groups[i].studentamount);
+      for(var n=0;n<$scope.groups[i].studentamount;n++){
+        var singlenote = [];
+        var singlecommonnote = [];
+        notePlayer.push(singlenote);
+        commonnotePlayer.push(singlecommonnote);
+      }
       $scope.notes.push(notePlayer);
       $scope.commonNotes.push(commonnotePlayer);
     }
@@ -138,19 +142,23 @@ teacherModule.controller('MonitorCtrl', function($scope,DataService){
 
   serviceInit = function(){
     socket.on('addlocalnote', function(data){
-      $scope.notes[data.group-1][data.player-1]=data.notes;
+      $scope.notes[data.group-1][data.player-1].push(data.newnote);
       $scope.$apply();
     });
     socket.on('deletelocalnote',function(data){
-      $scope.notes[data.group-1][data.player-1]=data.notes;
+      $scope.notes[data.group-1][data.player-1]=$.grep($scope.notes[data.group-1][data.player-1], function(value){
+          return value.id != data.noteid;
+      });
       $scope.$apply();
     });
     socket.on('addcommonnote', function(data){
-      $scope.commonNotes[data.group-1][data.player-1] = data.notes;
+      $scope.commonNotes[data.group-1][data.player-1].push(data.newnote);
       $scope.$apply();
     });
     socket.on('deletecommonnote', function(data){
-      $scope.commonNotes[data.group-1][data.player-1] = data.notes;
+      $scope.commonNotes[data.group-1][data.player-1] = $.grep($scope.commonNotes[data.group-1][data.player-1], function(value){
+          return value.id != data.noteid;
+      });
       $scope.$apply();
     });
     socket.on('evalonshare', function(data){
