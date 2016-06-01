@@ -399,8 +399,8 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
         $(".infoDlg").dialog({
             autoOpen: false,
             resizable: true,
-            width:800,
-            height:800,
+            width:500,
+            height:300,
             modal: false,
             buttons: {
                 "OK": function() {
