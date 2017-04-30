@@ -25,10 +25,10 @@ Shared display: https://myoa.herokuapp.com/
 Tablet: https://myoa.herokuapp.com/#/individual
 
 The shared page will be like this:
-<img src="https://github.com/InsaLili/myoa-app/blob/master/public/img/display.png">
+<img src="https://github.com/InsaLili/myoa-app/blob/master/public/img/display.png" width="100%">
 
 The personal page:
-<img src="https://github.com/InsaLili/myoa-app/blob/master/public/img/tablet.png">
+<img src="https://github.com/InsaLili/myoa-app/blob/master/public/img/tablet.png" width="50%">
 
 
 
