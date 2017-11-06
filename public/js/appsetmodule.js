@@ -27,13 +27,13 @@ appSetModule.controller('ShareCtrl', function($scope, DataService) {
         }).catch(function (err) {
             console.log(err);
         }); 
-    }
+    };
     $scope.chooseGroup = function (event,index){
         // $('.groupBtn').removeClass('active');
         // $(event.target).addClass('active');
         DataService._indexGroup = index;
         DataService.group = $scope.currentClass.groups[index];
-    }
+    };
 
     getDeploy();
 });
@@ -60,11 +60,11 @@ appSetModule.controller('IndividualCtrl', function($scope, DataService) {
         }).catch(function (err) {
             console.log(err);
         }); 
-    }
+    };
     $scope.range = function(n) {
         var num = parseInt(n);
         return new Array(num);   
-    }
+    };
     $scope.chooseGroup = function (event,index){
         $('.groupBtn').removeClass('active');
         $(event.target).addClass('active');
@@ -72,10 +72,10 @@ appSetModule.controller('IndividualCtrl', function($scope, DataService) {
         DataService.group = $scope.currentGroup;
         DataService._indexGroup = index;
         $scope.showStudents = true;
-    }
+    };
     $scope.choosePlayer = function(index){
         DataService._indexPlayer = index;
-    }
+    };
     getDeploy();
 });
 

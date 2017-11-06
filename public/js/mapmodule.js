@@ -12,7 +12,7 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
 
     $scope.range = function(n) {
         return new Array(n);   
-    }
+    };
     //!!!!todo,delete some var
     getInfo = function(){
         // get location amount
@@ -27,7 +27,7 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
         $scope.studentAmount = parseInt(DataService.group.studentamount);
         // store note number
         $scope.studentNotes=[];
-        // caculate avatar width based on student amount
+        // calculate avatar width based on student amount
         $scope.avatarWidth = Math.round(12/$scope.studentAmount);
 
         // store the number of evaluated location of each student
@@ -49,7 +49,7 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
         $scope.drag = 0;
         $scope.zoom = 0;
 
-    }
+    };
     getMarkers = function(){
       // get markers
         $scope.markers = DataService.app.mapstep1.markers;
@@ -60,19 +60,19 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
                 $scope.markers[i].symbol = $scope.markers[i].symbol.toUpperCase();
             }
         }  
-    }
+    };
     getSteps = function(){
         // get the type of sequence, and set steps based on the sequence type
         $scope.seqtype = DataService.app.mapstep2.seqtype;
-        if($scope.seqtype == "restricted"){
+        if($scope.seqtype === "restricted"){
             // rebuild steps
             $scope.steps = DataService.app.mapstep2.reseq;
-            if($scope.steps.s3.exist == false){
+            if($scope.steps.s3.exist === false){
                 delete $scope.steps.s3;
             }else{
                 var s3=true;
             }
-            if($scope.steps.s0.exist == false){
+            if($scope.steps.s0.exist === false){
                 delete $scope.steps.s0;
             }else{
                 var s0=true;
@@ -87,30 +87,30 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
         }else{
             $scope.steps = DataService.app.mapstep2.unseq;
             delete $scope.indiStu.timerValue[3];
-            if($scope.steps.s2.exist == false){
+            if($scope.steps.s2.exist === false){
                 delete $scope.steps.s2;
             }
 
-            if($scope.steps.s0.exist == false){
+            if($scope.steps.s0.exist === false){
                 delete $scope.steps.s0;
             }
             // build an array to store chosen locations
             $scope.chosenNum = []
         }
-    }
+    };
     getCris = function(){
         // get criterias
         $scope.cris = DataService.app.mapstep1.cris;
         $scope.crisTea = $scope.cris.teacher.length;
         $scope.cris.num = $scope.crisTea;
-    }
+    };
     getEvalConfig = function(){
         // get steps and evalate on which device
         ($scope.steps.s1.eval)?($scope.evaltype = $scope.steps.s1.eval):($scope.evaltype = "group");
         // check device
         $scope.shareDis = DataService.app.mapstep4.share;
         // judge on which device to make the evaluation
-        if($scope.evaltype == "individual"){
+        if($scope.evaltype === "individual"){
             // caculate the needed number of evaluation in restricted/individual type
             $scope.needEvals = $scope.studentAmount * $scope.locationAmount;
             $scope.currentEval = 0;
@@ -121,7 +121,7 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
         }
         $scope.evalVal = [];
         // when there is no s0, structure evalVal
-        if($scope.steps.s0 == undefined){
+        if($scope.steps.s0 === undefined){
             $scope.cris.num = $scope.cris.teacher.length;
 
             // if($scope.cris.num == 0){
@@ -130,9 +130,9 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
             for(var j=0; j<$scope.locationAmount;j++){
                 var cris = [];
                 // if evluating individually, add the player dimention to the array
-                if($scope.evaltype=="individual"){
+                if($scope.evaltype==="individual"){
                     // when no predefined cris, evalVal[location][0][player]
-                    if($scope.cris.num == 0){
+                    if($scope.cris.num === 0){
                         var crisplayer = [];
                         crisplayer.length = $scope.studentAmount;
                         cris.push(crisplayer);
@@ -157,8 +157,8 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
             $scope.currentStep = 0;
         }
         // 判断什么时候可以点击公共屏幕上的星星
-        ($scope.evaltype == "group" && $scope.currentStep==1)?($scope.clickStar = true):($scope.clickStar=false);
-    }
+        ($scope.evaltype === "group" && $scope.currentStep === 1)?($scope.clickStar = true):($scope.clickStar=false);
+    };
     getIncidator = function(){
         // get student indicators
         $scope.indiStu = DataService.app.mapstep3.indiStu;
@@ -168,15 +168,15 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
         var timerBadgeNum = function(){
             var time=0;
             for(var k=0; k<4;k++){
-                if($scope.indiStu.timers[k] == true)
+                if($scope.indiStu.timers[k] === true)
                     time++;
             }
             if(time>2) time = 2;
             return time;
-        }
+        };
 
         $scope.badgeWidth = 12/timerBadgeNum();
-    }
+    };
     configNote = function(){
         // store notes
         $scope.notes = [];
@@ -185,22 +185,24 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
         //     $scope.notes.push(pnote);
         // }
         $scope.commonNotes = [];
-    }
+    };
     configDB = function(){
         var db = new PouchDB('https://myoa.smileupps.com/user');
         // set DB title
         var d = new Date();
+        var year = d.getYear()+1900;
+        var month = d.getMonth()+1;
         var day = d.getDate();    
         var h= d.getHours();
         var m = d.getMinutes();
         var s = d.getSeconds();
-        $scope.dbID = "group"+$scope.groupNum+'/'+day+'th'+h+'h'+m+'m'+s+'s';
+        $scope.dbID = "group"+$scope.groupNum+'/'+year+'y'+month+'mo'+day+'th'+h+'h'+m+'m'+s+'s';
         db.put({
             _id: $scope.dbID
         }).catch(function(err){
             console.log(err);
         });
-    }
+    };
     configMap = function(){
         $scope.map = DataService.app.mapstep1.map;
         var devicecompo = DataService.app.mapstep4.device;
@@ -347,7 +349,7 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
         }
         console.log("notes number");
         console.log($scope.studentNotes);
-    }
+    };
     dialogInit = function(){
         var steps = $scope.steps.length;
         $( ".dialog").dialog({
@@ -404,7 +406,7 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
                 }
             }
         });
-    }
+    };
     // add a new timer
     timerInit = function(step){
         if($scope.indiStu.timers[step]){
@@ -415,13 +417,13 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
                 startTime: timerValue
             });
         }
-    }
+    };
     updateProg = function(data){
         var location = data.location;
         var player = data.player;
         var id = data.id;
         // add player's vote progress
-        ($scope.evalAmount[player-1] == null)?($scope.evalAmount[player-1]=1):($scope.evalAmount[player-1]++);
+        ($scope.evalAmount[player-1] === null)?($scope.evalAmount[player-1]=1):($scope.evalAmount[player-1]++);
         // update progressbar
         var voteNum = $scope.evalAmount[player-1];
         var progressbarText = $('.progspace p');
@@ -450,7 +452,7 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
         if($('#timer'+step).length !== 0){
             clearInterval(intervals.main);
             $('#timer'+step).remove();
-            if($scope.indiStu.badge.timer == true){
+            if($scope.indiStu.badge.timer === true){
                 if(digits[1].current != 9){
                     $scope.timerWin[step] = true;
                 }else{
@@ -656,7 +658,7 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
                 $scope.chosenNum.push(marker);
             }
         }
-    }
+    };
     init = function(){
         // get data and initialize service
         getInfo();
@@ -671,7 +673,7 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
         serviceInit();
         attachNotes();
 
-    }
+    };
     // wait for dom ready
     $timeout(function(){
         // initiate progress bar

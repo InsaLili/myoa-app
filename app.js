@@ -59,7 +59,6 @@ httpserver.listen(app.get('port'), function () {
 
 //socket
 var agree = [];
-var criid;
 var io = require('socket.io')(httpserver);
 io.on('connection', function (socket) {
     // console.log("a new device is connected");
@@ -83,7 +82,7 @@ io.on('connection', function (socket) {
             logger.info('success adding criteria',data);
             io.emit('successcri',data);
         }
-    })
+    });
     socket.on('deletecri', function(data){
         logger.info('delete a criteria',data);
         // logger.log('info',data);
@@ -93,7 +92,7 @@ io.on('connection', function (socket) {
         logger.info('change step',data);
         // logger.log('info',data);
         io.emit('changestep', data);
-    })
+    });
     // Start listening for mouse events
     socket.on('checklocation', function (data) {
         logger.info('check the location',data);
