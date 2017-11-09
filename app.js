@@ -61,7 +61,7 @@ httpserver.listen(app.get('port'), function () {
 var agree = [];
 var io = require('socket.io')(httpserver);
 io.on('connection', function (socket) {
-    // console.log("a new device is connected");
+    //console.log("a new device is connected");
     socket.on('choosegroup', function(data){
         logger.info('choose the group',data);
         groupNum = data.group;
@@ -95,7 +95,8 @@ io.on('connection', function (socket) {
     });
     // Start listening for mouse events
     socket.on('checklocation', function (data) {
-        logger.info('check the location',data);
+        //logger.info('check the location',data);
+        console.log('check the location',data);
 //        io.emit send message to all clients，socket.emit send message to particular client
         var numLocation = data.location-1;
         io.emit('checklocation', data);

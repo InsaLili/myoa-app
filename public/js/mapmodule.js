@@ -224,7 +224,7 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
                 message += '<img class="markerImg" src="'+$scope.markers[i].photo+'" />';
             }
             // when only has the large display, hide the avatar in the marker;; to be improved
-            if(devicecompo == "large"){
+            if(devicecompo === "large"){
                 message += '<p class="markerInfo">'+$scope.markers[i].data+'</p>';
             }else{
                 for(var j=1; j<=$scope.studentAmount;j++){
@@ -248,7 +248,7 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
             $scope.zoom++;
             updateDB();
         });
-    }
+    };
 
     serviceInit = function(){
         //------following parts realize the communication between pages
@@ -333,7 +333,7 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
             updateDB();
 
         });
-    }
+    };
 
     attachNotes = function(){
         for(var i=0; i<$scope.studentAmount;i++){
@@ -423,7 +423,7 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
         var player = data.player;
         var id = data.id;
         // add player's vote progress
-        ($scope.evalAmount[player-1] === null)?($scope.evalAmount[player-1]=1):($scope.evalAmount[player-1]++);
+        isNaN($scope.evalAmount[player-1])?($scope.evalAmount[player-1]=1):($scope.evalAmount[player-1]++);
         // update progressbar
         var voteNum = $scope.evalAmount[player-1];
         var progressbarText = $('.progspace p');
@@ -437,7 +437,7 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
         $(checkMark).addClass('checked');
         // update current number of evaluated locations
         $scope.currentEval++;
-    }
+    };
     updateStep = function($event,index,step){
         // change the check mark
         var element = $event.target.parentElement;
@@ -466,7 +466,7 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
         var dlgIndex = index+1;
         ($('#dialog'+dlgIndex).length !== 0)?($('#dialog'+dlgIndex).dialog('open')):($('#dialogFinal').dialog('open'))
         // $('#dialog'+dlgIndex).dialog('open');
-    }
+    };
 
     confirmChoice = function(){
         $('.chooseLocation').hide();
@@ -479,7 +479,7 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
                 $('#location'+$scope.chosenNum[i]).show();
             }
         }
-    }
+    };
     // show the average of evaluation results
     getEvalAvg = function(){
         for(var i=0; i<$scope.locationAmount; i++){
@@ -492,7 +492,7 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
                 $scope.evalVal[i][j] = crisEval;
             }
         }
-    }
+    };
 
     // check if finished evaluation of a location
     ifNewLocation = function(locationNum){
@@ -510,7 +510,7 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
             });
             $("#groupProgTxt").text($scope.currentEval + '/'+$scope.locationAmount+' Emplacements');
         }
-    }
+    };
     updateDB = function(){
         var db = new PouchDB('https://myoa.smileupps.com/user');
         db.get($scope.dbID).then(function(doc){
@@ -524,11 +524,11 @@ mapModule.controller('AppCtrl', function($scope, $timeout, DataService){
                 timeline: $scope.timeline
             }, $scope.dbID, doc._rev);
         });
-    }
+    };
 
     $scope.getInfo = function(num){
         $('#infoDlg'+num).dialog('open');
-    }
+    };
     // nextStep
     $scope.nextStep = function($event, index){
         // skip step 0 when there is no s0
